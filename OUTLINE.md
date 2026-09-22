@@ -14,9 +14,12 @@ the Python module for decorators, wrappers and monkey patching, in
 collections that are each a course of their own. The first collection,
 **Decorators with wrapt**, is twelve workshops on writing decorators
 with wrapt, each shown beside the standard library version it
-replaces. A second collection on monkey patching is planned and will
-sit beside it. The two share this repository's tooling and nothing
-else: each has its own index, id, numbering and audience.
+replaces. The second, **Monkey patching with wrapt**, is ten workshops
+on patching code you did not write, designed below and not yet
+written. A third, on object proxies, has its id reserved and its
+workshops sketched, and a fourth is held as a list of candidates. The
+collections share this repository's tooling and nothing else: each has
+its own index, id, numbering and audience.
 
 The decorators collection is the companion to the
 [decorator workshops](https://github.com/GrahamDumpleton/decorator-workshops),
@@ -28,11 +31,21 @@ about each of them. It does not require the other collection: every
 workshop restates the standard library side in a cell and a sentence
 before showing the wrapt one.
 
+The monkey patching collection assumes the wrapper signature and the
+`instance` rules from the first two workshops of the decorators
+collection, and restates them where they matter, so it can be taken
+on its own by anyone who has written a wrapt decorator. It is the
+course beneath the
+[wrapture workshops](https://github.com/GrahamDumpleton/wrapture-workshops):
+wrapture is built on the helpers taught here, so a learner who wants
+to test or trace with patches goes there next, and the workshops here
+say so at the points where the two meet.
+
 ## Source material
 
 wrapt's own documentation and source are the authority, read from the
 `reference/wrapt` submodule at the release the workshops teach, never
-from memory:
+from memory. For the decorators collection:
 
 - `docs/decorators.rst`: the wrapper signature, decorators with
   arguments and with optional arguments, processing the call's
@@ -50,6 +63,39 @@ from memory:
 
 - `docs/issues.rst`: `classmethod.__get__()`, `super()` with a
   decorated class, and the rest of what does not work and why.
+
+For the monkey patching collection:
+
+- `docs/monkey.rst`: the whole document. Wrapping functions and
+  methods, `patch_function_wrapper` and `function_wrapper`, wrapping
+  arbitrary attributes with `wrap_object`, `resolve_path` and
+  `apply_patch`, instance attributes with `wrap_object_attribute`,
+  deferring with the `?` shortcut and post import hooks, temporary
+  patches with `transient_function_wrapper` and
+  `scoped_function_wrapper`, inspecting and removing patches through
+  handles, and the pitfalls section, which the workshops distribute
+  rather than teach in one place.
+
+- `docs/wrappers.rst`: the Object Proxy and Custom Object Proxies
+  sections, as much as workshop 8 needs and no more; the rest is for
+  the proxies collection.
+
+- `docs/examples.rst`: the Scoped Test Patches section, which is
+  workshop 5's two step reading of `transient_function_wrapper`.
+
+- `docs/changes.rst`: the 2.4.0 notes on `unwrap_object`,
+  `wrapper_chain`, `scoped_function_wrapper` and `resolve_owner`,
+  which say what removal restores in each arrangement more precisely
+  than the guide does.
+
+- `blog/11` to `blog/14` in the wrapt repository, on safely applying
+  monkey patches, using wrapt to support testing, ordering issues, and
+  automatic patching: the background the workshops draw on for why,
+  written before the 2.4 lifecycle existed, so the docs win where the
+  two differ.
+
+The wrapture workshops are read, not taught, so the pointers to them
+name workshops that exist and say what they add.
 
 Python's own documentation is the authority for the standard library
 side of each comparison, and every claim about what Python does is
@@ -96,9 +142,12 @@ a learner may have both collections subscribed in one JupyterLab and
 the browser matches a local directory to a collection by name. So
 `decorating-methods`, `caching-results` and
 `decorating-async-functions` are taken, and the workshops here that
-cover the same ground are named differently.
+cover the same ground are named differently. The same goes for the
+wrapture workshops, which the monkey patching collection points at
+and a learner may well have beside it: `patching-third-party-code`,
+`wrap-not-replace` and `writing-instrumentation` are taken too.
 
-## The workshops
+## The decorators workshops
 
 ### 1. `your-first-wrapt-decorator`: Your first wrapt decorator
 
@@ -435,7 +484,7 @@ replaces, and not taught.
 
 - Length: 10 minutes.
 
-## Topics not covered
+## Topics the decorators collection leaves out
 
 Several topics from the earlier plan for a wrapt course were
 considered and left out, and the reasons are worth recording so the
@@ -454,6 +503,408 @@ every workshop here is the migration. The calling convention markers
 and the sync and async adapters are a footnote to workshop 11. Object
 proxies, `ObjectProxy` and its lazy and automatic variants, are the
 foundation of monkey patching and are for that collection.
+
+## Shape of the monkey patching collection
+
+What you need to patch something you did not write: make the patch
+correct on every kind of target, know when it did nothing, take it out
+again, and get there before the code you are patching is used. One
+ordered collection in four movements, numbered straight through.
+
+**Making a patch** (1 to 3). Assignment by hand and where it goes
+wrong, `wrap_function_wrapper` on every kind of method, and the three
+spellings of the same patch. After these the learner can patch any
+function or method and have it behave as the original did.
+
+**Taking it out again** (4 and 5). The handle every wrap function
+returns, what it is for, and the two forms of patch that remove
+themselves. This comes early because a notebook kernel keeps every
+patch the learner makes, so tidying up is a survival skill here, not
+an advanced topic.
+
+**Getting the timing right** (6 and 7). Why a patch applied after
+`from x import y` misses the caller that already has `y`, and the
+deferral mechanisms that put the patch in place before the module is
+used.
+
+**Beyond functions, and to work** (8 to 10). `wrap_object` with a
+proxy, `wrap_object_attribute` for what lives on instances, and a
+closing workshop that counts and times a library's calls, which is
+the shape of every instrumentation agent and the point where wrapture
+takes over.
+
+Ten to twenty minutes each, about two and a half hours in total. As
+in the decorators collection, each workshop is self-contained and
+ships the code it patches.
+
+The comparison the decorators collection makes with the standard
+library continues here in a different form: every workshop opens
+with the way the learner already knows, assignment, `getattr` and
+`setattr`, or `unittest.mock.patch`, in a cell and a sentence, and
+shows where it falls short before showing the wrapt helper. Every
+workshop uses only what is in wrapt 2.4.1, the release the reference
+submodule is at; the lifecycle functions the collection is built on
+arrived in 2.4.0.
+
+## The monkey patching workshops
+
+The shipped package is the same cast as the decorators collection,
+grown into a package: `shop`, under `files/shop/`, with a `pricing`
+module holding `fetch_price`, a `cart` module holding `Shop` with its
+`buy` method, an `empty` class method, a `tax` static method and a
+`name` set in `__init__`, and further modules as each workshop needs
+them. Each workshop ships its own copy, so no page depends on the
+state another workshop left.
+
+### 1. `your-first-monkey-patch`: Your first monkey patch
+
+Assignment, and what it gets wrong.
+
+Patch `shop.pricing.fetch_price` by assignment, with the closure and
+`functools.wraps` the learner already knows, and see it work. Do the
+same to `Shop.buy` and see that work too. Then `Shop.tax` and
+`Shop.empty`: `getattr` on the class hands back the static method as
+a plain function and the class method as a bound method, so the
+closure assigned back is a plain function in the class namespace,
+`shop.tax(10)` now passes the instance where none was wanted, and
+`empty` looked up through a subclass binds to `Shop` rather than the
+subclass. Print `Shop.__dict__["tax"]` before and after, so the
+learner sees the kind of thing in the class change. Saving the
+original through `getattr` to restore it later has the same flaw.
+
+Then `wrapt.wrap_function_wrapper(shop.cart, "Shop.tax", wrapper)`
+on all three, with the wrapper the learner writes with the four
+argument signature from the decorators collection. Each is still its
+own kind of method, `instance` follows the rules the learner knows,
+and `inspect.signature` still tells the truth. The helper reads the
+class `__dict__` along the method resolution order rather than
+calling `getattr`, which is why it can.
+
+Close with the value `wrap_function_wrapper` returned, printed and
+unexplained: it is the handle, and workshop 4 is about it.
+
+- Format: notebook with the code pane. `shop/cart.py` opens beside
+  the notebook on the first page that names it.
+
+- Files: `shop/pricing.py`, `shop/cart.py`.
+
+- Length: 15 minutes.
+
+### 2. `patching-every-kind-of-method`: Patching every kind of method
+
+The targets, and the `instance` rules from the patching side.
+
+One target at a time: an instance method, a class method, a static
+method, `__init__` and `__repr__`, a method of a nested class through
+the dotted path `"Outer.Inner.method"`, and a module named by the
+string `"shop.cart"` rather than the module object, which imports it
+if it has to. Before each cell a quiz asks what `instance` will be,
+which is the table from the decorators collection with the answers
+now arriving from outside the class. The one rule that matters more
+here than for a decorator: `wrapped` is already bound, so the wrapper
+calls `wrapped(*args, **kwargs)` and never inserts `instance` itself,
+and a page shows what goes wrong when it does.
+
+Then the target that is one object: `wrap_function_wrapper(shop_a,
+"buy", wrapper)` patches a single `Shop` and leaves every other
+instance alone, because the wrapper lands in that instance's own
+namespace.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/cart.py`, with the nested class added.
+
+- Length: 15 minutes.
+
+### 3. `three-ways-to-spell-a-patch`: Three ways to spell a patch
+
+The same patch three ways, and when each reads best.
+
+`wrap_function_wrapper` as a call, from code that decides at runtime
+what to patch. `@patch_function_wrapper("shop.pricing",
+"fetch_price")` on the wrapper itself, applied as a side effect of the
+module holding it being imported, which is how a file of patches
+reads; its `enabled` argument as a boolean read once and as a callable
+consulted on every call, the switch from workshop 6 of the decorators
+collection. `@function_wrapper`, the lighter `@decorator` without
+`adapter` or `enabled`, turning a wrapper into something that can be
+applied in place, `Shop.buy = notify(Shop.buy)`, or passed as the
+`wrapper` argument to the other two, so one wrapper serves several
+targets.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/pricing.py`, `shop/cart.py`, and a `patches.py` the
+  learner reads in the pane and then imports, to see
+  `patch_function_wrapper` apply on import.
+
+- Length: 10 minutes.
+
+### 4. `leaving-things-as-you-found-them`: Leaving things as you found them
+
+The handle, and the lifecycle it unlocks.
+
+Every wrap function returns the wrapper it installed, and that object
+is the identity of the patch. `wrapt.is_wrapped_by` says whether it
+is still there, `wrapt.wrapper_chain` prints the stack of wrappers
+outermost first ending at the original, `wrapt.unwrapped` is the
+original, and `wrapt.unwrap_object` takes the patch out. Each is
+asked of the object `wrapt.resolve_path` returns, never of `getattr`
+on the class, because the class hands back a fresh bound wrapper the
+handle is not in; a page shows the check fail that way and then pass.
+
+Two patches on `Shop.buy`, and the inner one removed first: the chain
+is spliced and the outer one keeps working, so two parties can remove
+their patches in either order. Remove the outer, remove it again, and
+`WrapperNotFoundError` says the patch is gone; `missing_ok=True` is
+for cleanup that must not care. A patch installed through a subclass
+that inherits `buy` and then removed leaves no `buy` in the subclass
+namespace, because the wrap recorded that it created the slot. The
+closure from workshop 1 assigned over a wrapt wrapper raises
+`WrapperNotOutermostError` on removal, naming what is above, since a
+`functools.wraps` closure's `__wrapped__` is metadata and splicing
+there would change nothing.
+
+Close with the rule the whole collection follows from here: a page
+that installs a patch takes it out before the next one needs a clean
+target, and restarting the kernel is the alternative nobody wants.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/cart.py`, with a subclass of `Shop`.
+
+- Length: 20 minutes.
+
+### 5. `patches-that-last-a-block`: Patches that last a block
+
+Temporary patches, and what happens when something interferes.
+
+Open with `unittest.mock.patch`, as a context manager and as a
+decorator, and say what it does: replaces the attribute wholesale and
+puts it back with `setattr`. The wrapt forms keep the original
+running and know about methods. `wrapt.scoped_function_wrapper` in a
+`with` statement, two of them in one `with`, and `ExitStack` when the
+list is only known at runtime. `@wrapt.transient_function_wrapper` as
+the decorator form, read in two steps as the examples do: the outer
+decorator describes the patch, the inner application chooses the
+function whose calls it is in force for, and applied straight onto a
+test function it lasts that test.
+
+Then interference. Replace the attribute wholesale inside the block
+and `WrapperNotFoundError` is raised on exit, at the test responsible
+rather than in the next one; a wrapt wrapper applied on top and left
+there is tolerated and the temporary one spliced out beneath it. The
+`?` form is not accepted here, since the patch must apply where the
+`with` is entered, and a generator context manager under
+`transient_function_wrapper` patches only the moment the generator is
+made, which is the one trap worth a cell.
+
+The finish text says that testing with patches is where wrapture
+starts, and names its `wrap-not-replace` and `coming-from-mock`
+workshops.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/pricing.py`, `shop/cart.py`.
+
+- Length: 15 minutes.
+
+### 6. `why-your-patch-did-nothing`: Why your patch did nothing
+
+Cached references, and the two ways round them.
+
+`shop/checkout.py` does `from shop.pricing import fetch_price` and
+`total()` calls it. Import `shop.checkout`, patch
+`shop.pricing.fetch_price`, call `total()`, and nothing happens: the
+pane shows the line that took its own reference at import, and
+`shop.checkout.fetch_price is shop.pricing.fetch_price` is `False`.
+Patch the alias too, at `"shop.checkout"`, and it works; the other
+way round, patching before the consumer is imported, is the next
+workshop. The same in the small: a bound method saved in a variable
+before the patch keeps the original, while a method reached through
+the class at call time sees the patch, which is why methods are safer
+targets than functions.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/pricing.py`, `shop/checkout.py`.
+
+- Length: 15 minutes.
+
+### 7. `patching-before-the-import`: Patching before the import
+
+Deferral, three ways, and getting the handle back.
+
+The `?` shortcut first: `@patch_function_wrapper("shop.reports?",
+"summary")` before `shop.reports` has been imported, then the import,
+and the patch is in place. `wrapt.register_post_import_hook` with a
+callback that receives the module, so the patch code can hand the
+module straight to `wrap_function_wrapper`; register it for
+`shop.pricing`, already imported, and it fires at once. The
+`@wrapt.when_imported` decorator form. The string form
+`"patches:install"`, where the module holding the patch is not itself
+imported until the target is, shown with `"patches" in sys.modules`
+before and after.
+
+Then the handle. A deferred wrap returns `None`, because the wrapper
+does not exist yet, so a patch that may need removing installs from a
+hook that keeps the handle, or recovers it after the import with
+`wrapt.find_wrapper` and a predicate. `discover_post_import_hooks` and
+entry points are named as the packaged form and left for later.
+
+A kernel imports a module once, so each demonstration has a module of
+its own, `shop.reports`, `shop.invoices` and `shop.shipping`, and the
+pane opens each before the cell that imports it.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/pricing.py`, `shop/reports.py`, `shop/invoices.py`,
+  `shop/shipping.py`, `patches.py`.
+
+- Length: 20 minutes.
+
+### 8. `wrapping-what-is-not-a-function`: Wrapping what is not a function
+
+`wrap_object`, and the least the learner needs of `ObjectProxy`.
+
+`shop.config.settings` is a dictionary the package reads. Wrap it
+with `wrapt.wrap_object("shop.config", "settings", Watched)`, where
+`Watched` is an `ObjectProxy` subclass whose `__getitem__` records
+which keys are read; the proxy is still a dictionary to `isinstance`,
+still equal to the original, and everything not overridden passes
+through. What the workshop teaches of proxies: `__wrapped__`, the
+`_self_` prefix for the proxy's own state, and that a special method
+must be defined on the proxy class to be intercepted. A callable
+proxy counting calls to `fetch_price` shows the same with `__call__`.
+Extra arguments to the factory through `args` and `kwargs`. The
+handle `wrap_object` returns is removed the way workshop 4 taught.
+
+Then the two steps beneath it: `wrapt.resolve_path` returning the
+parent, the attribute name and the original, and `wrapt.apply_patch`
+setting the replacement, for the case where the original is wanted
+for something other than wrapping, such as capturing it in a closure.
+
+The finish text names the proxies collection as where `ObjectProxy`
+is taught in full.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/pricing.py`, `shop/config.py`.
+
+- Length: 15 minutes.
+
+### 9. `patching-instance-attributes`: Patching instance attributes
+
+What lives in `self.__dict__`, and the descriptor that reaches it.
+
+`Shop.__init__` sets `self.name`, and no wrap function so far can
+touch it: the value is set per instance, after the class exists.
+`wrapt.wrap_object_attribute("shop.cart", "Shop.name", Labelled)`
+installs a descriptor on the class, and every read fetches the
+instance's value and passes it through the factory. Show
+`Shop.__dict__["name"]` is now an `AttributeWrapper`, that a
+`property` already on the class keeps working beneath it, that a
+second application stacks over the first rather than replacing it,
+and that reading the attribute on the class no longer raises: it
+serves the class default when there was one and the `wrapt.MISSING`
+sentinel when there was not. The handle is the descriptor, and
+`unwrap_object` removes it.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/cart.py`, with a `name` attribute and a `label`
+  property.
+
+- Length: 15 minutes.
+
+### 10. `patching-to-observe`: Patching to observe
+
+Counting and timing a library's calls, and the registry that keeps it
+honest.
+
+A wrapper with state, the class pattern from workshop 5 of the
+decorators collection, records every call of `fetch_price` and
+`Shop.buy` with its duration, and a cell prints the table. Around it
+the registry from the docs: `instrument` that wraps a target only if
+it is not already in the registry, `uninstrument` that walks the
+registry removing with `missing_ok=True`, applying twice and seeing
+one wrapper, and a check of `shop.__version__` before patching, which
+is what a patch of code that changes under you does. Deferral from
+workshop 7 makes it apply whether the package is imported before or
+after.
+
+The finish text says what this is: the shape of every instrumentation
+agent, and the point where wrapture takes over, with its bindings,
+recording and export built on these helpers. It names the
+[wrapture workshops](https://github.com/GrahamDumpleton/wrapture-workshops),
+`live-tracing` for what recording looks like and
+`writing-instrumentation` for a package of patches done properly.
+
+- Format: notebook with the code pane.
+
+- Files: `shop/pricing.py`, `shop/cart.py`, `shop/__init__.py` with
+  a version.
+
+- Length: 20 minutes.
+
+## Handed to wrapture
+
+The earlier plan for a wrapt course had a monkey patching module of
+ten topics, an import hooks module of sixteen and a capstone module of
+five. What is not in the collection above, and why.
+
+Monkey patching for testing, conditional and temporary patches, and
+instrumentation and observability were applications in the earlier
+plan. They are here as fundamentals, workshops 5 and 10, taught as
+the primitive and no further: the block scoped patch and the counting
+wrapper. The course in using them is the wrapture workshops,
+`wrap-not-replace`, `coming-from-mock` and `wrapture-with-pytest` for
+testing, `patching-third-party-code` for a patch's lifecycle, and
+`live-tracing`, `zero-code-tracing` and `writing-instrumentation` for
+tracing, and building those again on bare wrapt would be a worse
+course pointing at a better one. The capstone module, an
+instrumentation framework and a plugin system, is what wrapture is,
+and is not built here.
+
+Reversible patching, debugging patches and safe patching patterns
+were advanced topics the learner would build by hand. Since wrapt 2.4
+they are API, and workshop 4 teaches them as fundamentals. The
+pitfalls section of the docs is spread over workshops 1, 2, 4 and 6
+rather than being a workshop.
+
+`ObjectProxy` and its lazy and automatic variants were two topics in
+the middle of the earlier monkey patching module. Workshop 8 teaches
+the least it needs and the proxies collection has the rest, because
+proxies are a course of their own with a different audience: the
+patching collection needs `wrap_function_wrapper` and a wrapper
+function, which the learner already has.
+
+## Later collections
+
+**Object proxies with wrapt**, id `grahamdumpleton.me/wrapt/proxies`,
+reserved now as the monkey patching id was. Eight or nine workshops:
+a first proxy and what passes through, what does not (`type`,
+identity, `__class__`, and the copy a literal value becomes),
+`_self_` attributes and where assignment lands, special methods and
+why they must be on the proxy class, `CallableObjectProxy` and the
+partial variant, custom `FunctionWrapper` and `BoundFunctionWrapper`
+subclasses with `__bound_function_wrapper__`, `LazyObjectProxy` with
+`lazy_import` and its `interface` hint, `AutoObjectProxy`,
+`WeakFunctionProxy`, and serialising a proxy from the examples doc.
+Independent of the monkey patching collection apart from the pointer
+in its workshop 8. Notebook format, no shipped code expected.
+
+**A fourth collection, candidates only.** The remainder of the
+earlier import hooks module that is still wrapt rather than wrapture:
+how `ImportHookFinder` sits in `sys.meta_path` and what it does to a
+loader, `discover_post_import_hooks` with entry points and the
+`install-packages` capability it needs, the autowrapt bootstrap,
+versioned patches, patching a decorator itself, what cannot be
+patched on builtins and C types, and the overhead figures from blog
+posts 9 and 10. Half of it is a page each rather than a workshop, and
+much of it borders wrapture's zero-code tracing, so it waits until
+the second and third collections have shipped and the analytics show
+whether people reach the end of the second.
 
 ## Decisions that cut across the workshops
 
@@ -479,8 +930,42 @@ step does not wait on PyPI.
 
 **One format.** Every workshop is a notebook. There is no terminal
 workshop here and no mixed workshop, because the subject never needs
-one: decorators are things you do to Python objects, and a notebook is
-where Python objects live.
+one: decorators and patches are things you do to Python objects, and
+a notebook is where Python objects live. The monkey patching
+collection adds a pane for the code being patched, not a terminal.
+
+**Shipped code beside the notebook.** A patch is only interesting
+against code the learner can see, so every monkey patching workshop
+ships the package it patches under `files/` and shows it in an editor
+beside the notebook rather than in a tab behind it. The `notebook`
+layout of the decorators collection becomes a `columns` split there:
+the notebook on the left as the placeholder area, and an area named
+`code` on the right listing the first module the workshop patches,
+since a layout has one placeholder and this is not it; a `file-open`
+with `:area: code` brings each further module in beside it on the
+page that turns to it. The learner reads the line that took its own
+reference in workshop 6 while the cell that proves it runs. Imports
+work because the learner's kernel runs in the workspace, so `import
+shop` finds the shipped package with nothing added to the path.
+
+**Patch targets are shipped code, never the standard library.** The
+docs patch `logging.Logger.info`, which makes a point about patching
+something real, but a workshop patches the `shop` package it ships:
+the learner can read the target, a patch left behind by mistake
+confuses nothing the notebook depends on, and the internals of the
+standard library on 3.14 are not the lesson.
+
+**One module per deferral.** A kernel imports a module once, and the
+deferral workshop demonstrates three mechanisms, so each has a module
+of its own to be imported for the first time. Removing a module from
+`sys.modules` to demonstrate again is exactly the trick the workshop
+should not teach by accident.
+
+**Patches are taken out.** Each workshop has its own environment and
+kernel, so nothing leaks between workshops. Within one, from workshop
+4 on, a page that installs a patch removes it before the next page
+needs a clean target, and the page says so, which makes the lifecycle
+the habit rather than a topic.
 
 **Learners never type code.** Every cell arrives through a
 `cell-insert` action, so the learner's attention goes on reading and
@@ -509,7 +994,9 @@ nothing in CI.
 recurring cast, a `greet`, a slow `fetch_price` and a `Shop` with a
 `buy` method, is reused where it fits, so the early workshops feel
 continuous and so that a reader of the decorator workshops meets
-familiar names.
+familiar names. The monkey patching collection keeps the cast and
+grows it into the shipped `shop` package, so `fetch_price` and
+`Shop.buy` are the things being patched.
 
 **Timing and sleeps.** Every sleep is tens of milliseconds, and the
 race in workshop 10 is made visible with a short spin, so a page never
@@ -552,13 +1039,15 @@ into the middle of a course. A name in the list whose directory does
 not exist yet is skipped, so the index can be refreshed while a
 collection is being written.
 
-**Ids.** `grahamdumpleton.me/wrapt/decorators` now,
-`grahamdumpleton.me/wrapt/monkey-patching` later: a prefix for the
-product, then the course, leaving room for more under the same prefix.
-An id is the collection's identity to the analytics service and must
-never change, so it was chosen before any workshop was written. The
-other collections use flatter ids; revising them to match is a
-separate job for another time.
+**Ids.** `grahamdumpleton.me/wrapt/decorators`,
+`grahamdumpleton.me/wrapt/monkey-patching` and
+`grahamdumpleton.me/wrapt/proxies`: a prefix for the product, then
+the course, leaving room for more under the same prefix. An id is the
+collection's identity to the analytics service and must never change,
+so each is chosen before any workshop of its collection is written,
+and the proxies id is reserved here ahead of its design. The other
+collections use flatter ids; revising them to match is a separate
+job for another time.
 
 **Where the collections meet the browser.** The Available section of
 the workshop browser groups by collection, so anyone who subscribes
@@ -568,12 +1057,13 @@ collection's order, with every card carrying its collection's title
 and its own numbering but no heading between the groups, and that is
 what the Binder and Codespaces images show, since everything is
 installed there. With one collection it is exactly the numbered list
-it is today. When the second collection arrives it is worth grouping
-the Installed section by collection in jupyterlab-workshop, with the
-heading the Available section already uses, and that change is in the
-extension rather than here. The Finish dialog offers the next workshop
-of the same collection and stops at its end; the last workshop's
-`finish` text names where to go next.
+it is today. What it looks like with two is to be seen on Binder
+before anything is changed: the likely improvement is grouping the
+Installed section by collection with the heading the Available
+section already uses, and that change is in jupyterlab-workshop
+rather than here, so the open question below records it. The Finish
+dialog offers the next workshop of the same collection and stops at
+its end; the last workshop's `finish` text names where to go next.
 
 **Binder, Codespaces and local runs.** The Binder and Codespaces
 settings subscribe to each collection's index by relative path, so the
@@ -642,13 +1132,17 @@ with `print()`.
 
 **Shipped files.** Where a workshop needs code the learner should not
 have to read being typed in, it ships under `files/`, which the
-extension copies into the workspace on first open. Most workshops need
-none: the code is the point, so it goes in cells.
+extension copies into the workspace on first open. Most decorators
+workshops need none: the code is the point, so it goes in cells. Every
+monkey patching workshop ships its `shop` package, which is the thing
+being patched, and opens its modules in the code pane.
 
 ## Open questions
 
 - **Grouping the Installed section by collection** in
-  jupyterlab-workshop, before the monkey patching collection ships.
+  jupyterlab-workshop. Decided to look at the browser on Binder with
+  both collections installed first, and take what that shows to the
+  extension, rather than change the extension ahead of seeing it.
 
 ## Status
 
@@ -672,6 +1166,35 @@ put to work.
 | 10 | `synchronising-calls` | Done |
 | 11 | `wrapping-async-functions` | Done |
 | 12 | `changing-the-signature` | Done |
+
+The monkey patching collection is written in its order too: the
+first workshop settles the split layout, the shipped package and the
+code pane, and each later one adds one idea. Workshops 6 and 7 are
+written together, since 7 is the answer to 6.
+
+| # | Workshop | Status |
+|---|----------|--------|
+| 1 | `your-first-monkey-patch` | Planned |
+| 2 | `patching-every-kind-of-method` | Planned |
+| 3 | `three-ways-to-spell-a-patch` | Planned |
+| 4 | `leaving-things-as-you-found-them` | Planned |
+| 5 | `patches-that-last-a-block` | Planned |
+| 6 | `why-your-patch-did-nothing` | Planned |
+| 7 | `patching-before-the-import` | Planned |
+| 8 | `wrapping-what-is-not-a-function` | Planned |
+| 9 | `patching-instance-attributes` | Planned |
+| 10 | `patching-to-observe` | Planned |
+
+Shipping the monkey patching collection also touches what already
+exists, and these come with it rather than ahead of it: a
+`monkey_patching` list, id, title and description and an
+`index-monkey-patching` recipe in the Justfile, with `index` calling
+it; the `collections` lists in `binder/postBuild` and
+`.devcontainer/setup.sh`; the catalog description, which says "and
+later monkey patching" today; the `finish` text of
+`changing-the-signature`, which says the collection is planned; and
+the welcome messages and the README, which describe the workshops as
+being about decorators alone.
 
 Planned means designed here and not yet written. Written means the
 pages exist and lint is clean. Done means `just test <name>` is green
