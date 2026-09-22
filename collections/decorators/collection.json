@@ -156,6 +156,295 @@
           }
         }
       ]
+    },
+    {
+      "name": "keeping-state",
+      "title": "Keeping state",
+      "description": "Give a decorator state that outlives one call. Find out where an attribute set on a wrapt decorated function really lands, then build the state class wrapt's own examples use, reach its state through the decorated function with bind_state_to_wrapper, and give it optional arguments.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "20m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/keeping-state",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/keeping-state"
+          }
+        }
+      ]
+    },
+    {
+      "name": "switching-a-decorator-off",
+      "title": "Switching a decorator off",
+      "description": "Use the enabled argument to wrapt.decorator to switch a decorator off. With a boolean the decision is made once, when the decorator is applied, and the original function is returned untouched; with a callable or a settings object it is made on every call, and the wrapper is bypassed.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "10m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/switching-a-decorator-off",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/switching-a-decorator-off"
+          }
+        }
+      ]
+    },
+    {
+      "name": "one-decorator-for-everything",
+      "title": "One decorator for everything",
+      "description": "Write one decorator that does the right thing on a function, an instance method, a class method, a static method and a class, from the values of instance and wrapped, and have it refuse what it does not support. Then stack wrapt decorators with each other and with functools.wraps, and walk the chain with wrapper_chain and unwrapped.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/one-decorator-for-everything",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/one-decorator-for-everything"
+          }
+        }
+      ]
+    },
+    {
+      "name": "validating-arguments",
+      "title": "Validating arguments",
+      "description": "Build two argument checkers as state classes. A TypeChecker compares each argument against its annotation, with the signature taken from the bound wrapped function on the first call so methods need no special case, and a ValueChecker takes constraint callables by parameter name. Apply both to functions and every kind of method, then find the one stacking order that reports errors properly.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/validating-arguments",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/validating-arguments"
+          }
+        }
+      ]
+    },
+    {
+      "name": "caching-methods",
+      "title": "Caching methods",
+      "description": "Put functools.lru_cache on a method and find the three problems that come with it, a shared budget, instances held alive by the cache, and a TypeError for anything unhashable. Then wrapt.lru_cache, which keeps a cache per instance, and what that means for cache_info, cache_clear and pickling.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/caching-methods",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/caching-methods"
+          }
+        }
+      ]
+    },
+    {
+      "name": "synchronising-calls",
+      "title": "Synchronising calls",
+      "description": "See a counter come up short under threads, then serialise the calls with wrapt.synchronized. Find where the lock lives for a function, an instance method, a class method, a static method and a class, share it with the context manager form, and supply a lock or semaphore of your own.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/synchronising-calls",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/synchronising-calls"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wrapping-async-functions",
+      "title": "Wrapping async functions",
+      "description": "Put a synchronous timer on an async def and watch it time the creation of a coroutine rather than its run. Fix it with an async def wrapper, write one timer that serves def and async def alike, then use wrapt.synchronized on coroutines, where it switches to an asyncio.Lock, and see what its non-reentrancy asks of you.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators",
+        "asyncio"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/wrapping-async-functions",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/wrapping-async-functions"
+          }
+        }
+      ]
+    },
+    {
+      "name": "changing-the-signature",
+      "title": "Changing the signature",
+      "description": "A decorator that supplies an argument the caller no longer passes leaves inspect.signature and help() describing a parameter nobody should pass. Fix what introspection sees with wrapt.with_signature, from a prototype function and from a factory that derives the new signature from the old, on a function and on a method, and stacked under another decorator.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "10m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/changing-the-signature",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/changing-the-signature"
+          }
+        }
+      ]
     }
   ]
 }

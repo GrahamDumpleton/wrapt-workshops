@@ -663,14 +663,14 @@ put to work.
 | 2 | `what-instance-tells-you` | Done |
 | 3 | `arguments-to-the-decorator` | Done |
 | 4 | `handling-the-arguments` | Done |
-| 5 | `keeping-state` | Planned |
-| 6 | `switching-a-decorator-off` | Planned |
-| 7 | `one-decorator-for-everything` | Planned |
-| 8 | `validating-arguments` | Planned |
-| 9 | `caching-methods` | Planned |
-| 10 | `synchronising-calls` | Planned |
-| 11 | `wrapping-async-functions` | Planned |
-| 12 | `changing-the-signature` | Planned |
+| 5 | `keeping-state` | Done |
+| 6 | `switching-a-decorator-off` | Done |
+| 7 | `one-decorator-for-everything` | Done |
+| 8 | `validating-arguments` | Done |
+| 9 | `caching-methods` | Done |
+| 10 | `synchronising-calls` | Done |
+| 11 | `wrapping-async-functions` | Done |
+| 12 | `changing-the-signature` | Done |
 
 Planned means designed here and not yet written. Written means the
 pages exist and lint is clean. Done means `just test <name>` is green

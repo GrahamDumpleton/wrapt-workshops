@@ -1,0 +1,55 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: caching-methods
+title: Caching methods
+version: 0.1.0
+description: Put functools.lru_cache on a method and find the three problems that come with it, a shared budget, instances held alive by the cache, and a TypeError for anything unhashable. Then wrapt.lru_cache, which keeps a cache per instance, and what that means for cache_info, cache_clear and pickling.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/caching-methods
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-caching-methods
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have seen what `functools.lru_cache` does to a method: one
+  budget shared by every instance, every instance held alive through
+  the cache's keys, and a `TypeError` for a class that defines
+  `__eq__` without `__hash__`. `wrapt.lru_cache` keeps a cache on
+  each instance instead, so each has its own budget, is collected
+  when it goes, and need not be hashable, while functions, class
+  methods and static methods keep one shared cache as before.
+
+  Next is **Synchronising calls**, where `wrapt.synchronized` puts a
+  lock where it belongs: on the instance, the class or the function,
+  depending on what it decorates.
+
+  The "LRU Cache" section of the
+  [bundled decorators guide](https://wrapt.readthedocs.io/en/latest/bundled.html)
+  in the wrapt documentation covers `wrapt.lru_cache`, and
+  [functools.lru_cache](https://docs.python.org/3/library/functools.html#functools.lru_cache)
+  in Python's documentation covers the standard library one.
+variables:
+  - name: notebook
+    type: path
+    default: caching-methods.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-three-problems.md
+  - pages/03-a-cache-per-instance.md
+  - pages/04-info-and-clear.md
+  - pages/05-pickling.md
+  - pages/06-finish.md

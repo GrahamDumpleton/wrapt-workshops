@@ -1,0 +1,58 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: wrapping-async-functions
+title: Wrapping async functions
+version: 0.1.0
+description: Put a synchronous timer on an async def and watch it time the creation of a coroutine rather than its run. Fix it with an async def wrapper, write one timer that serves def and async def alike, then use wrapt.synchronized on coroutines, where it switches to an asyncio.Lock, and see what its non-reentrancy asks of you.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/wrapping-async-functions
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators, asyncio]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-wrapping-async-functions
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have seen a synchronous wrapper on an `async def` measure
+  nothing, written an `async def` wrapper that awaits `wrapped` and
+  works because the caller awaits whatever the wrapper returns,
+  written one timer that serves both kinds of function from
+  `inspect.iscoroutinefunction(wrapped)`, and used
+  `wrapt.synchronized` on coroutines, where it uses an `asyncio.Lock`,
+  is not reentrant, and wants a private coroutine that assumes the
+  lock is held.
+
+  Next is **Changing the signature**, the last workshop in this
+  collection, where a decorator that supplies an argument the caller
+  no longer passes tells introspection the truth with
+  `wrapt.with_signature`.
+
+  The "Asynchronous usage" and "Calling Convention Markers and
+  Adapters" sections of the
+  [bundled decorators guide](https://wrapt.readthedocs.io/en/latest/bundled.html)
+  in the wrapt documentation cover the async side of
+  `wrapt.synchronized` and the markers named on the last page.
+variables:
+  - name: notebook
+    type: path
+    default: wrapping-async-functions.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-silent-failure.md
+  - pages/03-an-async-wrapper.md
+  - pages/04-one-timer-for-both.md
+  - pages/05-synchronising-coroutines.md
+  - pages/06-not-reentrant.md
+  - pages/07-finish.md

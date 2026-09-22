@@ -41,8 +41,8 @@ all.
 
 Twelve workshops, about three hours in total, in the order to take
 them. Each is self-contained, so you can start anywhere, but they
-build. The first four are written; the status table in
-[OUTLINE.md](OUTLINE.md#status) says where the rest are.
+build. All twelve are written; the status table in
+[OUTLINE.md](OUTLINE.md#status) records where each stands.
 
 **Understanding wrapt**
 

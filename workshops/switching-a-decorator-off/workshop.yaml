@@ -1,0 +1,51 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: switching-a-decorator-off
+title: Switching a decorator off
+version: 0.1.0
+description: Use the enabled argument to wrapt.decorator to switch a decorator off. With a boolean the decision is made once, when the decorator is applied, and the original function is returned untouched; with a callable or a settings object it is made on every call, and the wrapper is bypassed.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/switching-a-decorator-off
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 10m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-switching-a-decorator-off
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have switched a decorator off two ways: with a boolean, decided
+  once when the decorator is applied, which leaves the original
+  function in place with no wrapper at all, and with a callable or a
+  settings object, asked on every call, which bypasses the wrapper
+  when the answer is no.
+
+  Next is **One decorator for everything**, which writes a decorator
+  that does the right thing on a function, a method, a class method, a
+  static method and a class, then stacks decorators and walks the
+  chain.
+
+  The "Enabling/Disabling Decorators" and "Dynamically Disabling
+  Decorators" sections of the
+  [decorators guide](https://wrapt.readthedocs.io/en/latest/decorators.html)
+  in the wrapt documentation cover the `enabled` argument.
+variables:
+  - name: notebook
+    type: path
+    default: switching-a-decorator-off.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-decided-once.md
+  - pages/03-decided-every-call.md
+  - pages/04-finish.md

@@ -1,0 +1,57 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: one-decorator-for-everything
+title: One decorator for everything
+version: 0.1.0
+description: Write one decorator that does the right thing on a function, an instance method, a class method, a static method and a class, from the values of instance and wrapped, and have it refuse what it does not support. Then stack wrapt decorators with each other and with functools.wraps, and walk the chain with wrapper_chain and unwrapped.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/one-decorator-for-everything
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-one-decorator-for-everything
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have written a universal decorator, one that tells a function, a
+  method, a class method, a static method and a class apart from
+  `instance` and `wrapped` alone and behaves differently for each,
+  and one that refuses at the call what it does not support. You have
+  stacked wrapt decorators with each other and with a `functools.wraps`
+  closure, and walked the result with `wrapt.wrapper_chain()` and
+  `wrapt.unwrapped()`.
+
+  That closes the first two movements of this collection. What
+  follows is five decorators worth having written or used once, and
+  the first is **Validating arguments**, where the state class from
+  **Keeping state** checks argument types against annotations and
+  values against constraints.
+
+  The "Universal Decorators" section of the
+  [decorators guide](https://wrapt.readthedocs.io/en/latest/decorators.html)
+  and the "Wrapper Chains" section of the
+  [API reference](https://wrapt.readthedocs.io/en/latest/api.html) in
+  the wrapt documentation cover what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: one-decorator-for-everything.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-four-cases.md
+  - pages/03-refusing-the-rest.md
+  - pages/04-stacking.md
+  - pages/05-walking-the-chain.md
+  - pages/06-finish.md

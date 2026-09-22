@@ -1,0 +1,51 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: validating-arguments
+title: Validating arguments
+version: 0.1.0
+description: Build two argument checkers as state classes. A TypeChecker compares each argument against its annotation, with the signature taken from the bound wrapped function on the first call so methods need no special case, and a ValueChecker takes constraint callables by parameter name. Apply both to functions and every kind of method, then find the one stacking order that reports errors properly.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/validating-arguments
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-validating-arguments
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have built a type checker and a value checker as state classes,
+  each computing the signature once from the bound `wrapped` on the
+  first call, so that functions, instance methods, class methods and
+  static methods are checked by the same code with no special case for
+  `self` or `cls`, and you have seen why the type checker goes on top.
+
+  Next is **Caching methods**, where `functools.lru_cache` on a
+  method leaks memory and shares its budget, and `wrapt.lru_cache`
+  keeps a cache per instance.
+
+  The "Checking Argument Types" and "Validating Argument Values"
+  sections of the
+  [examples](https://wrapt.readthedocs.io/en/latest/examples.html) in
+  the wrapt documentation are the two checkers this workshop built.
+variables:
+  - name: notebook
+    type: path
+    default: validating-arguments.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-checking-types.md
+  - pages/03-checking-values.md
+  - pages/04-which-goes-on-top.md
+  - pages/05-finish.md

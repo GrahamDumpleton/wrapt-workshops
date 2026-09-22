@@ -1,0 +1,56 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: synchronising-calls
+title: Synchronising calls
+version: 0.1.0
+description: See a counter come up short under threads, then serialise the calls with wrapt.synchronized. Find where the lock lives for a function, an instance method, a class method, a static method and a class, share it with the context manager form, and supply a lock or semaphore of your own.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/synchronising-calls
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-synchronising-calls
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have seen a race lose updates and `wrapt.synchronized` stop it,
+  and found where the lock lives in each case: on the function, on
+  each instance for an instance method, on the class for a class
+  method or a decorated class. The context manager form shares the
+  lock of whatever object it is given, the automatic lock is an
+  `RLock`, and an explicit lock or semaphore can be supplied instead.
+
+  Next is **Wrapping async functions**, where a synchronous wrapper
+  on an `async def` times the wrong thing, an `async def` wrapper
+  fixes it, and `wrapt.synchronized` switches to an `asyncio.Lock`
+  by itself.
+
+  The "Thread Synchronization" section of the
+  [bundled decorators guide](https://wrapt.readthedocs.io/en/latest/bundled.html)
+  in the wrapt documentation covers `wrapt.synchronized`, and the
+  "Synchronization Locks" section of the
+  [examples](https://wrapt.readthedocs.io/en/latest/examples.html)
+  builds a small one from scratch.
+variables:
+  - name: notebook
+    type: path
+    default: synchronising-calls.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-race.md
+  - pages/03-where-the-lock-lives.md
+  - pages/04-the-context-manager-form.md
+  - pages/05-your-own-lock.md
+  - pages/06-finish.md

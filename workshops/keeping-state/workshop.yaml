@@ -1,0 +1,57 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: keeping-state
+title: Keeping state
+version: 0.1.0
+description: Give a decorator state that outlives one call. Find out where an attribute set on a wrapt decorated function really lands, then build the state class wrapt's own examples use, reach its state through the decorated function with bind_state_to_wrapper, and give it optional arguments.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/keeping-state
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 20m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-keeping-state
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have seen that an attribute set on a wrapt decorated function
+  lands on the original, because a `FunctionWrapper` forwards
+  assignment as well as lookup, and that state belongs on an object of
+  its own: a class whose `__call__` is the wrapper, with
+  `bind_state_to_wrapper` making that object reachable as an attribute
+  of the decorated function, through a class and its instances alike.
+
+  Next is **Switching a decorator off**, where the `enabled` argument
+  to `wrapt.decorator` removes a decorator at definition time or
+  bypasses it on each call, which the standard library has no answer
+  to.
+
+  The "Decorators With State" section of the
+  [decorators guide](https://wrapt.readthedocs.io/en/latest/decorators.html),
+  the "Tracking Call State" section of the
+  [examples](https://wrapt.readthedocs.io/en/latest/examples.html) and
+  the "Binding State to a Wrapper" section of the
+  [bundled decorators guide](https://wrapt.readthedocs.io/en/latest/bundled.html)
+  in the wrapt documentation cover the pattern this workshop built.
+variables:
+  - name: notebook
+    type: path
+    default: keeping-state.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-trap.md
+  - pages/03-a-class-with-state.md
+  - pages/04-reaching-the-state.md
+  - pages/05-optional-arguments.md
+  - pages/06-finish.md

@@ -1,0 +1,57 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: changing-the-signature
+title: Changing the signature
+version: 0.1.0
+description: A decorator that supplies an argument the caller no longer passes leaves inspect.signature and help() describing a parameter nobody should pass. Fix what introspection sees with wrapt.with_signature, from a prototype function and from a factory that derives the new signature from the old, on a function and on a method, and stacked under another decorator.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/changing-the-signature
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 10m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-changing-the-signature
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have seen a signature changing decorator leave introspection
+  telling a lie, and `wrapt.with_signature` correct it: from a
+  prototype function whose signature is the truth, and from a factory
+  that derives the new signature from the wrapped function's own, on
+  a function and on a method, where the bound view strips `self` as
+  Python's does, and stacked under another wrapt decorator.
+
+  That is the end of **Decorators with wrapt**. You can now write any
+  decorator you could write with the standard library, with less
+  code and correct on methods, and several you could not: with state
+  that is reachable, a switch, a cache per instance, a lock in the
+  right place, and a signature that tells the truth.
+
+  The [wrapt documentation](https://wrapt.readthedocs.io) goes further
+  in two directions this collection left alone: the object proxies
+  that `FunctionWrapper` is built on, and monkey patching, which is
+  the subject of the next collection planned for this repository. The
+  [decorator workshops](https://github.com/GrahamDumpleton/decorator-workshops)
+  are the standard library side of everything here, if you want the
+  full treatment of what wrapt was replacing.
+variables:
+  - name: notebook
+    type: path
+    default: changing-the-signature.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-lie.md
+  - pages/03-a-prototype.md
+  - pages/04-a-factory.md
+  - pages/05-finish.md
