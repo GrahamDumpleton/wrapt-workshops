@@ -1,0 +1,54 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: handling-the-arguments
+title: Handling the arguments
+version: 0.1.0
+description: What a wrapper does with the call's arguments. Why wrapt hands them over as a tuple and a dict rather than binding them to names, why args[0] is wrong, how a nested function binds the one argument you care about, how inspect.signature binds all of them by name with no special case for methods, and what a wrapper can do with the return value.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/handling-the-arguments
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators, inspect]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-handling-the-arguments
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have seen why a wrapt wrapper receives `args` and `kwargs` as a
+  tuple and a dict, why `args[0]` is not the first argument, how a
+  nested function binds the one argument the wrapper cares about, how
+  `inspect.signature(wrapped).bind(...)` gives every argument by name
+  with `self` already accounted for, and that a wrapper can return
+  whatever it likes.
+
+  Next is **Keeping state**, where a decorator remembers something
+  between calls, and wrapt's `bind_state_to_wrapper` puts that state
+  where the decorated function can reach it.
+
+  The "Processing Function Arguments" section of the
+  [decorators guide](https://wrapt.readthedocs.io/en/latest/decorators.html)
+  in the wrapt documentation covers the nested function pattern, and
+  [inspect.Signature.bind](https://docs.python.org/3/library/inspect.html#inspect.Signature.bind)
+  in Python's documentation covers the general tool.
+variables:
+  - name: notebook
+    type: path
+    default: handling-the-arguments.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-why-args-is-a-tuple.md
+  - pages/03-reaching-an-argument.md
+  - pages/04-every-argument-by-name.md
+  - pages/05-the-return-value.md
+  - pages/06-finish.md

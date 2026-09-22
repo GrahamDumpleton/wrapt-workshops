@@ -659,10 +659,10 @@ put to work.
 
 | # | Workshop | Status |
 |---|----------|--------|
-| 1 | `your-first-wrapt-decorator` | Planned |
-| 2 | `what-instance-tells-you` | Planned |
-| 3 | `arguments-to-the-decorator` | Planned |
-| 4 | `handling-the-arguments` | Planned |
+| 1 | `your-first-wrapt-decorator` | Done |
+| 2 | `what-instance-tells-you` | Done |
+| 3 | `arguments-to-the-decorator` | Done |
+| 4 | `handling-the-arguments` | Done |
 | 5 | `keeping-state` | Planned |
 | 6 | `switching-a-decorator-off` | Planned |
 | 7 | `one-decorator-for-everything` | Planned |

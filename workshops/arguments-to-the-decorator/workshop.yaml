@@ -1,0 +1,52 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: arguments-to-the-decorator
+title: Arguments to the decorator
+version: 0.1.0
+description: Give a wrapt decorator settings of its own, three ways, each beside the standard library shape it replaces. A function that takes the settings and returns the decorator, a class whose __call__ is the wrapper, and a decorator that works with and without parentheses through wrapt.partial.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/arguments-to-the-decorator
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-arguments-to-the-decorator
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have given a wrapt decorator settings three ways: an outer
+  function whose closure the wrapper reads, a class whose `__call__`
+  is the wrapper and whose instance holds the settings, and a
+  `wrapped=None` first parameter with `wrapt.partial` for a decorator
+  that works with and without parentheses, with no guessing about
+  what it was handed.
+
+  Next is **Handling the arguments**, about the other arguments, the
+  ones the call passes, and why the wrapper receives them as a tuple
+  and a dict rather than bound to names.
+
+  The [decorators guide](https://wrapt.readthedocs.io/en/latest/decorators.html)
+  in the wrapt documentation covers all three shapes under
+  "Decorators With Arguments" and "Decorators With Optional
+  Arguments".
+variables:
+  - name: notebook
+    type: path
+    default: arguments-to-the-decorator.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-one-level-fewer.md
+  - pages/03-the-class-form.md
+  - pages/04-with-and-without-parentheses.md
+  - pages/05-finish.md

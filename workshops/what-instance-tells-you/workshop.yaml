@@ -1,0 +1,53 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: what-instance-tells-you
+title: What instance tells you
+version: 0.1.0
+description: One decorator on a plain function, an instance method, a class method, a static method and a class. Read what instance holds for each, see why args never contains self and why a call through the class looks the same, and learn the one ordering rule for classmethod.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/what-instance-tells-you
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators, methods]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-what-instance-tells-you
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have read `instance` for every kind of target a decorator lands
+  on: `None` for a function, a static method and a class, the object
+  for an instance method and the class for a class method, with `args`
+  never carrying `self` or `cls` and a call through the class looking
+  no different. And you have the one rule: a wrapt decorator goes
+  outside `@classmethod`, never inside.
+
+  Next is **Arguments to the decorator**, which gives a decorator
+  settings of its own, three ways, each beside the standard library
+  shape it replaces.
+
+  The [decorators guide](https://wrapt.readthedocs.io/en/latest/decorators.html)
+  in the wrapt documentation has a section for each kind of target,
+  and the [known issues](https://wrapt.readthedocs.io/en/latest/issues.html)
+  page explains the `classmethod.__get__()` behaviour behind the
+  ordering rule.
+variables:
+  - name: notebook
+    type: path
+    default: what-instance-tells-you.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-five-targets.md
+  - pages/03-where-self-went.md
+  - pages/04-the-ordering-rule.md
+  - pages/05-finish.md

@@ -10,5 +10,152 @@
     "decorators"
   ],
   "ordered": true,
-  "workshops": []
+  "workshops": [
+    {
+      "name": "your-first-wrapt-decorator",
+      "title": "Your first wrapt decorator",
+      "description": "Write the four argument wrapper that wrapt turns into a decorator, beside the closure version with functools.wraps. Ask the decorated function about itself and get the right answers with nothing copied, then see what the decorated name really is, and meet the instance argument.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/your-first-wrapt-decorator",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/your-first-wrapt-decorator"
+          }
+        }
+      ]
+    },
+    {
+      "name": "what-instance-tells-you",
+      "title": "What instance tells you",
+      "description": "One decorator on a plain function, an instance method, a class method, a static method and a class. Read what instance holds for each, see why args never contains self and why a call through the class looks the same, and learn the one ordering rule for classmethod.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators",
+        "methods"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/what-instance-tells-you",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/what-instance-tells-you"
+          }
+        }
+      ]
+    },
+    {
+      "name": "arguments-to-the-decorator",
+      "title": "Arguments to the decorator",
+      "description": "Give a wrapt decorator settings of its own, three ways, each beside the standard library shape it replaces. A function that takes the settings and returns the decorator, a class whose __call__ is the wrapper, and a decorator that works with and without parentheses through wrapt.partial.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/arguments-to-the-decorator",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/arguments-to-the-decorator"
+          }
+        }
+      ]
+    },
+    {
+      "name": "handling-the-arguments",
+      "title": "Handling the arguments",
+      "description": "What a wrapper does with the call's arguments. Why wrapt hands them over as a tuple and a dict rather than binding them to names, why args[0] is wrong, how a nested function binds the one argument you care about, how inspect.signature binds all of them by name with no special case for methods, and what a wrapper can do with the return value.",
+      "tags": [
+        "python",
+        "wrapt",
+        "decorators",
+        "inspect"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/handling-the-arguments",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/handling-the-arguments"
+          }
+        }
+      ]
+    }
+  ]
 }

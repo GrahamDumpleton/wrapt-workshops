@@ -1,0 +1,54 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: your-first-wrapt-decorator
+title: Your first wrapt decorator
+version: 0.1.0
+description: Write the four argument wrapper that wrapt turns into a decorator, beside the closure version with functools.wraps. Ask the decorated function about itself and get the right answers with nothing copied, then see what the decorated name really is, and meet the instance argument.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/your-first-wrapt-decorator
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, decorators]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-your-first-wrapt-decorator
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have written a wrapt decorator: one function of four arguments,
+  with no inner function and no `functools.wraps`, and seen that the
+  decorated function answers every question about itself correctly
+  because it is a proxy for the original rather than a copy of some
+  of its attributes.
+
+  Next is **What instance tells you**, which puts one decorator on a
+  function, an instance method, a class method, a static method and a
+  class, and reads what `instance` holds in each case.
+
+  The [decorators guide](https://wrapt.readthedocs.io/en/latest/decorators.html)
+  in the wrapt documentation covers the wrapper signature and the
+  introspection this workshop tried, and the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  covers `FunctionWrapper` and the object proxy it is built on.
+variables:
+  - name: notebook
+    type: path
+    default: your-first-wrapt-decorator.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-closure-you-know.md
+  - pages/03-the-wrapt-version.md
+  - pages/04-ask-it-questions.md
+  - pages/05-what-it-really-is.md
+  - pages/06-meet-instance.md
+  - pages/07-finish.md
