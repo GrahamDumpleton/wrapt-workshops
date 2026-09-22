@@ -11,10 +11,11 @@
 # anything in their codespace. pip rather than uv, as on Binder, since
 # this is the learner's environment and the workshops use pip themselves.
 #
-# When the workshops report progress to an analytics service, the block
-# goes in the settings below, under a token of its own labelled
-# wrapt-codespaces, and .devcontainer/welcome.md tells the learner so.
-# Until then nothing is reported.
+# The analytics block is the same as Binder's but carries a token of its
+# own, so the service tells the two apart and either can be revoked
+# alone; it is as public as this file and only routes anonymous progress
+# events to the workshops' service. .devcontainer/welcome.md tells the
+# learner that progress is reported.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -71,7 +72,11 @@ cat > "$overrides" <<'JSON'
       "catalogs",
       "remove",
       "author"
-    ]
+    ],
+    "analytics": {
+      "sink": "https://workshop-analytics.grumpys.work/events",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NWYyZTk4OTBjZjE0NmQzOWFmNDFiZGVlYjExN2Q0NSIsInN1YiI6IndyYXB0LWNvZGVzcGFjZXMiLCJzY29wZSI6WyJpbmdlc3QiXSwibGFiZWxzIjp7ImRlcGxveW1lbnQiOiJ3cmFwdC1jb2Rlc3BhY2VzIn0sIm9yaWdpbnMiOltdLCJpYXQiOjE3OTAxMTUwNTQsIm5iZiI6MTc5MDExNTA1NCwiZXhwIjoxODIxMTM5MTk5fQ.G5W_xc2ukdtzGtM5UjI5wgdJOM6Uq9fs6a4-09odhkY"
+    }
   }
 }
 JSON

@@ -28,6 +28,14 @@ you, signed in to GitHub. Making the port public, or visible to an
 organization, would let anyone who has its address run code in your
 codespace.
 
+As you work through a workshop, its progress is reported to the
+workshops' own analytics service: which pages you visited, which
+actions you clicked and what the checks found, and when. That is how
+it can be seen where the workshops are clear and where they are not.
+Nothing in what is reported identifies you or your codespace. Nothing
+you type is sent, nor the notebooks you make, the output of cells, or
+the answers you give to forms, only which step happened and when.
+
 When you open a workshop, JupyterLab shows what it will do in this
 codespace, which here is to create an environment with wrapt installed,
 write a notebook and run cells in it, and asks you how far to trust it.

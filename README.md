@@ -137,6 +137,15 @@ checkout's own collection indexes, and names `binder/welcome.md` as the
 message shown when the session starts, which says what the workshops
 are and how to end the session.
 
+The same override names the workshops' own analytics service as the sink
+for progress events, so a session reports which pages, actions and
+checks happened and when, and it can be seen where the workshops are
+clear and where they are not. Sessions are anonymous, and the events
+never carry notebook contents, cell output or form answers; the welcome
+message says that progress is reported before you start. The token in
+the script is as public as the script, is accepted only for ingest, and
+is labelled `wrapt-binder` so it can be revoked on its own.
+
 Binder sessions are temporary: anything you do in one is gone when it
 ends, so finish a workshop in the session you started it in. When you
 are done with the session, whether you finished a workshop or not, shut
@@ -171,7 +180,9 @@ gone, open the address of the port labelled JupyterLab from VS Code's
 Ports panel. The tab is not opened by itself, because browsers block a
 tab nobody clicked for. From there the workshop browser lists the
 workshops in order, as on Binder, and `setup.sh` installs the same
-settings override as `binder/postBuild`, with two differences: it names
+settings override as `binder/postBuild`, reporting progress to the same
+analytics service under a token of its own, labelled
+`wrapt-codespaces`, with two differences: it names
 `.devcontainer/welcome.md` as the message shown when JupyterLab starts,
 and it does not mark the workshops as trusted.
 

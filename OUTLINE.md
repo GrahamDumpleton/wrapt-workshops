@@ -594,6 +594,20 @@ link. A codespace belongs to the reader's GitHub account and persists,
 so it trusts nothing for them and JupyterLab starts without the
 codespace's GitHub token.
 
+Both report anonymous progress events to the workshops' own analytics
+service, which is how it can be seen where a workshop loses people.
+Each carries an ingest token of its own, labelled `wrapt-binder` and
+`wrapt-codespaces`, so the service tells the two apart and either can
+be revoked alone; the tokens are public by construction, since the
+settings scripts are. The tokens carry only the deployment label: the
+collection is identified by the `id` in its index, which every event
+already carries, so no label repeats it. Each welcome message tells
+the visitor that progress is reported and what is never sent. The
+collection index carries no block of its own, as the other
+collections' do not: it would only ask someone who subscribed from
+their own JupyterLab to opt in, and the two images are where the
+numbers are.
+
 **CI.** `.github/workflows/test.yml` lints the catalog, every
 collection index and every workshop, and self-tests every workshop, on
 each push, spelling the commands out rather than running the Justfile
@@ -632,14 +646,6 @@ extension copies into the workspace on first open. Most workshops need
 none: the code is the point, so it goes in cells.
 
 ## Open questions
-
-- **Analytics.** The Binder and Codespaces settings carry no analytics
-  block yet, and the welcome messages say nothing about reporting.
-  When tokens are minted for `wrapt-binder` and `wrapt-codespaces`,
-  and the collection's own block for its index, the blocks go into
-  `binder/postBuild`, `.devcontainer/setup.sh` and
-  `collections/decorators/collection.json`, and both welcome messages
-  gain the paragraph the other collections carry.
 
 - **The GitHub repository.** The README, the catalog and the indexes
   assume `https://github.com/GrahamDumpleton/wrapt-workshops`, which
