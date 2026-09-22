@@ -647,11 +647,6 @@ none: the code is the point, so it goes in cells.
 
 ## Open questions
 
-- **The GitHub repository.** The README, the catalog and the indexes
-  assume `https://github.com/GrahamDumpleton/wrapt-workshops`, which
-  does not exist yet. Nothing here needs it until the first push, but
-  the Binder and Codespaces links do not work until then.
-
 - **Grouping the Installed section by collection** in
   jupyterlab-workshop, before the monkey patching collection ships.
 
