@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "id": "grahamdumpleton.me/wrapt/decorators",
+  "title": "Decorators with wrapt",
+  "description": "Guided JupyterLab workshops on writing decorators with wrapt: the wrapper signature, methods, arguments, state, and the decorators wrapt bundles, each beside the standard library version it replaces.",
+  "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops",
+  "tags": [
+    "python",
+    "wrapt",
+    "decorators"
+  ],
+  "ordered": true,
+  "workshops": []
+}

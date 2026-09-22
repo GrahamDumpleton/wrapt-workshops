@@ -1,0 +1,75 @@
+#!/bin/bash
+# Configure the Binder image so JupyterLab starts in the workshop browser
+# with the wrapt workshops listed as installed and ready to open, and
+# trusts them without asking, since the visitor is the one who chose the
+# link. A launch link naming a workshop still opens that workshop
+# directly. The disabled features keep visitors to the supplied
+# workshops: no other directories or URLs, no subscribing to collections
+# or catalogs, no removing and no editing; Restart puts a workshop back
+# as it started. Subscribing to the checkout's own collection indexes
+# lists the workshops under each collection's title, numbered in its
+# order; a collection added to this repository is added to the list
+# here. The welcome message in binder/welcome.md greets the visitor once
+# the session starts, with what the workshops are for and how to end it.
+#
+# When the workshops report progress to an analytics service, the block
+# goes in the settings below, under a token of its own labelled
+# wrapt-binder, and binder/welcome.md tells the visitor so. Until then
+# nothing is reported.
+set -euo pipefail
+
+# Notebook workshops build an environment of their own on first open,
+# installing their requirements and ipykernel with pip. Download every
+# workshop's requirements, and ipykernel, into a wheelhouse in the
+# image and tell pip to look there first, so the install takes its
+# wheels from disk rather than PyPI. It is find-links only, never
+# no-index: pip still reaches PyPI for anything the wheelhouse lacks,
+# so learners can install packages of their own, and a workshop whose
+# requirements are not in the wheelhouse still works, only more slowly.
+# The config lives in the image's home directory, so nothing in the
+# workshops refers to it and a local checkout is unaffected.
+shopt -s nullglob
+
+wheels="${HOME}/.wheels"
+
+mkdir -p "$wheels"
+
+for requirements in workshops/*/requirements.txt; do
+    python -m pip download --disable-pip-version-check -d "$wheels" -r "$requirements"
+done
+
+python -m pip download --disable-pip-version-check -d "$wheels" ipykernel
+
+mkdir -p "${HOME}/.config/pip"
+
+cat > "${HOME}/.config/pip/pip.conf" <<CONF
+[global]
+find-links = ${wheels}
+CONF
+
+settings="${NB_PYTHON_PREFIX}/share/jupyter/lab/settings"
+
+mkdir -p "$settings"
+
+cat > "$settings/overrides.json" <<'JSON'
+{
+  "@jupyterlab-workshop/labextension:panel": {
+    "defaultWorkshop": "",
+    "browseOnStart": true,
+    "workshopsDirectory": "workshops",
+    "collections": ["collections/decorators/collection.json"],
+    "welcome": "binder/welcome.md",
+    "trustPolicy": { "forcedLevel": "trusted" },
+    "disabledFeatures": [
+      "open-directory",
+      "open-url",
+      "collections",
+      "catalogs",
+      "remove",
+      "author"
+    ]
+  }
+}
+JSON
+
+echo "Wrote the JupyterLab overrides to $settings/overrides.json"
