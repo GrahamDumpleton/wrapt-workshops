@@ -99,6 +99,6 @@ len(seen) == 3 and seen[1] == {"item": "pear", "quantity": 2, "gift_wrap": True}
 call, which is fine for a decorator that runs a few times a second
 and noticeable in one that runs in a tight loop. A decorator that
 needs it on every call can compute the signature once and keep it;
-**Keeping state**, later in this collection, is about where a
+**Keeping state**, a later workshop, is about where a
 decorator keeps such things.
 ```

@@ -1,13 +1,20 @@
 # Welcome to the wrapt workshops
 
-These are guided, hands-on workshops on writing decorators with
-[wrapt](https://wrapt.readthedocs.io/): the wrapper signature, what
-`instance` tells you, arguments, state, and the decorators wrapt
-bundles, each shown beside the standard library version it replaces.
+These are guided, hands-on workshops on
+[wrapt](https://wrapt.readthedocs.io/), in two collections.
+**Decorators with wrapt** is about writing decorators: the wrapper
+signature, what `instance` tells you, arguments, state, and the
+decorators wrapt bundles, each shown beside the standard library
+version it replaces. **Monkey patching with wrapt** is about patching
+code you did not write: every kind of method, taking a patch out
+again, temporary patches, getting there before the import, and
+wrapping what is not a function, each on a small package shipped with
+the workshop and open beside the notebook.
 Each one takes a question you might have and has you answer it by doing
 it, in this JupyterLab, with the workshop checking your work as you go.
-The workshop browser lists them in the order to take them; open the
-first, and the Finish dialog at the end of each offers the next.
+The workshop browser lists each collection's workshops in the order
+to take them; open the first, and the Finish dialog at the end of
+each offers the next.
 
 Each workshop installs wrapt for itself into an environment of its own
 when it opens, so the first page asks you to create that environment

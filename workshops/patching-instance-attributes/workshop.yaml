@@ -1,0 +1,58 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: patching-instance-attributes
+title: Patching instance attributes
+version: 0.1.0
+description: The value that lives on each object rather than on its class, set in __init__, which no wrap function so far can reach. wrapt.wrap_object_attribute installs a descriptor on the class that passes every read through a factory of yours, over a property, over a class default, stacked twice, and removed with its handle leaving the class as shipped.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-instance-attributes
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-patching-instance-attributes
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/cart.py"] }
+gating: soft
+finish: |
+  You have patched a value that is set on every instance rather than
+  defined on the class. `wrap_object_attribute` installs a descriptor
+  on the class, an `AttributeWrapper`, which fetches each instance's
+  own value on every read and passes it through your factory, and it
+  composes with what was there: a property keeps computing beneath
+  it, a class default serves as the fallback, and a second
+  application stacks over the first. The descriptor is the handle,
+  and `unwrap_object` removes it, leaving the class as shipped.
+
+  Next, and the last of these workshops, is **Patching to observe**:
+  a wrapper that counts and times a library's calls, the registry
+  that keeps it honest, and the point where wrapture takes over.
+
+  The "Wrapping Instance Attributes" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation covers `wrap_object_attribute`, and its
+  "wrap_object_attribute composes with prior definitions" section
+  covers the property, the default and the stacking.
+variables:
+  - name: notebook
+    type: path
+    default: patching-instance-attributes.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-out-of-reach.md
+  - pages/03-a-descriptor-on-the-class.md
+  - pages/04-over-what-was-there.md
+  - pages/05-taking-them-out.md
+  - pages/06-finish.md

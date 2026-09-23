@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "wrapt workshops",
-  "description": "Guided JupyterLab workshops for wrapt: writing decorators, and later monkey patching.",
+  "description": "Guided JupyterLab workshops for wrapt: writing decorators, and monkey patching.",
   "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops",
   "collections": [
     {
@@ -14,6 +14,18 @@
         "python",
         "wrapt",
         "decorators"
+      ]
+    },
+    {
+      "url": "collections/monkey-patching/collection.json",
+      "id": "grahamdumpleton.me/wrapt/monkey-patching",
+      "title": "Monkey patching with wrapt",
+      "description": "Guided JupyterLab workshops on patching code you did not write with wrapt: every kind of method, taking a patch out again, temporary patches, getting there before the import, and wrapping what is not a function, each on a shipped package open beside the notebook.",
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching"
       ]
     }
   ]

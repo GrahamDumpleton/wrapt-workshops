@@ -71,8 +71,9 @@ price == 0.75 and by_closure.__name__ == "fetch_price" and str(inspect.signature
 
 ```{hint}
 :title: If you want the full story of wraps
-The decorator workshops, the standard library companion to this
-collection, spend a whole workshop on what a wrapper loses and what
+The decorator workshops, the standard library companion to
+**Decorators with wrapt**, spend a whole workshop on what a wrapper
+loses and what
 `functools.wraps` gives back, under the title **Preserving the
 wrapped function**. This page only needs its conclusion: `wraps`
 copies some attributes and sets `__wrapped__`, and `inspect` follows

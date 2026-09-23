@@ -40,7 +40,7 @@ explanation: "A boolean decides at definition time. To have a change of `LOGGING
 
 ## Where this goes next
 
-Every decorator in this collection so far has been applied to one
+Every decorator in the workshops so far has been applied to one
 kind of thing at a time. The next workshop writes one decorator that
 does the right thing on a function, an instance method, a class
 method, a static method and a class, using the values of `instance`

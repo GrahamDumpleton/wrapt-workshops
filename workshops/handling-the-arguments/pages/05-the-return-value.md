@@ -46,15 +46,15 @@ print("receipt :", pear_receipt)
 around it, and uses the nested function from earlier to know which
 item the caller asked about. A third kind, a wrapper that returns a
 cached or stubbed value and never calls `wrapped`, is the shape of
-every cache, and **Caching methods** later in this collection is
-built on it.
+every cache, and **Caching methods**, a later workshop, is built on
+it.
 
 One consequence to keep in mind. The decorated `receipt` still reports
 `price_of`'s signature and docstring, which say nothing about
 returning a dict. When a decorator changes what a function takes or
 returns, the introspection that wrapt preserves so carefully is now
 preserving the wrong thing, and **Changing the signature**, the last
-workshop in this collection, is about telling it otherwise.
+of these workshops, is about telling it otherwise.
 
 ```{verify}
 :id: return-changed

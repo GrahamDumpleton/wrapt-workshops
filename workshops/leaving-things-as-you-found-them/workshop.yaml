@@ -1,0 +1,60 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: leaving-things-as-you-found-them
+title: Leaving things as you found them
+version: 0.1.0
+description: The handle a wrap function returns, and the lifecycle it unlocks. Ask whether a patch is still in place, walk the chain of wrappers on a target, and take a patch out with unwrap_object. Two patches removed in either order, a patch through a subclass removed with no residue, and the one arrangement removal refuses.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/leaving-things-as-you-found-them
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching]
+duration: 20m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-leaving-things-as-you-found-them
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/cart.py"] }
+gating: soft
+finish: |
+  You have kept the handle a wrap function returns and used it for
+  everything a patch needs after it is installed: `is_wrapped_by` to
+  ask whether it is still there, `wrapper_chain` and `unwrapped` to
+  see what is stacked on a target and what is at the bottom, and
+  `unwrap_object` to take it out, whether it is outermost, buried
+  under another wrapt wrapper, or installed through a subclass. You
+  have seen removal refuse the one arrangement it cannot fix, a plain
+  closure over the top, and say so.
+
+  Next is **Patches that last a block**, where the patch removes
+  itself: `scoped_function_wrapper` for a `with` block and
+  `transient_function_wrapper` for a function call, beside
+  `unittest.mock.patch`, and what each does when something interferes.
+
+  The "Inspecting and Removing Patches" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation covers everything this workshop used,
+  and its "Reach methods through the class, not getattr" section
+  covers the mistake the first page made on purpose.
+variables:
+  - name: notebook
+    type: path
+    default: leaving-things-as-you-found-them.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-handle.md
+  - pages/03-taking-it-out.md
+  - pages/04-two-patches.md
+  - pages/05-no-residue.md
+  - pages/06-not-outermost.md
+  - pages/07-finish.md

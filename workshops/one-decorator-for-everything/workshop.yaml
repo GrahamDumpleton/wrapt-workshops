@@ -32,8 +32,9 @@ finish: |
   closure, and walked the result with `wrapt.wrapper_chain()` and
   `wrapt.unwrapped()`.
 
-  That closes the first two movements of this collection. What
-  follows is five decorators worth having written or used once, and
+  That closes the first two movements of **Decorators with wrapt**.
+  What follows is five decorators worth having written or used once,
+  and
   the first is **Validating arguments**, where the state class from
   **Keeping state** checks argument types against annotations and
   values against constraints.

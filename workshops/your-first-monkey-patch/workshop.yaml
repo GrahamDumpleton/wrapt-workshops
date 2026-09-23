@@ -1,0 +1,57 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: your-first-monkey-patch
+title: Your first monkey patch
+version: 0.1.0
+description: Patch a function and a method by assignment, the way you already know, and see it work. Then do the same to a static method and a class method and watch what getattr handed you break both. Then wrapt.wrap_function_wrapper on all of them, each still its own kind of method, and meet the handle it returns.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/your-first-monkey-patch
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-your-first-monkey-patch
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/cart.py", "file:shop/pricing.py"] }
+gating: soft
+finish: |
+  You have patched code you did not write, twice over: by assignment,
+  which works on a function and an instance method and quietly breaks
+  a static method and a class method, because `getattr` on a class
+  hands back something other than what the class holds; and with
+  `wrapt.wrap_function_wrapper`, which reads the class namespace
+  itself, wraps what is really there, and leaves each method its own
+  kind.
+
+  Next is **Patching every kind of method**, which puts one wrapper
+  on every kind of target there is, a dunder method and a nested class
+  among them, reads what `instance` holds for each, and patches one
+  object rather than every one.
+
+  The "Wrapping Functions and Methods" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation covers `wrap_function_wrapper`, and its
+  "Pitfalls and Guidelines" section covers why the class, not
+  `getattr`, is where to look.
+variables:
+  - name: notebook
+    type: path
+    default: your-first-monkey-patch.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-patching-by-assignment.md
+  - pages/03-where-assignment-goes-wrong.md
+  - pages/04-the-wrapt-way.md
+  - pages/05-finish.md

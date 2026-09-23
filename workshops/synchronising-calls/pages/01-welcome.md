@@ -13,9 +13,10 @@ not, because a method wants a lock per instance, a class method wants
 one per class, and a function wants one of its own, and the code that
 takes the lock has to find the right one every time.
 
-`wrapt.synchronized` answers the question the way this collection has
-been answering questions: from `instance`. This workshop makes a race
-visible, fixes it, then reads the lock off each kind of object to see
+`wrapt.synchronized` answers the question the way these workshops
+have been answering questions: from `instance`. This workshop makes a
+race visible, fixes it, then reads the lock off each kind of object to
+see
 where it went, and finishes with the context manager form and locks
 of your own.
 

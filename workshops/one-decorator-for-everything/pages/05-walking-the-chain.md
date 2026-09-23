@@ -36,7 +36,8 @@ Two things to know. The chain is walked by reading `__wrapped__`,
 which on a lazy object proxy causes it to materialise. And the chain
 is what a monkey patching tool uses to find a particular wrapper and
 remove it from the middle of a stack, which wrapt's `find_wrapper()`
-and `unwrap_object()` do, and which belongs to another collection.
+and `unwrap_object()` do, and which the **Monkey patching with wrapt**
+workshops cover.
 
 ```{verify}
 :id: chain-walked

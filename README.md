@@ -17,8 +17,12 @@ Guided, hands-on workshops for
 decorators, wrappers and monkey patching. The first collection teaches
 writing decorators with wrapt: the wrapper signature, what `instance`
 tells you, arguments, state, and the decorators wrapt bundles, each
-shown beside the standard library version it replaces. A collection on
-monkey patching will follow.
+shown beside the standard library version it replaces. The second
+teaches monkey patching with wrapt: patching code you did not write,
+correctly on every kind of method, taking a patch out again, temporary
+patches, getting there before the import, and wrapping what is not a
+function, each on a small package shipped with the workshop and open
+beside the notebook.
 
 The workshops run on
 [jupyterlab-workshop](https://github.com/GrahamDumpleton/jupyterlab-workshop),
@@ -31,7 +35,7 @@ for the design of the collections.
 
 ## The collections
 
-The repository holds one collection now and is laid out for more. Each
+The repository holds two collections and is laid out for more. Each
 collection is a course: its workshops are numbered in the order to take
 them, and the Finish dialog of each offers the next. A
 [catalog](catalog.json) names every collection, so one URL offers them
@@ -108,6 +112,86 @@ build. All twelve are written; the status table in
 12. **Changing the signature** (`changing-the-signature`, 10 minutes).
     A decorator that supplies an argument the caller no longer passes,
     the lie `inspect.signature` then tells, and `wrapt.with_signature`.
+
+### Monkey patching with wrapt
+
+Ten workshops, about two and a half hours in total, in the order to
+take them. Each patches a small `shop` package shipped with it and
+open in an editor beside the notebook, so you read what you are
+patching while you patch it. They assume the wrapper signature and
+the `instance` rules from the first two decorators workshops, and
+restate them where they matter. All ten are written; the status
+table in [OUTLINE.md](OUTLINE.md#status) records where each stands.
+
+**Making a patch**
+
+1. **Your first monkey patch** (`your-first-monkey-patch`,
+   15 minutes). Patch a function and a method by assignment and see it
+   work; do the same to a static method and a class method and watch
+   what `getattr` handed you break both. Then `wrap_function_wrapper`
+   on all of them, each still its own kind, and the handle it returns.
+
+2. **Patching every kind of method** (`patching-every-kind-of-method`,
+   15 minutes). One wrapper on an instance method, a class method, a
+   static method, `__init__` and `__len__`, and a method of a nested
+   class through a dotted path, predicting `instance` each time. A
+   module named as a string, the one rule about `instance`, and a
+   patch on one object.
+
+3. **Three ways to spell a patch** (`three-ways-to-spell-a-patch`,
+   10 minutes). `wrap_function_wrapper` as a call from a list of
+   targets, `patch_function_wrapper` as a decorator in a shipped file
+   of patches with `enabled` as its switch, and `function_wrapper`
+   for a wrapper applied in place or handed to `wrap_object`.
+
+**Taking it out again**
+
+4. **Leaving things as you found them**
+   (`leaving-things-as-you-found-them`, 20 minutes). The handle:
+   `is_wrapped_by`, `wrapper_chain`, `unwrapped` and `unwrap_object`.
+   Two patches removed in either order, a patch through a subclass
+   removed with no residue, and the one arrangement removal refuses.
+
+5. **Patches that last a block** (`patches-that-last-a-block`,
+   15 minutes). `unittest.mock.patch` first, then
+   `scoped_function_wrapper` for a `with` block, several at once and
+   from a list, and `transient_function_wrapper` for a call, raised or
+   not. What each does when something interferes, and where wrapture
+   takes testing with patches.
+
+**Getting the timing right**
+
+6. **Why your patch did nothing** (`why-your-patch-did-nothing`,
+   15 minutes). A correct patch that changed nothing, because the
+   caller imported the function by name. Patch the alias too, and see
+   why a method looked up at call time is the safer target and a
+   saved bound method is not.
+
+7. **Patching before the import** (`patching-before-the-import`,
+   20 minutes). The `?` on the module name, a post import hook with
+   `when_imported` that fires at once for an imported module, the
+   string form that leaves the patch module unimported, and the handle
+   a deferred patch does not return, recovered with `find_wrapper`.
+
+**Beyond functions, and to work**
+
+8. **Wrapping what is not a function**
+   (`wrapping-what-is-not-a-function`, 15 minutes). `wrap_object` with
+   a `BaseObjectProxy` subclass of your own on a settings dictionary, a
+   callable proxy with arguments to the factory, and the two steps
+   beneath every wrap function, `resolve_path` and `apply_patch`.
+
+9. **Patching instance attributes** (`patching-instance-attributes`,
+   15 minutes). The value `__init__` sets on each object, out of reach
+   of every wrap function so far, and `wrap_object_attribute`, a
+   descriptor on the class that passes every read through a factory:
+   over a property, over a class default, stacked, and removed.
+
+10. **Patching to observe** (`patching-to-observe`, 20 minutes). A
+    wrapper with state that counts and times a library's calls, a
+    registry that installs each patch once and removes them all, a
+    version check, and a post import hook. The shape of every
+    instrumentation agent, and where wrapture takes it.
 
 ## Launch on Binder
 
@@ -240,9 +324,10 @@ extension looks in by default. The config file opens JupyterLab at
 `http://localhost:8888/lab?catalog=catalog.json&collection=collections/decorators/collection.json`,
 which adds the decorators collection for the session, so its workshops
 are listed numbered in the order to take them under the collection's
-title, and adds the catalog, which offers the other collections of this
-repository to subscribe to once there are others. Without the link the
-workshops are listed in directory order. From the browser, open a
+title, and adds the catalog, which offers the monkey patching
+collection to subscribe to, since a launch link carries one collection.
+Without the link the workshops are listed in directory order. From the
+browser, open a
 workshop, or go straight to one with
 `http://localhost:8888/lab?workshop=workshops/<name>`. Outside Binder
 the trust dialog appears when a workshop opens; it lists what the
@@ -287,19 +372,23 @@ Collections tab:
 ```
 https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/catalog.json
 https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/decorators/collection.json
+https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/monkey-patching/collection.json
 ```
 
 ## What is in the repository
 
 ```
 workshops/
-  <name>/                a workshop: workshop.yaml, requirements.txt and pages/*.md;
-                         every collection's workshops sit here side by side
+  <name>/                a workshop: workshop.yaml, requirements.txt and pages/*.md,
+                         and files/ holding the package a monkey patching workshop
+                         patches; every collection's workshops sit here side by side
 catalog.json             names every collection, by relative path; written by `just index`
 collections/
   decorators/
     collection.json      the index of the decorators collection, in the order to take
                          it, written by `just index`; its id never changes
+  monkey-patching/
+    collection.json      the index of the monkey patching collection, likewise
 reference/wrapt          a git submodule of wrapt at the release the workshops teach,
                          the source of truth for its API and documentation
 reference/jupyterlab-workshop

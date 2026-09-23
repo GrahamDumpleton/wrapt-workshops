@@ -1,0 +1,379 @@
+{
+  "version": 1,
+  "id": "grahamdumpleton.me/wrapt/monkey-patching",
+  "title": "Monkey patching with wrapt",
+  "description": "Guided JupyterLab workshops on patching code you did not write with wrapt: every kind of method, taking a patch out again, temporary patches, getting there before the import, and wrapping what is not a function, each on a shipped package open beside the notebook.",
+  "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops",
+  "tags": [
+    "python",
+    "wrapt",
+    "monkey-patching"
+  ],
+  "ordered": true,
+  "workshops": [
+    {
+      "name": "your-first-monkey-patch",
+      "title": "Your first monkey patch",
+      "description": "Patch a function and a method by assignment, the way you already know, and see it work. Then do the same to a static method and a class method and watch what getattr handed you break both. Then wrapt.wrap_function_wrapper on all of them, each still its own kind of method, and meet the handle it returns.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/your-first-monkey-patch",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/your-first-monkey-patch"
+          }
+        }
+      ]
+    },
+    {
+      "name": "patching-every-kind-of-method",
+      "title": "Patching every kind of method",
+      "description": "One wrapper on every kind of target, an instance method, a class method, a static method, a dunder method and a method of a nested class, predicting what instance holds for each. Patch through a dotted path and a module named as a string, see what happens when the wrapper passes instance itself, and patch one object without touching the others.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-every-kind-of-method",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/patching-every-kind-of-method"
+          }
+        }
+      ]
+    },
+    {
+      "name": "three-ways-to-spell-a-patch",
+      "title": "Three ways to spell a patch",
+      "description": "The same patch three ways. wrap_function_wrapper as a call, from code that decides what to patch. patch_function_wrapper as a decorator on the wrapper, installing the patch when its module is imported, with enabled as a switch. function_wrapper turning a wrapper into a decorator you apply in place or hand to wrap_object. When each reads best.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "10m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/three-ways-to-spell-a-patch",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/three-ways-to-spell-a-patch"
+          }
+        }
+      ]
+    },
+    {
+      "name": "leaving-things-as-you-found-them",
+      "title": "Leaving things as you found them",
+      "description": "The handle a wrap function returns, and the lifecycle it unlocks. Ask whether a patch is still in place, walk the chain of wrappers on a target, and take a patch out with unwrap_object. Two patches removed in either order, a patch through a subclass removed with no residue, and the one arrangement removal refuses.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "20m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/leaving-things-as-you-found-them",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/leaving-things-as-you-found-them"
+          }
+        }
+      ]
+    },
+    {
+      "name": "patches-that-last-a-block",
+      "title": "Patches that last a block",
+      "description": "Patches that remove themselves. unittest.mock.patch first, which replaces wholesale, then wrapt.scoped_function_wrapper for a with block, several at once and from a list with ExitStack, and transient_function_wrapper for a function call, read in two steps. What each does when something interferes, and where wrapture takes this next.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching",
+        "testing"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patches-that-last-a-block",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/patches-that-last-a-block"
+          }
+        }
+      ]
+    },
+    {
+      "name": "why-your-patch-did-nothing",
+      "title": "Why your patch did nothing",
+      "description": "A patch applied correctly that changed nothing. A module that imported the function by name holds its own reference, and the patch on the original module never reaches it. See it in the shipped code, patch the alias too, and see why a method looked up through the class at call time is the safer target than a function, and a saved bound method is not.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/why-your-patch-did-nothing",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/why-your-patch-did-nothing"
+          }
+        }
+      ]
+    },
+    {
+      "name": "patching-before-the-import",
+      "title": "Patching before the import",
+      "description": "A patch that waits for its module. The ? shortcut on the module name, a post import hook with when_imported that receives the module and fires at once for one already imported, and the string form that keeps the patch module itself unimported until the target is. Then the handle a deferred patch does not return, recovered with find_wrapper.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "20m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-before-the-import",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/patching-before-the-import"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wrapping-what-is-not-a-function",
+      "title": "Wrapping what is not a function",
+      "description": "A patch on a dictionary a module reads its settings from. wrapt.wrap_object with a factory of your own, a BaseObjectProxy subclass that records which keys are read, and the least you need to know about proxies to write one. A callable proxy counting calls, arguments to the factory, and the two steps beneath every wrap function, resolve_path and apply_patch.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/wrapping-what-is-not-a-function",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/wrapping-what-is-not-a-function"
+          }
+        }
+      ]
+    },
+    {
+      "name": "patching-instance-attributes",
+      "title": "Patching instance attributes",
+      "description": "The value that lives on each object rather than on its class, set in __init__, which no wrap function so far can reach. wrapt.wrap_object_attribute installs a descriptor on the class that passes every read through a factory of yours, over a property, over a class default, stacked twice, and removed with its handle leaving the class as shipped.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-instance-attributes",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/patching-instance-attributes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "patching-to-observe",
+      "title": "Patching to observe",
+      "description": "The mechanisms put to work. A wrapper with state that counts and times a library's calls, a registry that installs each patch once and removes them all, a version check before patching, and deferral so the patches apply whether the library is imported before or after. The shape of every instrumentation agent, and where wrapture takes it.",
+      "tags": [
+        "python",
+        "wrapt",
+        "monkey-patching",
+        "instrumentation"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "20m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-to-observe",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/patching-to-observe"
+          }
+        }
+      ]
+    }
+  ]
+}

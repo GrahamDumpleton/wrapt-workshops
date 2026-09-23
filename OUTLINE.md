@@ -15,9 +15,10 @@ collections that are each a course of their own. The first collection,
 **Decorators with wrapt**, is twelve workshops on writing decorators
 with wrapt, each shown beside the standard library version it
 replaces. The second, **Monkey patching with wrapt**, is ten workshops
-on patching code you did not write, designed below and not yet
-written. A third, on object proxies, has its id reserved and its
-workshops sketched, and a fourth is held as a list of candidates. The
+on patching code you did not write, each on a small package shipped
+with it and open beside the notebook. A third, on object proxies, has
+its id reserved and its workshops sketched, and a fourth is held as a
+list of candidates. The
 collections share this repository's tooling and nothing else: each has
 its own index, id, numbering and audience.
 
@@ -583,8 +584,7 @@ calling `getattr`, which is why it can.
 Close with the value `wrap_function_wrapper` returned, printed and
 unexplained: it is the handle, and workshop 4 is about it.
 
-- Format: notebook with the code pane. `shop/cart.py` opens beside
-  the notebook on the first page that names it.
+- Format: notebook with the code pane.
 
 - Files: `shop/pricing.py`, `shop/cart.py`.
 
@@ -595,7 +595,7 @@ unexplained: it is the handle, and workshop 4 is about it.
 The targets, and the `instance` rules from the patching side.
 
 One target at a time: an instance method, a class method, a static
-method, `__init__` and `__repr__`, a method of a nested class through
+method, `__init__` and `__len__`, a method of a nested class through
 the dotted path `"Outer.Inner.method"`, and a module named by the
 string `"shop.cart"` rather than the module object, which imports it
 if it has to. Before each cell a quiz asks what `instance` will be,
@@ -612,7 +612,8 @@ namespace.
 
 - Format: notebook with the code pane.
 
-- Files: `shop/cart.py`, with the nested class added.
+- Files: `shop/cart.py`, with the nested class added, and
+  `shop/reports.py`, imported by name.
 
 - Length: 15 minutes.
 
@@ -628,9 +629,8 @@ reads; its `enabled` argument as a boolean read once and as a callable
 consulted on every call, the switch from workshop 6 of the decorators
 collection. `@function_wrapper`, the lighter `@decorator` without
 `adapter` or `enabled`, turning a wrapper into something that can be
-applied in place, `Shop.buy = notify(Shop.buy)`, or passed as the
-`wrapper` argument to the other two, so one wrapper serves several
-targets.
+applied in place, `Shop.buy = count_calls(Shop.buy)`, or handed to
+`wrap_object` as the factory, so one wrapper serves several targets.
 
 - Format: notebook with the code pane.
 
@@ -753,8 +753,8 @@ hook that keeps the handle, or recovers it after the import with
 entry points are named as the packaged form and left for later.
 
 A kernel imports a module once, so each demonstration has a module of
-its own, `shop.reports`, `shop.invoices` and `shop.shipping`, and the
-pane opens each before the cell that imports it.
+its own, `shop.reports`, `shop.invoices` and `shop.shipping`, all open
+in the pane from the start and linked from the page that imports each.
 
 - Format: notebook with the code pane.
 
@@ -765,16 +765,18 @@ pane opens each before the cell that imports it.
 
 ### 8. `wrapping-what-is-not-a-function`: Wrapping what is not a function
 
-`wrap_object`, and the least the learner needs of `ObjectProxy`.
+`wrap_object`, and the least the learner needs of `BaseObjectProxy`.
 
 `shop.config.settings` is a dictionary the package reads. Wrap it
 with `wrapt.wrap_object("shop.config", "settings", Watched)`, where
-`Watched` is an `ObjectProxy` subclass whose `__getitem__` records
+`Watched` is a `BaseObjectProxy` subclass whose `__getitem__` records
 which keys are read; the proxy is still a dictionary to `isinstance`,
 still equal to the original, and everything not overridden passes
 through. What the workshop teaches of proxies: `__wrapped__`, the
-`_self_` prefix for the proxy's own state, and that a special method
-must be defined on the proxy class to be intercepted. A callable
+`_self_` prefix for the proxy's own state, that a special method
+must be defined on the proxy class to be intercepted, and that
+`__iter__` and `__call__` are left off the base class on purpose,
+so `Watched` defines `__iter__` to pass iteration through. A callable
 proxy counting calls to `fetch_price` shows the same with `__call__`.
 Extra arguments to the factory through `args` and `kwargs`. The
 handle `wrap_object` returns is removed the way workshop 4 taught.
@@ -784,8 +786,8 @@ parent, the attribute name and the original, and `wrapt.apply_patch`
 setting the replacement, for the case where the original is wanted
 for something other than wrapping, such as capturing it in a closure.
 
-The finish text names the proxies collection as where `ObjectProxy`
-is taught in full.
+The finish text names the proxies collection as where
+`BaseObjectProxy` is taught in full.
 
 - Format: notebook with the code pane.
 
@@ -883,8 +885,10 @@ function, which the learner already has.
 
 **Object proxies with wrapt**, id `grahamdumpleton.me/wrapt/proxies`,
 reserved now as the monkey patching id was. Eight or nine workshops:
-a first proxy and what passes through, what does not (`type`,
-identity, `__class__`, and the copy a literal value becomes),
+a first proxy on `BaseObjectProxy` and what passes through, what
+does not (`type`, identity, `__class__`, iteration, and the copy a
+literal value becomes), why `ObjectProxy` still exists (its
+`__iter__`, kept for code written before wrapt 2.0.0),
 `_self_` attributes and where assignment lands, special methods and
 why they must be on the proxy class, `CallableObjectProxy` and the
 partial variant, custom `FunctionWrapper` and `BoundFunctionWrapper`
@@ -940,10 +944,14 @@ ships the package it patches under `files/` and shows it in an editor
 beside the notebook rather than in a tab behind it. The `notebook`
 layout of the decorators collection becomes a `columns` split there:
 the notebook on the left as the placeholder area, and an area named
-`code` on the right listing the first module the workshop patches,
-since a layout has one placeholder and this is not it; a `file-open`
-with `:area: code` brings each further module in beside it on the
-page that turns to it. The learner reads the line that took its own
+`code` on the right listing every module the pages refer to, open as
+tabs from the start, since a layout has one placeholder and this is
+not it. The welcome page introduces each module with an `{open}`
+link, and every later mention of a file is such a link, which brings
+its tab to the front. No page opens a file with an action partway
+through: that was tried and read as a second beginning, with the
+learner asked to switch between panes rather than glance across. The
+learner reads the line that took its own
 reference in workshop 6 while the cell that proves it runs. Imports
 work because the learner's kernel runs in the workspace, so `import
 shop` finds the shipped package with nothing added to the path.
@@ -1174,27 +1182,23 @@ written together, since 7 is the answer to 6.
 
 | # | Workshop | Status |
 |---|----------|--------|
-| 1 | `your-first-monkey-patch` | Planned |
-| 2 | `patching-every-kind-of-method` | Planned |
-| 3 | `three-ways-to-spell-a-patch` | Planned |
-| 4 | `leaving-things-as-you-found-them` | Planned |
-| 5 | `patches-that-last-a-block` | Planned |
-| 6 | `why-your-patch-did-nothing` | Planned |
-| 7 | `patching-before-the-import` | Planned |
-| 8 | `wrapping-what-is-not-a-function` | Planned |
-| 9 | `patching-instance-attributes` | Planned |
-| 10 | `patching-to-observe` | Planned |
+| 1 | `your-first-monkey-patch` | Done |
+| 2 | `patching-every-kind-of-method` | Done |
+| 3 | `three-ways-to-spell-a-patch` | Done |
+| 4 | `leaving-things-as-you-found-them` | Done |
+| 5 | `patches-that-last-a-block` | Done |
+| 6 | `why-your-patch-did-nothing` | Done |
+| 7 | `patching-before-the-import` | Done |
+| 8 | `wrapping-what-is-not-a-function` | Done |
+| 9 | `patching-instance-attributes` | Done |
+| 10 | `patching-to-observe` | Done |
 
-Shipping the monkey patching collection also touches what already
-exists, and these come with it rather than ahead of it: a
-`monkey_patching` list, id, title and description and an
-`index-monkey-patching` recipe in the Justfile, with `index` calling
-it; the `collections` lists in `binder/postBuild` and
-`.devcontainer/setup.sh`; the catalog description, which says "and
-later monkey patching" today; the `finish` text of
-`changing-the-signature`, which says the collection is planned; and
-the welcome messages and the README, which describe the workshops as
-being about decorators alone.
+Shipping the collection also touched what already existed: the
+`monkey_patching` list, id, title and description and the
+`index-monkey-patching` recipe in the Justfile; the `collections`
+lists in `binder/postBuild` and `.devcontainer/setup.sh`; the
+catalog description; the `finish` text of `changing-the-signature`;
+the welcome messages, the README and AGENTS.md.
 
 Planned means designed here and not yet written. Written means the
 pages exist and lint is clean. Done means `just test <name>` is green

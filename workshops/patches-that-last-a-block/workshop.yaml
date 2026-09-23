@@ -1,0 +1,66 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: patches-that-last-a-block
+title: Patches that last a block
+version: 0.1.0
+description: Patches that remove themselves. unittest.mock.patch first, which replaces wholesale, then wrapt.scoped_function_wrapper for a with block, several at once and from a list with ExitStack, and transient_function_wrapper for a function call, read in two steps. What each does when something interferes, and where wrapture takes this next.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patches-that-last-a-block
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching, testing]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-patches-that-last-a-block
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/cart.py", "file:shop/pricing.py"] }
+gating: soft
+finish: |
+  You have written patches that remove themselves:
+  `scoped_function_wrapper` for the length of a `with` block, several
+  in one statement or from a list with `ExitStack`, and
+  `transient_function_wrapper` for the length of a call, described
+  once and applied to the function whose calls it covers. Unlike
+  `unittest.mock.patch`, the original keeps running beneath the
+  wrapper and the wrapper knows about methods. And when something
+  interferes, removal on exit says so at the block responsible.
+
+  This is where testing with patches begins, and where
+  [wrapture](https://wrapture.readthedocs.io), built on these helpers,
+  takes over: strict stubs, recorded calls, and assertions on what a
+  real call graph did. Its workshops **Testing by wrapping, not
+  replacing** and **Converting a mock test suite** start from the
+  comparison this workshop made, at
+  [wrapture-workshops](https://github.com/GrahamDumpleton/wrapture-workshops).
+
+  Next is **Why your patch did nothing**: the
+  patch that was applied correctly and changed nothing, because the
+  caller had already taken its own reference.
+
+  The "Temporary Patches for Tests" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  and the "Scoped Test Patches" section of the
+  [examples](https://wrapt.readthedocs.io/en/latest/examples.html)
+  in the wrapt documentation cover both forms.
+variables:
+  - name: notebook
+    type: path
+    default: patches-that-last-a-block.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-mock-patch.md
+  - pages/03-for-a-block.md
+  - pages/04-for-a-call.md
+  - pages/05-when-something-interferes.md
+  - pages/06-finish.md

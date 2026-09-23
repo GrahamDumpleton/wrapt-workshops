@@ -44,5 +44,5 @@ explanation: "The factory sees `(self, session, item)` and drops self, leaving `
 
 This is the last workshop in **Decorators with wrapt**. Press Finish
 below to close it. The Finish dialog says where the wrapt
-documentation goes on from here, and which collection comes next in
+documentation goes on from here, and which workshops come next in
 this repository.

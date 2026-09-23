@@ -1,0 +1,61 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: patching-before-the-import
+title: Patching before the import
+version: 0.1.0
+description: A patch that waits for its module. The ? shortcut on the module name, a post import hook with when_imported that receives the module and fires at once for one already imported, and the string form that keeps the patch module itself unimported until the target is. Then the handle a deferred patch does not return, recovered with find_wrapper.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-before-the-import
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching]
+duration: 20m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-patching-before-the-import
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/reports.py", "file:shop/invoices.py", "file:shop/shipping.py", "file:patches.py"] }
+gating: soft
+finish: |
+  You have patched modules before they were imported, three ways: the
+  `?` on the module name, which applies at once or on import,
+  whichever comes first; a post import hook, with
+  `@wrapt.when_imported` or `register_post_import_hook`, which
+  receives the module and fires at once for one already imported;
+  and the string form, `"module:function"`, which leaves the patch
+  module itself unimported until the target arrives. A deferred wrap
+  returns no handle, so a patch that may need removing installs from
+  a hook that keeps one, or recovers it afterwards with
+  `find_wrapper` and a predicate.
+
+  Next is **Wrapping what is not a function**: `wrap_object`, which
+  takes any factory, with the least of `BaseObjectProxy` you need
+  to write one, and the two steps beneath it.
+
+  The "Deferring Patches Until Import" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation covers all three forms and the entry
+  point discovery this workshop only named, and the blog post
+  [Automatic patching of Python applications](https://github.com/GrahamDumpleton/wrapt/blob/master/blog/14-automatic-patching-of-python-applications.md)
+  is where it leads.
+variables:
+  - name: notebook
+    type: path
+    default: patching-before-the-import.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-question-mark.md
+  - pages/03-a-post-import-hook.md
+  - pages/04-the-string-form.md
+  - pages/05-recovering-the-handle.md
+  - pages/06-finish.md

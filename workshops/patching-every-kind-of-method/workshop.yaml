@@ -1,0 +1,60 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: patching-every-kind-of-method
+title: Patching every kind of method
+version: 0.1.0
+description: One wrapper on every kind of target, an instance method, a class method, a static method, a dunder method and a method of a nested class, predicting what instance holds for each. Patch through a dotted path and a module named as a string, see what happens when the wrapper passes instance itself, and patch one object without touching the others.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-every-kind-of-method
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-patching-every-kind-of-method
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/cart.py", "file:shop/reports.py"] }
+gating: soft
+finish: |
+  You have patched every kind of target there is and read what
+  `instance` holds for each: the object for an instance method and a
+  dunder method, the class for a class method, `None` for a static
+  method, the entry for a method of a nested class reached through a
+  dotted path. The rule that goes with it never changes: `wrapped` is
+  already bound, so the wrapper calls `wrapped(*args, **kwargs)` and
+  never passes `instance` itself. And a patch installed on one object
+  lands in that object's own namespace and touches no other.
+
+  Next is **Three ways to spell a patch**: the same patch as a call,
+  as a decorator on the wrapper that applies itself on import, and as
+  a reusable wrapper made with `function_wrapper`, and when each
+  reads best.
+
+  The "Wrapping Functions and Methods" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation covers the dotted path and the string
+  form, and its "Respect the instance argument rules" section covers
+  the rule.
+variables:
+  - name: notebook
+    type: path
+    default: patching-every-kind-of-method.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-instance-and-class.md
+  - pages/03-static-and-dunder.md
+  - pages/04-paths-and-names.md
+  - pages/05-never-pass-instance.md
+  - pages/06-one-object.md
+  - pages/07-finish.md

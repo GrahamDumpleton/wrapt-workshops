@@ -14,8 +14,9 @@ The repository is organised as collections. Each collection is a course
 with an index of its own under `collections/<name>/collection.json`,
 and `catalog.json` at the root names them all, so one URL offers every
 course. The first collection, `decorators`, teaches writing decorators
-with wrapt. A collection on monkey patching is planned and will sit
-beside it, sharing the tooling here and nothing else. Every workshop
+with wrapt, and the second, `monkey-patching`, teaches patching code
+you did not write with it; they share the tooling here and nothing
+else. Every workshop
 of every collection lives flat under `workshops/`, because the
 extension lists only the directories directly under that one
 directory; which collection a workshop belongs to is recorded in the
@@ -29,6 +30,15 @@ confirming each step, and each shows the standard library version
 beside the wrapt one, so the collection reads as the companion to the
 [decorator workshops](https://github.com/GrahamDumpleton/decorator-workshops).
 Ten to twenty minutes each.
+
+The monkey patching collection is for the same developers once they
+have written a wrapt decorator. Each workshop patches a small `shop`
+package shipped under its `files/` directory and opened in an editor
+beside the notebook, so the learner reads what is being patched while
+patching it; the by-hand or `unittest.mock` way opens each workshop
+in place of the standard library comparison, and from the fourth
+workshop on every page that installs a patch removes it before the
+next page needs a clean target.
 
 The scratch/ directory is not part of the git repo. It holds temporary
 working files, plans an agent is asked to generate, and the record of
@@ -47,7 +57,10 @@ it). Its `docs/*.rst` are the material the workshops draw on:
 option and the rules for methods and classes, `bundled.rst` for
 `lru_cache`, `synchronized`, `with_signature` and
 `bind_state_to_wrapper`, `examples.rst` for the state class and the
-argument checkers, and `issues.rst` for what does not work and why.
+argument checkers, `issues.rst` for what does not work and why,
+`monkey.rst` for every monkey patching helper, the post import hooks
+and the lifecycle, and `wrappers.rst` for `BaseObjectProxy` and
+`ObjectProxy`.
 The same documentation is published at https://wrapt.readthedocs.io.
 `src/wrapt/` settles any question the docs leave open.
 
@@ -237,6 +250,16 @@ Conventions for the workshops here:
   so `notebook:{{ notebook }}` is a literal path that never resolves,
   and a literal filename duplicates the `notebook` variable.
 
+  The monkey patching workshops split the main area into columns: the
+  placeholder for the notebook on the left, and an area named `code`
+  on the right listing every shipped module the pages refer to, since
+  a layout has one placeholder. The welcome page introduces each with
+  an `{open}` link and later mentions link the same way, which brings
+  the tab to the front; no page opens a file with an action partway
+  through. Shipped files are copied into the
+  workspace before the opening layout is applied, so naming one there
+  is safe; the notebook, which a page creates, still is not.
+
 - Create the notebook with `notebook-create` on the welcome page, after
   the environment step, and never ship it in `files/`, so it is written
   on the workshop's own kernel. Never put `:auto: page-enter` on it: the
@@ -258,6 +281,32 @@ Conventions for the workshops here:
 - Learners never have to type code. Every cell arrives through an
   action, so the learner's attention goes on reading and predicting
   rather than on typing and typos.
+
+- A welcome page is read before the notebook exists, so it says the
+  shipped files are already open in the editor and nothing about
+  where they sit; the notebook step says the notebook opens beside
+  the code, and pages after that may say a file is open beside the
+  notebook.
+
+- Never write "collection" on its own in a page or a finish text: a
+  learner does not know the word means a set of workshops. Name the
+  set instead. **Decorators with wrapt** or **Monkey patching with
+  wrapt** for a sibling in this repository, "the decorator workshops"
+  with its link for the standard library repository, "the wrapture
+  workshops" for wrapture, and "these workshops" or "the workshops so
+  far" for the one the learner is in. "Collection" is the term of
+  this file, OUTLINE.md and the README, where it is explained.
+
+- A custom proxy derives from `wrapt.BaseObjectProxy`, never from
+  `wrapt.ObjectProxy`. Since wrapt 2.0.0 `BaseObjectProxy` is the
+  recommended base class; `ObjectProxy` exists for code that depended
+  on its `__iter__` being proxied by default, and the pages do not go
+  into the difference beyond the one point that matters: calling,
+  iteration and the other special methods whose presence says what
+  an object is are not on `BaseObjectProxy`, so a proxy over
+  something callable or iterable defines `__call__` or `__iter__`
+  itself, and pages never claim that every special method passes
+  through.
 
 - After adding a workshop or editing a manifest, run `just index` to
   refresh the collection index and the catalog, and add or update the

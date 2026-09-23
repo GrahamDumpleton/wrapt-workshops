@@ -84,6 +84,6 @@ price == 0.5 and attempts["count"] == 3 and type(fetch_price).__name__ == "Funct
 When there is more than a setting or two, when the wrapper wants
 helper methods, or when the decorator has state to keep between calls
 and wants that state on an object rather than in a closure. The last
-of those has a workshop of its own, **Keeping state**, later in this
-collection, and it builds on the shape you just wrote.
+of those has a workshop of its own, **Keeping state**, which comes
+later and builds on the shape you just wrote.
 ```

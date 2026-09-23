@@ -1,0 +1,66 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: wrapping-what-is-not-a-function
+title: Wrapping what is not a function
+version: 0.1.0
+description: A patch on a dictionary a module reads its settings from. wrapt.wrap_object with a factory of your own, a BaseObjectProxy subclass that records which keys are read, and the least you need to know about proxies to write one. A callable proxy counting calls, arguments to the factory, and the two steps beneath every wrap function, resolve_path and apply_patch.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/wrapping-what-is-not-a-function
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-wrapping-what-is-not-a-function
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/config.py", "file:shop/pricing.py"] }
+gating: soft
+finish: |
+  You have patched something that is not a function. `wrap_object`
+  takes any factory, calls it with the original and whatever `args`
+  and `kwargs` you give, and installs what comes back, so a
+  `BaseObjectProxy` subclass of your own can stand in for a
+  dictionary or a callable and intercept what it chooses. You know the three things
+  about a proxy that a patch needs: `__wrapped__` is the original,
+  `_self_` names stay on the proxy, and a special method must be
+  defined on the proxy class to be intercepted, or, for `__call__`
+  and `__iter__`, to exist at all. And you have seen the
+  two steps beneath every wrap function, `resolve_path` and
+  `apply_patch`, and why a replacement that is not a wrapt proxy
+  carries no handle.
+
+  Proxies are a subject of their own, and a further set of workshops
+  on them is planned for this repository: what passes through and
+  what does not, special methods in full, lazy and automatic proxies,
+  and custom function wrappers.
+
+  Next is **Patching instance attributes**, for
+  the value that lives on each object rather than on its class,
+  which no wrap function so far can reach.
+
+  The "Wrapping Arbitrary Attributes" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  and the "Object Proxy" and "Custom Object Proxies" sections of the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  in the wrapt documentation cover what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: wrapping-what-is-not-a-function.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-a-proxy-for-a-dictionary.md
+  - pages/03-a-proxy-that-is-called.md
+  - pages/04-the-two-steps.md
+  - pages/05-finish.md

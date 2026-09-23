@@ -111,8 +111,8 @@ to its parent, so `corner.buy.tracker` is `Shop.buy.tracker`.
 
 So the count is per decoration, not per instance: it counts calls of
 `buy` across every shop. State that should be per instance belongs on
-the instance, and **Caching methods** later in this collection shows
-wrapt doing exactly that for a cache.
+the instance, and **Caching methods**, a later workshop, shows wrapt
+doing exactly that for a cache.
 
 ```{verify}
 :id: state-shared

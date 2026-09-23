@@ -50,7 +50,7 @@ explanation: "If wrapt spread the call into the wrapper's signature, a keyword a
 Every wrapper so far has forgotten everything between calls. The next
 workshop gives a decorator state, a count or a cache that outlives one
 call, and shows where wrapt keeps it so that the decorated function
-can reach it, which is the pattern the rest of this collection is
+can reach it, which is the pattern the rest of these workshops are
 built on.
 
 **Keeping state** is next.

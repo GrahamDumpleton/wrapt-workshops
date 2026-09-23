@@ -1,0 +1,64 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: patching-to-observe
+title: Patching to observe
+version: 0.1.0
+description: The mechanisms put to work. A wrapper with state that counts and times a library's calls, a registry that installs each patch once and removes them all, a version check before patching, and deferral so the patches apply whether the library is imported before or after. The shape of every instrumentation agent, and where wrapture takes it.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/patching-to-observe
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching, instrumentation]
+duration: 20m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-patching-to-observe
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/__init__.py", "file:shop/cart.py", "file:shop/pricing.py", "file:shop/reports.py"] }
+gating: soft
+finish: |
+  You have instrumented a library without touching it: a wrapper with
+  state recording every call and how long it took, a registry that
+  installs each patch once and takes them all out, a version check
+  before anything is patched, and a post import hook so the patches
+  apply whether the library was imported before or after. That is
+  the shape of every instrumentation agent, and the end of
+  **Monkey patching with wrapt**.
+
+  It is also where [wrapture](https://wrapture.readthedocs.io) begins.
+  Built on these helpers, it gives a patch a lifecycle, records what
+  real code did as a tree of calls, and sends the events to logs,
+  files or OpenTelemetry, from a config file with no code in the
+  program. The
+  [wrapture workshops](https://github.com/GrahamDumpleton/wrapture-workshops)
+  pick up here: **A program that narrates itself** for what recording
+  looks like, and **Instrumenting a package nobody has covered** for
+  a package of patches done properly, with settings, cleanup and an
+  entry point.
+
+  The "Inspecting and Removing Patches" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation is where the registry pattern comes
+  from, and the [Decorators with wrapt](https://github.com/GrahamDumpleton/wrapt-workshops)
+  workshops in this repository, if you have not taken them, are where
+  the state class the recorder is built on is taught.
+variables:
+  - name: notebook
+    type: path
+    default: patching-to-observe.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-a-recording-wrapper.md
+  - pages/03-a-registry.md
+  - pages/04-imported-before-or-after.md
+  - pages/05-finish.md

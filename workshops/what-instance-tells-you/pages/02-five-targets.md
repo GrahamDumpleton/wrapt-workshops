@@ -110,6 +110,6 @@ len(calls) == 4 and calls[0][1] is shop and calls[0][2] == ("apple",) and calls[
 A wrapper that branches on these values, `instance is None`,
 `inspect.isclass(instance)` and `inspect.isclass(wrapped)`, can behave
 correctly on every kind of target at once. wrapt's documentation calls
-that a universal decorator, and **One decorator for everything**,
-later in this collection, builds one.
+that a universal decorator, and **One decorator for everything**, a
+later workshop, builds one.
 ```

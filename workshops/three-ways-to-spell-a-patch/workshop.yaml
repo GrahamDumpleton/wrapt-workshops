@@ -1,0 +1,57 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: three-ways-to-spell-a-patch
+title: Three ways to spell a patch
+version: 0.1.0
+description: The same patch three ways. wrap_function_wrapper as a call, from code that decides what to patch. patch_function_wrapper as a decorator on the wrapper, installing the patch when its module is imported, with enabled as a switch. function_wrapper turning a wrapper into a decorator you apply in place or hand to wrap_object. When each reads best.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/three-ways-to-spell-a-patch
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching]
+duration: 10m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-three-ways-to-spell-a-patch
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/cart.py", "file:shop/pricing.py", "file:patches.py"] }
+gating: soft
+finish: |
+  You have written the same patch three ways. `wrap_function_wrapper`
+  is a call, for code that decides at runtime what to patch.
+  `@patch_function_wrapper` sits on the wrapper and installs the patch
+  as a side effect of its module being imported, which is how a file
+  of patches reads, with `enabled` as its switch. `@function_wrapper`
+  turns a wrapper into a decorator without the extras of
+  `@wrapt.decorator`, to apply in place or to hand to `wrap_object`
+  as the thing that wraps.
+
+  Next is **Leaving things as you found them**, about the handle
+  every one of these returns: finding a patch again, seeing the chain
+  of wrappers on a target, and taking a patch out, in any order, with
+  nothing left behind.
+
+  The "The wrapt.patch_function_wrapper Decorator" and "The
+  wrapt.function_wrapper Decorator" sections of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation cover the two decorator forms.
+variables:
+  - name: notebook
+    type: path
+    default: three-ways-to-spell-a-patch.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-as-a-call.md
+  - pages/03-as-a-decorator.md
+  - pages/04-as-a-reusable-wrapper.md
+  - pages/05-finish.md

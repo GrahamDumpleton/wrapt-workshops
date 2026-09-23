@@ -6,7 +6,7 @@ repo := "https://github.com/GrahamDumpleton/wrapt-workshops"
 # offers them all; each collection has an index of its own under
 # collections/<name>/, with an id that never changes.
 catalog_title := "wrapt workshops"
-catalog_description := "Guided JupyterLab workshops for wrapt: writing decorators, and later monkey patching."
+catalog_description := "Guided JupyterLab workshops for wrapt: writing decorators, and monkey patching."
 
 decorators_id := "grahamdumpleton.me/wrapt/decorators"
 decorators_title := "Decorators with wrapt"
@@ -16,6 +16,13 @@ decorators_description := "Guided JupyterLab workshops on writing decorators wit
 # design this list follows; `just index` writes the index in this order,
 # skipping any not written yet, so the order lives here and nowhere else.
 decorators := "your-first-wrapt-decorator what-instance-tells-you arguments-to-the-decorator handling-the-arguments keeping-state switching-a-decorator-off one-decorator-for-everything validating-arguments caching-methods synchronising-calls wrapping-async-functions changing-the-signature"
+
+monkey_patching_id := "grahamdumpleton.me/wrapt/monkey-patching"
+monkey_patching_title := "Monkey patching with wrapt"
+monkey_patching_description := "Guided JupyterLab workshops on patching code you did not write with wrapt: every kind of method, taking a patch out again, temporary patches, getting there before the import, and wrapping what is not a function, each on a shipped package open beside the notebook."
+
+# The monkey patching collection, in the order to take it.
+monkey_patching := "your-first-monkey-patch patching-every-kind-of-method three-ways-to-spell-a-patch leaving-things-as-you-found-them patches-that-last-a-block why-your-patch-did-nothing patching-before-the-import wrapping-what-is-not-a-function patching-instance-attributes patching-to-observe"
 
 # List available targets.
 default:
@@ -100,7 +107,7 @@ test-all:
     done
 
 # Write or refresh every collection index and the catalog.
-index: index-decorators catalog
+index: index-decorators index-monkey-patching catalog
 
 # The workshop directories are named one by one, in the collection's
 # order, which is how `jupyter workshop index` is told the order to
@@ -123,6 +130,23 @@ index-decorators:
         exit 0
     fi
     uv run jupyter workshop index "${dirs[@]}" --root . --out collections/decorators/collection.json --repo "{{repo}}" --id "{{decorators_id}}" --title "{{decorators_title}}" --description "{{decorators_description}}" --homepage "{{repo}}" --tag python --tag wrapt --tag decorators --ordered
+
+# Write or refresh collections/monkey-patching/collection.json in the collection's order.
+index-monkey-patching:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    dirs=()
+    for name in {{monkey_patching}}; do
+        if [ -d "workshops/$name" ]; then
+            dirs+=("workshops/$name")
+        fi
+    done
+    if [ ${#dirs[@]} -eq 0 ]; then
+        echo "No monkey patching workshops under workshops/ yet; collections/monkey-patching/collection.json is left as it is"
+        exit 0
+    fi
+    mkdir -p collections/monkey-patching
+    uv run jupyter workshop index "${dirs[@]}" --root . --out collections/monkey-patching/collection.json --repo "{{repo}}" --id "{{monkey_patching_id}}" --title "{{monkey_patching_title}}" --description "{{monkey_patching_description}}" --homepage "{{repo}}" --tag python --tag wrapt --tag monkey-patching --ordered
 
 # Write or refresh catalog.json from the collection indexes, recorded by relative path.
 catalog:

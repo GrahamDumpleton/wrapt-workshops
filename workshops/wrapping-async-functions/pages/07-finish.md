@@ -59,7 +59,7 @@ explanation: "A FunctionWrapper calls your wrapper and returns whatever it retur
 
 ## Where this goes next
 
-The last workshop in this collection returns to introspection. A
+The last of these workshops returns to introspection. A
 decorator that supplies an argument the caller no longer passes, a
 session or a request id, leaves `inspect.signature` and `help()`
 describing a parameter the caller must not pass. `wrapt.with_signature`

@@ -1,0 +1,60 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: why-your-patch-did-nothing
+title: Why your patch did nothing
+version: 0.1.0
+description: A patch applied correctly that changed nothing. A module that imported the function by name holds its own reference, and the patch on the original module never reaches it. See it in the shipped code, patch the alias too, and see why a method looked up through the class at call time is the safer target than a function, and a saved bound method is not.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/why-your-patch-did-nothing
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, monkey-patching]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-why-your-patch-did-nothing
+layout: notebook
+layouts:
+  notebook:
+    main:
+      split: columns
+      areas:
+        - { name: notebook, tabs: [] }
+        - { name: code, size: 0.4, tabs: ["file:shop/checkout.py", "file:shop/cart.py", "file:shop/pricing.py"] }
+gating: soft
+finish: |
+  You have seen a correct patch change nothing, because
+  `from shop.pricing import fetch_price` gave `shop.checkout` a
+  reference of its own before the patch was made, and a patch on
+  `shop.pricing` never reaches it. The two ways round it: patch the
+  alias too, at the module where the name is looked up, or patch
+  before the consumer is imported, which is the next workshop. And
+  the rule that makes methods safer targets: a call through an object
+  looks the method up on the class at call time and sees the patch,
+  while a bound method saved in a variable, like an imported name, is
+  a reference taken before the patch.
+
+  Next is **Patching before the import**: the `?` shortcut, post
+  import hooks, and the string form that keeps the patch module
+  itself unimported until it is needed.
+
+  The "Watch out for cached references" section of the
+  [monkey patching guide](https://wrapt.readthedocs.io/en/latest/monkey.html)
+  in the wrapt documentation is this workshop in a paragraph, and the
+  blog post
+  [Ordering issues when monkey patching in Python](https://github.com/GrahamDumpleton/wrapt/blob/master/blog/13-ordering-issues-when-monkey-patching-in-python.md)
+  is the long version.
+variables:
+  - name: notebook
+    type: path
+    default: why-your-patch-did-nothing.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-patch-that-did-nothing.md
+  - pages/03-patch-the-alias.md
+  - pages/04-methods-and-saved-references.md
+  - pages/05-finish.md
