@@ -1,0 +1,53 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: your-first-object-proxy
+title: Your first object proxy
+version: 0.1.0
+description: Write a delegating class by hand, a __getattr__ that forwards to the object it holds, and find what it gets wrong, from isinstance to where an assignment lands. Then wrap the same object in wrapt.BaseObjectProxy and see every one of those come right with nothing written, and meet __wrapped__ and the one question that still tells the two apart.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/your-first-object-proxy
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-your-first-object-proxy
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have written a proxy two ways. The delegating class forwards
+  attribute reads and nothing else: `isinstance` does not know it,
+  the special methods go around `__getattr__`, and an assignment
+  stays on the delegate. `wrapt.BaseObjectProxy` forwards all of it,
+  including `__class__`, which is why `isinstance` is fooled, and an
+  assignment through it lands on the object it wraps, which is on
+  `__wrapped__`.
+
+  `type()` still names the proxy, and `repr()` announces it. The next
+  workshop, **What does not pass through**, is about those lines and
+  the others a transparent proxy does not cross, and the one it draws
+  on purpose.
+
+  The "Object Proxy" section of the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  in the wrapt documentation covers what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: your-first-object-proxy.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-a-delegate-by-hand.md
+  - pages/03-what-it-gets-wrong.md
+  - pages/04-the-wrapt-version.md
+  - pages/05-finish.md

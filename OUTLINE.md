@@ -16,9 +16,10 @@ collections that are each a course of their own. The first collection,
 with wrapt, each shown beside the standard library version it
 replaces. The second, **Monkey patching with wrapt**, is ten workshops
 on patching code you did not write, each on a small package shipped
-with it and open beside the notebook. A third, on object proxies, has
-its id reserved and its workshops sketched, and a fourth is held as a
-list of candidates. The
+with it and open beside the notebook. The third, **Object proxies
+with wrapt**, is ten workshops on standing in for an object you did
+not make, each opening with the standard library way, and a fourth
+is held as a list of candidates. The
 collections share this repository's tooling and nothing else: each has
 its own index, id, numbering and audience.
 
@@ -94,6 +95,42 @@ For the monkey patching collection:
   automatic patching: the background the workshops draw on for why,
   written before the 2.4 lifecycle existed, so the docs win where the
   two differ.
+
+For the object proxies collection:
+
+- `docs/wrappers.rst`: the whole document. The Object Proxy section
+  and its type comparison, custom proxies, proxy attributes and the
+  `_self_` prefix, special methods, function wrappers and custom
+  function wrappers with `__bound_function_wrapper__`, and lazy
+  proxies with `lazy_import` and its `interface` hint.
+
+- `docs/api.rst`: the Object Proxies, Function Wrappers and Weak
+  References entries, which are the shortest correct statement of
+  what each class is for, and the C Extension and Pure Python
+  Implementations section for which classes are C.
+
+- `docs/examples.rst`: the Serialising an Object Proxy section, which
+  is workshop 10.
+
+- `docs/issues.rst`: introspecting the proxy's own `__dict__` through
+  `__self_dict__`, ternary `pow()`, and the signature of
+  `PartialCallableObjectProxy` over a bound method.
+
+- `docs/typing.rst`: the Object Proxies and Function Wrappers
+  sections, read so that no cell contradicts what a type checker
+  would say, not taught.
+
+- `docs/changes.rst`: the 2.0.0 notes on `AutoObjectProxy`,
+  `LazyObjectProxy` and `wrapt.partial`, which say why each was
+  added, and the 2.4.0 note on `__self_dict__`.
+
+- `src/wrapt/wrappers.py` and `src/wrapt/proxies.py`, for the two
+  things the 2.4.1 docs do not say: that `__self_setattr__` stores an
+  attribute on the proxy under any name, and that an in-place
+  operator on a proxy over an immutable value rebinds through
+  `__object_proxy__`. Both are in the source and the stubs at 2.4.1,
+  and the workshops teach them from there: workshop 3 needs the
+  first, and workshop 2 names the second in passing.
 
 The wrapture workshops are read, not taught, so the pointers to them
 name workshops that exist and say what they add.
@@ -881,22 +918,355 @@ proxies are a course of their own with a different audience: the
 patching collection needs `wrap_function_wrapper` and a wrapper
 function, which the learner already has.
 
-## Later collections
+## Shape of the object proxies collection
 
-**Object proxies with wrapt**, id `grahamdumpleton.me/wrapt/proxies`,
-reserved now as the monkey patching id was. Eight or nine workshops:
-a first proxy on `BaseObjectProxy` and what passes through, what
-does not (`type`, identity, `__class__`, iteration, and the copy a
-literal value becomes), why `ObjectProxy` still exists (its
-`__iter__`, kept for code written before wrapt 2.0.0),
-`_self_` attributes and where assignment lands, special methods and
-why they must be on the proxy class, `CallableObjectProxy` and the
-partial variant, custom `FunctionWrapper` and `BoundFunctionWrapper`
-subclasses with `__bound_function_wrapper__`, `LazyObjectProxy` with
-`lazy_import` and its `interface` hint, `AutoObjectProxy`,
-`WeakFunctionProxy`, and serialising a proxy from the examples doc.
-Independent of the monkey patching collection apart from the pointer
-in its workshop 8. Notebook format, no shipped code expected.
+What you need to stand in for an object you did not make: know what a
+proxy passes through and what it cannot, keep state of your own on
+it, change what it does, and pick the variant wrapt ships for the
+cases that keep coming up. One ordered collection in four movements,
+numbered straight through.
+
+**What a proxy is** (1 to 3). A delegating class written by hand and
+where it falls short, `BaseObjectProxy` and what passes through, the
+lines a transparent proxy cannot cross, and where the proxy's own
+state lives. After these the learner can wrap anything and have it
+indistinguishable from the original to the code that receives it.
+
+**Changing what the proxy does** (4 to 6). Special methods and why
+they belong on the class, the callable proxies, and the function
+wrappers beneath every wrapt decorator. Workshop 6 is the peak: the
+machinery the decorators collection left out on purpose, and the
+point where a learner who has done that collection sees what was
+under it all along.
+
+**Proxies that decide later** (7 and 8). A proxy that reads its
+target at construction and grows the special methods it needs, and
+one that has no target until first use.
+
+**Edges** (9 and 10). Holding a function weakly, and copying and
+pickling a proxy, which the base class refuses on purpose.
+
+Ten to twenty minutes each, about two and a half hours in total.
+Every workshop is self-contained and writes the thing it wraps in
+cells, so it can be taken on its own.
+
+The audience is someone building a library or a tool that stands in
+for objects, a lazy loader, a tracked configuration, a recorded
+client, a wrapper API, rather than someone patching. The collection
+assumes Python classes, `__getattr__` and the idea of a special
+method, and nothing from the other two collections. It names them
+where they meet: workshop 6 is the underside of the decorators
+collection and says so, and workshop 8 of the monkey patching
+collection is where a proxy is installed by `wrap_object`, which the
+welcome page points at for the learner who wants that.
+
+The comparison with the standard library continues in the form the
+monkey patching collection gave it: every workshop opens with the way
+the learner already knows, a delegating `__getattr__`,
+`unittest.mock.Mock` with `wraps`, `functools.partial`, a
+hand-written descriptor, `importlib.util.LazyLoader`, `weakref.proxy`
+and `WeakMethod`, `copy` and `pickle`, in a cell and a sentence, and
+shows where it falls short before showing the wrapt class.
+
+The layout is the decorators collection's `notebook` layout, not the
+monkey patching collection's split, because the object being wrapped
+is written in a cell and there is nothing to read beside the
+notebook. Workshop 8 is the one exception to shipping nothing: a
+module that prints when imported is the only way to see an import
+happen late, and one module per demonstration, as the deferral
+workshop settled.
+
+The workshops run the C extension, since that is what a plain install
+gets, and teach nothing that differs between the C extension and the
+pure Python implementation. Where the docs record a difference, the
+workshop teaches the spelling that works on both: `__self_setattr__`
+rather than `object.__setattr__`, with a sentence on why. Every
+workshop uses only what is in wrapt 2.4.1, the release the reference
+submodule is at.
+
+## The object proxies workshops
+
+The cast is the one the other collections use, `fetch_price`, a
+`Shop` with a `buy` method and a `settings` dictionary, defined in
+cells rather than shipped, so a reader of either other collection
+meets familiar names and the proxy is always over something small
+enough to hold in the head.
+
+### 1. `your-first-object-proxy`: Your first object proxy
+
+A delegating class by hand, and what it gets wrong.
+
+A `Delegate` class with an `__init__` that stores the target and a
+`__getattr__` that forwards to it, around a `Shop`. Attribute reads
+and method calls work, and it looks done. Then the cells that show it
+is not: `isinstance(delegate, Shop)` is false, `repr` names the
+delegate, `len`, `==` and `with` bypass `__getattr__` because Python
+looks special methods up on the type, and `delegate.name = "x"` lands
+on the delegate, not the shop. A quiz before each cell asks which will
+work.
+
+Then `wrapt.BaseObjectProxy(shop)` and the same cells again:
+`isinstance` is true, equality and hashing follow the shop, `str`
+and `dir` show the shop, assignment lands on the shop, and
+`__wrapped__` is the original. The learner sees the proxy do
+everything the delegate did and everything it did not, without
+writing a method.
+
+Close with `type(proxy)` and `repr(proxy)` printed and explained in
+a sentence each: `type()` reads the real type and `repr()` announces
+the proxy on purpose, so that debugging output never hides one, while
+`str()` shows the shop. Workshop 2 is about the rest of the lines
+the proxy does not cross.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 15 minutes.
+
+### 2. `what-does-not-pass-through`: What does not pass through
+
+The lines a transparent proxy cannot cross, and the one it draws on
+purpose.
+
+`proxy is shop` is false and `id` differs, because a proxy is a
+second object. `type(proxy)` is the proxy class while
+`proxy.__class__` is `Shop`, which is how `isinstance` is fooled and
+`type` is not, and the quiz asks for both before the cell runs. An
+operator on a proxy over a number returns a plain number, so `proxy +
+1` is an `int`, while `proxy += 1` is still a proxy: an in-place
+operator on an immutable value rebinds through `__object_proxy__`,
+which is named and not dwelt on.
+
+Then the line drawn on purpose: `iter(BaseObjectProxy([1, 2]))` fails,
+because `__iter__` is left off the base class so that a proxy over a
+non-iterable does not claim to be one, and `ObjectProxy` forwards it,
+kept for code written before wrapt 2.0.0. `__call__` is left off for
+the same reason, and workshop 5 is where it comes back.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 15 minutes.
+
+### 3. `what-belongs-to-the-proxy`: What belongs to the proxy
+
+Where assignment lands, and how to keep something back.
+
+`proxy.count = 0` lands on the shop, as workshop 1 showed, so a proxy
+that counts needs somewhere of its own. The `_self_` prefix: a
+subclass whose `__init__` sets `self._self_count`, read back through
+the proxy and absent from the shop, and a check that says "the count
+is on the shop, so the attribute was set without the prefix" when the
+learner's cell gets it wrong. `vars(proxy)` shows the shop's
+dictionary, because `__dict__` is forwarded too, and `__self_dict__`
+shows the proxy's own.
+
+Then the name that cannot carry the prefix: code that will look up
+`proxy.describe` by that exact name, on a proxy over an object with
+no `describe`. `__self_setattr__("describe", ...)` stores it on the
+proxy under the name asked for. It is the portable spelling:
+`object.__setattr__` does the same with the pure Python
+implementation and, from Python 3.13, with the C extension too, and
+a sentence says so, since the learner's 3.14 kernel will not show
+the difference.
+
+The comparison is `unittest.mock.Mock(wraps=shop)`, which keeps its
+own attributes and records every call, and is not a `Shop` to
+`isinstance`, which is the trade the proxy does not make.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 15 minutes.
+
+### 4. `intercepting-special-methods`: Intercepting special methods
+
+Why a special method on the instance does nothing, and what the class
+gets instead.
+
+The `Watched` proxy from the monkey patching collection, from the
+proxy side: a `BaseObjectProxy` subclass over `settings` whose
+`__getitem__` records the keys read and calls through
+`self.__wrapped__`. First the wrong way, `proxy.__getitem__ = f` on
+an instance, which changes nothing, because Python looks special
+methods up on the type, the fact from workshop 1 now working for the
+learner rather than against them. Then the same on the class, and it
+works, while every special method not overridden still passes
+through.
+
+Then three more, each one cell: `__enter__` and `__exit__` timing a
+`with` block over a lock, `__contains__` logging membership tests,
+and `__iadd__` on a proxy over a list, which shows the in-place
+operator arriving at the proxy and the result staying a proxy.
+
+The comparison is the hand-written delegate, which needs every
+special method written to be transparent; the proxy needs only the
+ones that change.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 15 minutes.
+
+### 5. `calling-through-a-proxy`: Calling through a proxy
+
+The callable proxies, and a partial that keeps its signature.
+
+`BaseObjectProxy(fetch_price)("apple")` fails, since `__call__` is
+left off the base class, which workshop 2 promised. `CallableObjectProxy`
+adds it, and a subclass counting calls in a `_self_` attribute is a
+call counter that is still the function to `isinstance`, to
+`inspect.signature` and to `__name__`.
+
+Then `wrapt.partial(fetch_price, "apple")` beside
+`functools.partial`: the bound arguments on `_self_args` and
+`_self_kwargs`, `inspect.signature` reporting the remaining
+parameters as it does for `functools.partial`, and the difference,
+that the wrapt one is still the function to `isinstance` and carries
+its attributes, where `functools.partial` is a type of its own. The
+issues section on a partial over a bound method is a page.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 15 minutes.
+
+### 6. `under-the-decorator`: Under the decorator
+
+`FunctionWrapper`, and the descriptor beneath every wrapt decorator.
+
+`wrapt.FunctionWrapper(fetch_price, wrapper)` is what
+`@wrapt.decorator` builds, and calling it runs the four argument
+wrapper the learner may know from the decorators collection, restated
+in a sentence for one who does not. Put one on `Shop.buy` in the
+class body and read it through an instance: the result is a
+`BoundFunctionWrapper`, with `_self_instance` set, `_self_parent`
+pointing back at the unbound wrapper, and `_self_binding` naming the
+kind, `function`, `classmethod`, `staticmethod`, `class`, `builtin`,
+`callable` or `instancemethod`. A quiz asks for `_self_binding` and
+`_self_instance` on each kind before the cell prints them, which is
+the `instance` table of the decorators collection with its mechanism
+showing.
+
+Then a custom pair: a `FunctionWrapper` subclass whose
+`__bound_function_wrapper__` names a `BoundFunctionWrapper` subclass,
+so the bound form carries behaviour of its own, recording each
+binding. The comparison is the hand-written descriptor whose
+`__get__` returns a `types.MethodType`, which is right for functions
+and wrong for everything else in the table.
+
+The finish text says this is the underside of the decorators
+collection, and names its workshop 2 for the rules from the other
+side.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 20 minutes.
+
+### 7. `a-proxy-that-fits-its-target`: A proxy that fits its target
+
+`AutoObjectProxy`, and what it costs.
+
+The same three objects, a list, `fetch_price` and a generator, each
+wrapped in `BaseObjectProxy` and failing to iterate, be called or be
+resumed, then each wrapped in `AutoObjectProxy` and working, because
+it reads the wrapped object at construction and adds the special
+methods that object has. `type(proxy)` is a class made for that one
+instance, printed for two proxies to show they differ, and a short
+timing of constructing each shows the cost. The rule that follows:
+`AutoObjectProxy` when the kind of thing wrapped is not known up
+front, `BaseObjectProxy` with the special methods written when it
+is.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 10 minutes.
+
+### 8. `wrapping-what-does-not-exist-yet`: Wrapping what does not exist yet
+
+`LazyObjectProxy`, and the import that happens when it is needed.
+
+`LazyObjectProxy(make_shop)` with a callback that prints when it
+runs: nothing prints at construction, and the first attribute access
+prints once. Then `wrapt.lazy_import("shop.reports")` over a shipped
+module that prints on import: `sys.modules` before and after, the
+print arriving at first use, and `lazy_import("shop.pricing",
+"fetch_price")` for one attribute of a module. Then the `interface`
+hint: a lazy proxy over a callable must be callable before the import
+has happened, so the proxy cannot ask the wrapped object which
+special methods to add, and `interface=Callable` or an iterable type
+from `collections.abc` tells it. Avoiding a circular import is the
+use the page ends on.
+
+The comparison is `importlib.util.LazyLoader` and a module-level
+`__getattr__`, which defer a module and nothing else.
+
+- Format: notebook.
+
+- Files: `shop/__init__.py`, `shop/reports.py` and
+  `shop/pricing.py`, each printing a line when imported, one per
+  demonstration; the `interface` hint is shown on a callback that
+  needs no module.
+
+- Length: 15 minutes.
+
+### 9. `holding-a-function-weakly`: Holding a function weakly
+
+`WeakFunctionProxy`, and the bound method that dies at once.
+
+A registry of callbacks that must not keep a `Shop` alive.
+`weakref.ref(shop.buy)` is dead before the next line, because a
+bound method is made on each access and discarded; `weakref.proxy` on
+it is the same; `weakref.WeakMethod` handles it and hands back a
+reference to dereference rather than something to call. Then
+`wrapt.WeakFunctionProxy(shop.buy)`: callable as the method while the
+shop lives, holding the instance and the function weakly and
+rebinding on each call, raising `ReferenceError` after `del shop`,
+with the callback argument firing when the shop is collected, which
+is how a registry removes the entry.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 10 minutes.
+
+### 10. `saving-and-restoring-a-proxy`: Saving and restoring a proxy
+
+Copying and pickling a proxy, which the base class refuses on
+purpose.
+
+`pickle.dumps(proxy)`, `copy.copy(proxy)` and `copy.deepcopy(proxy)`
+each raise `NotImplementedError`, and the message names the method
+to define. The reason, from the examples doc: the base class cannot
+know what state a subclass added, so it declines rather than guess. The `StatsProxy` from the examples doc, a proxy over a
+dictionary with a `_self_label`, defines `__reduce__` returning the
+class and its constructor arguments, and a round trip through
+`pickle` brings back both the dictionary and the label; `__copy__`
+and `__deepcopy__` the same way; `dill` needs nothing more, since it
+follows the same protocol. A check confirms the label survived, which
+is the `_self_` lesson of workshop 3 from the other end.
+
+The finish text names the two other collections: decorators for
+`FunctionWrapper` from the decorator's side, and monkey patching for
+installing a proxy into code you did not write.
+
+- Format: notebook.
+
+- Files: none.
+
+- Length: 15 minutes.
+
+## Later collections
 
 **A fourth collection, candidates only.** The remainder of the
 earlier import hooks module that is still wrapt rather than wrapture:
@@ -1021,9 +1391,9 @@ requirements install.
 
 ## Collections and the repository
 
-**Several collections, one repository, one catalog.** The decorators
-collection and the planned monkey patching collection are different
-courses for different people, so each is a collection of its own:
+**Several collections, one repository, one catalog.** The decorators,
+monkey patching and object proxies collections are different courses
+for different people, so each is a collection of its own:
 numbered from one, with its own id, description and Finish sequence,
 and each can be subscribed to or linked alone. They share the tooling,
 the submodules, the images and CI, which is the reason for one
@@ -1049,13 +1419,13 @@ collection is being written.
 
 **Ids.** `grahamdumpleton.me/wrapt/decorators`,
 `grahamdumpleton.me/wrapt/monkey-patching` and
-`grahamdumpleton.me/wrapt/proxies`: a prefix for the product, then
-the course, leaving room for more under the same prefix. An id is the
-collection's identity to the analytics service and must never change,
-so each is chosen before any workshop of its collection is written,
-and the proxies id is reserved here ahead of its design. The other
-collections use flatter ids; revising them to match is a separate
-job for another time.
+`grahamdumpleton.me/wrapt/object-proxies`: a prefix for the product,
+then the course, leaving room for more under the same prefix. An id
+is the collection's identity to the analytics service and must never
+change, so each is chosen before any workshop of its collection is
+written, and the object proxies id is settled here with its design.
+The other collections use flatter ids; revising them to match is a
+separate job for another time.
 
 **Where the collections meet the browser.** Both sections of the
 workshop browser group by collection, since jupyterlab-workshop
@@ -1188,6 +1558,32 @@ written together, since 7 is the answer to 6.
 | 8 | `wrapping-what-is-not-a-function` | Done |
 | 9 | `patching-instance-attributes` | Done |
 | 10 | `patching-to-observe` | Done |
+
+The object proxies collection is written in its order as well.
+Workshops 1 and 2 are written together, since 2 explains what 1
+leaves printed and unexplained, and 7 and 8 are written together,
+since `LazyObjectProxy` is built on `AutoObjectProxy`.
+
+| # | Workshop | Status |
+|---|----------|--------|
+| 1 | `your-first-object-proxy` | Done |
+| 2 | `what-does-not-pass-through` | Done |
+| 3 | `what-belongs-to-the-proxy` | Done |
+| 4 | `intercepting-special-methods` | Done |
+| 5 | `calling-through-a-proxy` | Done |
+| 6 | `under-the-decorator` | Done |
+| 7 | `a-proxy-that-fits-its-target` | Done |
+| 8 | `wrapping-what-does-not-exist-yet` | Done |
+| 9 | `holding-a-function-weakly` | Done |
+| 10 | `saving-and-restoring-a-proxy` | Done |
+
+Shipping it touched the same places the monkey patching collection
+did: an `object_proxies` list, id, title and description and an
+`index-object-proxies` recipe in the Justfile; the `collections`
+lists in `binder/postBuild` and `.devcontainer/setup.sh`; the
+catalog; the `finish` text of `wrapping-what-is-not-a-function` and
+`patching-to-observe`; the launch link in `jupyter_lab_config.py`;
+the welcome messages, the README and AGENTS.md.
 
 Shipping the collection also touched what already existed: the
 `monkey_patching` list, id, title and description and the

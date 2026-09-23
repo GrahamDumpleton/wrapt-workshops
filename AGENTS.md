@@ -14,9 +14,10 @@ The repository is organised as collections. Each collection is a course
 with an index of its own under `collections/<name>/collection.json`,
 and `catalog.json` at the root names them all, so one URL offers every
 course. The first collection, `decorators`, teaches writing decorators
-with wrapt, and the second, `monkey-patching`, teaches patching code
-you did not write with it; they share the tooling here and nothing
-else. Every workshop
+with wrapt, the second, `monkey-patching`, teaches patching code you
+did not write with it, and the third, `object-proxies`, teaches
+standing in for an object with it; they share the tooling here and
+nothing else. Every workshop
 of every collection lives flat under `workshops/`, because the
 extension lists only the directories directly under that one
 directory; which collection a workshop belongs to is recorded in the
@@ -40,6 +41,19 @@ in place of the standard library comparison, and from the fourth
 workshop on every page that installs a patch removes it before the
 next page needs a clean target.
 
+The object proxies collection is for developers building something
+that stands in for an object, a lazy loader, a tracked configuration,
+a recorded client, rather than patching. It assumes Python classes
+and the idea of a special method and nothing from the other two
+collections. Each workshop writes the object it wraps in a cell, so
+the layout is the decorators collection's single notebook area, and
+the standard library way that opens each workshop is a delegating
+`__getattr__`, `unittest.mock`, `functools.partial`, a descriptor by
+hand, `importlib`, `weakref`, `copy` or `pickle`. One workshop ships
+a package under `files/`, since an import can only be seen to happen
+late if a module announces it, and the notebook imports it rather
+than a code pane showing it.
+
 The scratch/ directory is not part of the git repo. It holds temporary
 working files, plans an agent is asked to generate, and the record of
 topics held back from the collections. Its contents come and go, so
@@ -59,8 +73,10 @@ option and the rules for methods and classes, `bundled.rst` for
 `bind_state_to_wrapper`, `examples.rst` for the state class and the
 argument checkers, `issues.rst` for what does not work and why,
 `monkey.rst` for every monkey patching helper, the post import hooks
-and the lifecycle, and `wrappers.rst` for `BaseObjectProxy` and
-`ObjectProxy`.
+and the lifecycle, and `wrappers.rst`, with the Object Proxies,
+Function Wrappers and Weak References entries of `api.rst` and the
+serialising example in `examples.rst`, for the object proxies
+collection.
 The same documentation is published at https://wrapt.readthedocs.io.
 `src/wrapt/` settles any question the docs leave open.
 

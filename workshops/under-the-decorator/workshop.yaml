@@ -1,0 +1,59 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: under-the-decorator
+title: Under the decorator
+version: 0.1.0
+description: Build a wrapt.FunctionWrapper by hand and see it is what @wrapt.decorator builds. Put one on an instance method, a class method and a static method, read the BoundFunctionWrapper that comes back through an instance with its _self_instance, _self_parent and _self_binding, and compare a descriptor written by hand. Then a wrapper pair of your own with __bound_function_wrapper__.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/under-the-decorator
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 20m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-under-the-decorator
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You have seen what is under a wrapt decorator. `FunctionWrapper`
+  is a callable proxy holding the function and your wrapper, and it
+  is a descriptor: read through an instance it returns a
+  `BoundFunctionWrapper` carrying `_self_instance`, `_self_parent`
+  and `_self_binding`, which is how the wrapper learns what
+  `instance` is for a function, an instance method, a class method
+  and a static method alike. A subclass names its own bound class
+  through `__bound_function_wrapper__`, so behaviour of yours can
+  live on either side of the binding.
+
+  This is the underside of **Decorators with wrapt**, whose second
+  workshop, **What instance tells you**, reads the same rules from
+  the decorator's side.
+
+  Next is **A proxy that fits its target**: `AutoObjectProxy`, which
+  reads its target at construction and adds the special methods that
+  target has, and what that costs.
+
+  The "Function Wrappers" and "Custom Function Wrappers" sections of
+  the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  in the wrapt documentation cover what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: under-the-decorator.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-a-function-wrapper-by-hand.md
+  - pages/03-bound-through-an-instance.md
+  - pages/04-your-own-pair.md
+  - pages/05-finish.md

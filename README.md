@@ -22,7 +22,11 @@ teaches monkey patching with wrapt: patching code you did not write,
 correctly on every kind of method, taking a patch out again, temporary
 patches, getting there before the import, and wrapping what is not a
 function, each on a small package shipped with the workshop and open
-beside the notebook.
+beside the notebook. The third teaches object proxies with wrapt:
+standing in for an object, what a proxy passes through and what it
+cannot, state of its own, intercepting special methods, the wrapper
+beneath every decorator, and the callable, automatic, lazy and weak
+proxies wrapt ships, each beside the standard library way.
 
 The workshops run on
 [jupyterlab-workshop](https://github.com/GrahamDumpleton/jupyterlab-workshop),
@@ -35,7 +39,7 @@ for the design of the collections.
 
 ## The collections
 
-The repository holds two collections and is laid out for more. Each
+The repository holds three collections and is laid out for more. Each
 collection is a course: its workshops are numbered in the order to take
 them, and the Finish dialog of each offers the next. A
 [catalog](catalog.json) names every collection, so one URL offers them
@@ -192,6 +196,84 @@ table in [OUTLINE.md](OUTLINE.md#status) records where each stands.
     registry that installs each patch once and removes them all, a
     version check, and a post import hook. The shape of every
     instrumentation agent, and where wrapture takes it.
+
+### Object proxies with wrapt
+
+Ten workshops, about two and a half hours in total, in the order to
+take them. Each writes the object it stands in for in a cell and
+opens with the standard library way, a delegating `__getattr__`,
+`unittest.mock`, `functools.partial`, `weakref`, `copy` and `pickle`,
+before the wrapt class. They assume Python classes and the idea of a
+special method, and nothing from the other two collections, which
+they name where the three meet. All ten are written; the status
+table in [OUTLINE.md](OUTLINE.md#status) records where each stands.
+
+**What a proxy is**
+
+1. **Your first object proxy** (`your-first-object-proxy`,
+   15 minutes). A delegating class by hand and the four things it
+   gets wrong, then `wrapt.BaseObjectProxy` getting all four right
+   with nothing written, `__wrapped__`, and the two questions that
+   still tell a proxy apart.
+
+2. **What does not pass through** (`what-does-not-pass-through`,
+   15 minutes). Identity and `type()` against `__class__` and
+   `isinstance`, an operator that returns a plain value and an
+   in-place one that keeps the proxy, and the line drawn on purpose:
+   `__iter__` and `__call__` left off, and why `ObjectProxy` still
+   exists.
+
+3. **What belongs to the proxy** (`what-belongs-to-the-proxy`,
+   15 minutes). An assignment through a proxy lands on the target,
+   `Mock` with `wraps` for comparison, the `_self_` prefix, the two
+   dictionaries and `__self_dict__`, and `__self_setattr__` for a
+   name that must stay on the proxy without the prefix.
+
+**Changing what the proxy does**
+
+4. **Intercepting special methods** (`intercepting-special-methods`,
+   15 minutes). `__getitem__` set on an instance does nothing, because
+   Python looks special methods up on the type; on a subclass it
+   records every key read. Then `__enter__` and `__exit__` on a lock
+   and `__iadd__` on a list.
+
+5. **Calling through a proxy** (`calling-through-a-proxy`,
+   15 minutes). `CallableObjectProxy` for the `__call__` the base
+   leaves off, a subclass counting calls while still the function to
+   `inspect`, and `wrapt.partial` beside `functools.partial`.
+
+6. **Under the decorator** (`under-the-decorator`, 20 minutes).
+   `FunctionWrapper` built by hand and what the decorator builds, the
+   `BoundFunctionWrapper` read through an instance with its binding,
+   instance and parent, a descriptor by hand that gets static methods
+   wrong, and a wrapper pair of your own with
+   `__bound_function_wrapper__`.
+
+**Proxies that decide later**
+
+7. **A proxy that fits its target** (`a-proxy-that-fits-its-target`,
+   10 minutes). A list, a function and a generator refused by the base
+   and handled by `AutoObjectProxy`, which reads its target at
+   construction, and the class per instance that costs.
+
+8. **Wrapping what does not exist yet**
+   (`wrapping-what-does-not-exist-yet`, 15 minutes).
+   `LazyObjectProxy` with a callback run on first use,
+   `wrapt.lazy_import` over a shipped module that prints when
+   imported, one attribute of a module, and the `interface` hint.
+
+**Edges**
+
+9. **Holding a function weakly** (`holding-a-function-weakly`,
+   10 minutes). The bound method a weak reference loses at once,
+   `WeakFunctionProxy` rebinding on each call and raising once the
+   instance is gone, and a registry of callbacks that lets its
+   objects go.
+
+10. **Saving and restoring a proxy** (`saving-and-restoring-a-proxy`,
+    15 minutes). `pickle`, `copy` and `deepcopy` refused on purpose,
+    then `__reduce__`, `__copy__` and `__deepcopy__` on a proxy with
+    a label of its own, round tripped with both halves intact.
 
 ## Launch on Binder
 

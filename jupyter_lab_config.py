@@ -3,8 +3,8 @@
 # named explicitly: `just lab` passes `--config=jupyter_lab_config.py`,
 # and `uv run jupyter lab --config=jupyter_lab_config.py` does the same.
 #
-# Open the workshop browser with both of the checkout's collections
-# added for the session, in the order to take them, and the catalog. A
+# Open the workshop browser with the checkout's collections added for
+# the session, in the order to take them, and the catalog. A
 # collection lists its workshops in the order to take them, numbered,
 # rather than the order the workshops directory gives, and the browser
 # groups the installed workshops under each collection's heading in the
@@ -16,4 +16,5 @@ c.LabApp.default_url = (
     "/lab?catalog=catalog.json"
     "&collection=collections/decorators/collection.json"
     "&collection=collections/monkey-patching/collection.json"
+    "&collection=collections/object-proxies/collection.json"
 )

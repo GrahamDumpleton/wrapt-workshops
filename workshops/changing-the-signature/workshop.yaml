@@ -38,10 +38,12 @@ finish: |
   right place, and a signature that tells the truth.
 
   The [wrapt documentation](https://wrapt.readthedocs.io) goes further
-  in two directions these workshops left alone: the object proxies
-  that `FunctionWrapper` is built on, and monkey patching, which is
-  the subject of **Monkey patching with wrapt**, the workshops listed
-  beside these in the workshop browser. The
+  in two directions these workshops left alone, and each has a set of
+  workshops of its own listed beside these in the workshop browser.
+  **Monkey patching with wrapt** is patching code you did not write
+  with the helpers built on these decorators. **Object proxies with
+  wrapt** is the `BaseObjectProxy` and `FunctionWrapper` that every
+  decorator here was built on, from the proxy's side. The
   [decorator workshops](https://github.com/GrahamDumpleton/decorator-workshops)
   are the standard library side of everything here, if you want the
   full treatment of what wrapt was replacing.

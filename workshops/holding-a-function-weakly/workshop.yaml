@@ -1,0 +1,53 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: holding-a-function-weakly
+title: Holding a function weakly
+version: 0.1.0
+description: weakref.ref on a bound method is dead at once and weakref.proxy on one raises, because a bound method is made on each access and discarded. wrapt.WeakFunctionProxy holds the instance and the function weakly and rebinds on each call, raises ReferenceError once the instance is collected and runs a callback when it goes, which builds a registry of callbacks that lets its objects go.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/holding-a-function-weakly
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 10m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-holding-a-function-weakly
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You can hold a function without keeping it alive. A bound method
+  is made on each access and discarded, so a weak reference to one
+  is dead at once. `WeakFunctionProxy` holds the instance and the
+  underlying function weakly, rebinds them on each call, raises
+  `ReferenceError` once the instance is gone and runs its callback
+  when that happens, which is how a registry of callbacks drops the
+  entries for objects that no longer exist.
+
+  Next is **Saving and restoring a proxy**, the last of these
+  workshops: copying and pickling a proxy, which the base class
+  refuses on purpose, and the three methods a subclass defines to
+  allow it.
+
+  The `WeakFunctionProxy` entry of the
+  [API reference](https://wrapt.readthedocs.io/en/latest/api.html)
+  in the wrapt documentation covers what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: holding-a-function-weakly.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-the-method-that-dies-at-once.md
+  - pages/03-the-weak-function-proxy.md
+  - pages/04-a-registry-that-lets-go.md
+  - pages/05-finish.md

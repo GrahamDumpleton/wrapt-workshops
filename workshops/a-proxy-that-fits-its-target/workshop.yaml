@@ -1,0 +1,53 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: a-proxy-that-fits-its-target
+title: A proxy that fits its target
+version: 0.1.0
+description: A list, a function and a generator each wrapped in BaseObjectProxy and refusing to iterate, be called or be resumed, then each wrapped in AutoObjectProxy and working, because it reads its target at construction and adds the special methods that target has. The cost, a class generated per instance, measured, and when each base is the right one.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/a-proxy-that-fits-its-target
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 10m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-a-proxy-that-fits-its-target
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You know the two ways to give a proxy the special methods its
+  target has. `BaseObjectProxy` leaves off the ones whose presence
+  says what an object is, and a subclass adds the ones it needs.
+  `AutoObjectProxy` looks at the target when the proxy is made and
+  generates a class with those methods, so it fits whatever it is
+  given, at the cost of a class per instance. When the kind of
+  target is known, write the methods; when it is not, let the proxy
+  read it.
+
+  Next is **Wrapping what does not exist yet**: `LazyObjectProxy`,
+  built on `AutoObjectProxy`, for a target that is not made until
+  the first time it is needed.
+
+  The `AutoObjectProxy` entry of the
+  [API reference](https://wrapt.readthedocs.io/en/latest/api.html)
+  in the wrapt documentation covers what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: a-proxy-that-fits-its-target.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-three-things-the-base-refuses.md
+  - pages/03-the-auto-proxy.md
+  - pages/04-a-class-per-instance.md
+  - pages/05-finish.md

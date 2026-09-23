@@ -1,0 +1,52 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: intercepting-special-methods
+title: Intercepting special methods
+version: 0.1.0
+description: Set __getitem__ on a proxy instance and see nothing change, because Python looks special methods up on the type. Define it on a BaseObjectProxy subclass instead and record every key read from a settings dictionary while everything else passes through. Then __enter__ and __exit__ timing a lock, and __iadd__ on a list that stays a proxy.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/intercepting-special-methods
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-intercepting-special-methods
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You can change what a proxy does. Python finds a special method on
+  the type and never on the instance, so setting one on a proxy
+  changes nothing, and defining it on a `BaseObjectProxy` subclass
+  intercepts it while every special method not defined still passes
+  through. The method does its work and calls the target's through
+  `self.__wrapped__`, keeping its own state under `_self_` names.
+
+  Next is **Calling through a proxy**: the one special method that
+  is not on the base class at all, `__call__`, the proxies wrapt
+  ships that add it, and a partial that keeps its signature.
+
+  The "Custom Object Proxies" and "Special Object Methods" sections
+  of the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  in the wrapt documentation cover what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: intercepting-special-methods.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-on-the-instance.md
+  - pages/03-on-the-class.md
+  - pages/04-two-more.md
+  - pages/05-finish.md

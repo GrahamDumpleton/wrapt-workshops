@@ -1,0 +1,375 @@
+{
+  "version": 1,
+  "id": "grahamdumpleton.me/wrapt/object-proxies",
+  "title": "Object proxies with wrapt",
+  "description": "Guided JupyterLab workshops on standing in for an object with wrapt: what a proxy passes through and what it cannot, state of its own, intercepting special methods, the function wrapper beneath every decorator, and the callable, automatic, lazy and weak proxies wrapt ships, each beside the standard library way.",
+  "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops",
+  "tags": [
+    "python",
+    "wrapt",
+    "proxies"
+  ],
+  "ordered": true,
+  "workshops": [
+    {
+      "name": "your-first-object-proxy",
+      "title": "Your first object proxy",
+      "description": "Write a delegating class by hand, a __getattr__ that forwards to the object it holds, and find what it gets wrong, from isinstance to where an assignment lands. Then wrap the same object in wrapt.BaseObjectProxy and see every one of those come right with nothing written, and meet __wrapped__ and the one question that still tells the two apart.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/your-first-object-proxy",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/your-first-object-proxy"
+          }
+        }
+      ]
+    },
+    {
+      "name": "what-does-not-pass-through",
+      "title": "What does not pass through",
+      "description": "A proxy is a second object, so identity and type() tell the truth about it while __class__ and isinstance follow the target. An operator on a proxy returns a plain value, and an in-place operator keeps the proxy. Then the line wrapt.BaseObjectProxy draws on purpose, leaving __iter__ and __call__ off, and why wrapt.ObjectProxy still exists.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/what-does-not-pass-through",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/what-does-not-pass-through"
+          }
+        }
+      ]
+    },
+    {
+      "name": "what-belongs-to-the-proxy",
+      "title": "What belongs to the proxy",
+      "description": "An assignment through a proxy lands on the target, and unittest.mock.Mock keeps its own state by not being the target at all. The _self_ prefix for state that stays on the proxy, the two dictionaries a proxy has and __self_dict__ for reading its own, and __self_setattr__ for a name that must be found on the proxy without the prefix.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/what-belongs-to-the-proxy",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/what-belongs-to-the-proxy"
+          }
+        }
+      ]
+    },
+    {
+      "name": "intercepting-special-methods",
+      "title": "Intercepting special methods",
+      "description": "Set __getitem__ on a proxy instance and see nothing change, because Python looks special methods up on the type. Define it on a BaseObjectProxy subclass instead and record every key read from a settings dictionary while everything else passes through. Then __enter__ and __exit__ timing a lock, and __iadd__ on a list that stays a proxy.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/intercepting-special-methods",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/intercepting-special-methods"
+          }
+        }
+      ]
+    },
+    {
+      "name": "calling-through-a-proxy",
+      "title": "Calling through a proxy",
+      "description": "A BaseObjectProxy over a function cannot be called, so wrapt.CallableObjectProxy adds __call__, and a subclass of it counts calls while still answering for the function to inspect, isinstance and __name__. Then wrapt.partial beside functools.partial, with the bound arguments removed from the signature both report and the function still underneath one of them.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/calling-through-a-proxy",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/calling-through-a-proxy"
+          }
+        }
+      ]
+    },
+    {
+      "name": "under-the-decorator",
+      "title": "Under the decorator",
+      "description": "Build a wrapt.FunctionWrapper by hand and see it is what @wrapt.decorator builds. Put one on an instance method, a class method and a static method, read the BoundFunctionWrapper that comes back through an instance with its _self_instance, _self_parent and _self_binding, and compare a descriptor written by hand. Then a wrapper pair of your own with __bound_function_wrapper__.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "20m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/under-the-decorator",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/under-the-decorator"
+          }
+        }
+      ]
+    },
+    {
+      "name": "a-proxy-that-fits-its-target",
+      "title": "A proxy that fits its target",
+      "description": "A list, a function and a generator each wrapped in BaseObjectProxy and refusing to iterate, be called or be resumed, then each wrapped in AutoObjectProxy and working, because it reads its target at construction and adds the special methods that target has. The cost, a class generated per instance, measured, and when each base is the right one.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "10m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/a-proxy-that-fits-its-target",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/a-proxy-that-fits-its-target"
+          }
+        }
+      ]
+    },
+    {
+      "name": "wrapping-what-does-not-exist-yet",
+      "title": "Wrapping what does not exist yet",
+      "description": "A wrapt.LazyObjectProxy with a callback in place of a target, run once on first use and never at construction. wrapt.lazy_import over a shipped module that prints when it is imported, with sys.modules checked before and after, one attribute of a module, and the interface hint that lets a lazy proxy be callable before the import has happened.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/wrapping-what-does-not-exist-yet",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/wrapping-what-does-not-exist-yet"
+          }
+        }
+      ]
+    },
+    {
+      "name": "holding-a-function-weakly",
+      "title": "Holding a function weakly",
+      "description": "weakref.ref on a bound method is dead at once and weakref.proxy on one raises, because a bound method is made on each access and discarded. wrapt.WeakFunctionProxy holds the instance and the function weakly and rebinds on each call, raises ReferenceError once the instance is collected and runs a callback when it goes, which builds a registry of callbacks that lets its objects go.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "10m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/holding-a-function-weakly",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/holding-a-function-weakly"
+          }
+        }
+      ]
+    },
+    {
+      "name": "saving-and-restoring-a-proxy",
+      "title": "Saving and restoring a proxy",
+      "description": "pickle.dumps, copy.copy and copy.deepcopy each refuse a proxy with NotImplementedError, because the base class cannot know what state a subclass added and declines to guess. A proxy over a dictionary with a label of its own defines __reduce__ and round trips through pickle with both intact, then __copy__ and __deepcopy__ the same way, and dill needs nothing more.",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
+      ],
+      "platforms": [
+        "linux",
+        "macos"
+      ],
+      "frontends": [],
+      "capabilities": [
+        "write-files",
+        "kernel-exec",
+        "install-packages"
+      ],
+      "duration": "15m",
+      "authors": [
+        "Graham Dumpleton"
+      ],
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/saving-and-restoring-a-proxy",
+      "issues": "https://github.com/GrahamDumpleton/wrapt-workshops/issues",
+      "versions": [
+        {
+          "version": "0.1.0",
+          "source": {
+            "git": "https://github.com/GrahamDumpleton/wrapt-workshops",
+            "ref": "main",
+            "subdir": "workshops/saving-and-restoring-a-proxy"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: what-belongs-to-the-proxy
+title: What belongs to the proxy
+version: 0.1.0
+description: An assignment through a proxy lands on the target, and unittest.mock.Mock keeps its own state by not being the target at all. The _self_ prefix for state that stays on the proxy, the two dictionaries a proxy has and __self_dict__ for reading its own, and __self_setattr__ for a name that must be found on the proxy without the prefix.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/what-belongs-to-the-proxy
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-what-belongs-to-the-proxy
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You know where a proxy keeps what is its own. An assignment
+  through a proxy lands on the target, so state the target must not
+  see is named with the `_self_` prefix, which the proxy stores on
+  itself. `vars()` and `__dict__` follow the target too, and
+  `__self_dict__` is the proxy's own dictionary. For a name that
+  must be found on the proxy under a name other code chooses,
+  `__self_setattr__` stores it there directly, and it is the
+  spelling that works on every Python version wrapt supports.
+
+  Next is **Intercepting special methods**: why a special method
+  set on a proxy instance does nothing, and what defining it on the
+  proxy class gets you.
+
+  The "Proxy Object Attributes" section of the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  and the "Introspecting the ObjectProxy instance \_\_dict\_\_"
+  section of the
+  [known issues](https://wrapt.readthedocs.io/en/latest/issues.html)
+  in the wrapt documentation cover what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: what-belongs-to-the-proxy.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-where-assignment-lands.md
+  - pages/03-the-self-prefix.md
+  - pages/04-two-dictionaries.md
+  - pages/05-a-name-without-the-prefix.md
+  - pages/06-finish.md

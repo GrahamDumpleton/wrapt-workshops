@@ -1,0 +1,55 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: calling-through-a-proxy
+title: Calling through a proxy
+version: 0.1.0
+description: A BaseObjectProxy over a function cannot be called, so wrapt.CallableObjectProxy adds __call__, and a subclass of it counts calls while still answering for the function to inspect, isinstance and __name__. Then wrapt.partial beside functools.partial, with the bound arguments removed from the signature both report and the function still underneath one of them.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/calling-through-a-proxy
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-calling-through-a-proxy
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You can call through a proxy. `BaseObjectProxy` leaves `__call__`
+  off so that a proxy never claims to be callable when its target
+  is not, `CallableObjectProxy` adds it, and a subclass overriding
+  `__call__` intercepts every call while `__name__`, the signature
+  and `isinstance` all still answer for the function. `wrapt.partial`
+  is a callable proxy holding bound arguments, with the same
+  signature `functools.partial` reports and the function still
+  underneath.
+
+  Next is **Under the decorator**: `FunctionWrapper`, the callable
+  proxy beneath every wrapt decorator, and the descriptor that binds
+  it to an instance.
+
+  The "Function Wrappers" section of the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  and the `PartialCallableObjectProxy` entry of the
+  [API reference](https://wrapt.readthedocs.io/en/latest/api.html)
+  in the wrapt documentation cover what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: calling-through-a-proxy.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-not-callable.md
+  - pages/03-a-call-counter.md
+  - pages/04-a-partial-that-keeps-its-signature.md
+  - pages/05-finish.md

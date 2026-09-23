@@ -66,7 +66,7 @@ cat > "$overrides" <<'JSON'
     "defaultWorkshop": "",
     "browseOnStart": true,
     "workshopsDirectory": "workshops",
-    "collections": ["collections/decorators/collection.json", "collections/monkey-patching/collection.json"],
+    "collections": ["collections/decorators/collection.json", "collections/monkey-patching/collection.json", "collections/object-proxies/collection.json"],
     "welcome": ".devcontainer/welcome.md",
     "disabledFeatures": [
       "open-directory",

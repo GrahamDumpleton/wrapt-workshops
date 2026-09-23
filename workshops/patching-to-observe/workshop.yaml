@@ -50,7 +50,10 @@ finish: |
   in the wrapt documentation is where the registry pattern comes
   from, and the [Decorators with wrapt](https://github.com/GrahamDumpleton/wrapt-workshops)
   workshops in this repository, if you have not taken them, are where
-  the state class the recorder is built on is taught.
+  the state class the recorder is built on is taught. **Object
+  proxies with wrapt**, beside these in the workshop browser, is
+  where the `BaseObjectProxy` that workshop 8 touched is taught in
+  full.
 variables:
   - name: notebook
     type: path

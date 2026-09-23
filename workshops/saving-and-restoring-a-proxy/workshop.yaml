@@ -1,0 +1,62 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: saving-and-restoring-a-proxy
+title: Saving and restoring a proxy
+version: 0.1.0
+description: pickle.dumps, copy.copy and copy.deepcopy each refuse a proxy with NotImplementedError, because the base class cannot know what state a subclass added and declines to guess. A proxy over a dictionary with a label of its own defines __reduce__ and round trips through pickle with both intact, then __copy__ and __deepcopy__ the same way, and dill needs nothing more.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/saving-and-restoring-a-proxy
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-saving-and-restoring-a-proxy
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You can save and restore a proxy. The base class refuses pickling
+  and copying on purpose, because it cannot know what a subclass
+  keeps under its `_self_` names, so a subclass says how with
+  `__reduce__`, `__copy__` and `__deepcopy__`, each rebuilding the
+  proxy from the target and its own state. That is the `_self_`
+  rule from the other end: what the proxy keeps to itself is what
+  it has to save.
+
+  That is the end of **Object proxies with wrapt**. You can stand in
+  for any object, know what passes through and what does not, keep
+  state of your own, intercept what you choose, and reach for the
+  lazy, automatic, callable and weak proxies wrapt ships when they
+  fit.
+
+  Two other sets of workshops sit beside these in the workshop
+  browser. **Decorators with wrapt** is `FunctionWrapper` from the
+  decorator's side: the wrapper signature, what `instance` tells
+  you, state, and the decorators wrapt bundles. **Monkey patching
+  with wrapt** is where a proxy is installed into code you did not
+  write, with `wrap_object` and the helpers around it.
+
+  The "Serialising an Object Proxy" section of the
+  [examples](https://wrapt.readthedocs.io/en/latest/examples.html)
+  in the wrapt documentation is where the proxy on these pages comes
+  from.
+variables:
+  - name: notebook
+    type: path
+    default: saving-and-restoring-a-proxy.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-refused-on-purpose.md
+  - pages/03-reduce.md
+  - pages/04-copy-and-deepcopy.md
+  - pages/05-finish.md

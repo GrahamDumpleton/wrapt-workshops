@@ -6,7 +6,7 @@ repo := "https://github.com/GrahamDumpleton/wrapt-workshops"
 # offers them all; each collection has an index of its own under
 # collections/<name>/, with an id that never changes.
 catalog_title := "wrapt workshops"
-catalog_description := "Guided JupyterLab workshops for wrapt: writing decorators, and monkey patching."
+catalog_description := "Guided JupyterLab workshops for wrapt: writing decorators, monkey patching, and object proxies."
 
 decorators_id := "grahamdumpleton.me/wrapt/decorators"
 decorators_title := "Decorators with wrapt"
@@ -23,6 +23,13 @@ monkey_patching_description := "Guided JupyterLab workshops on patching code you
 
 # The monkey patching collection, in the order to take it.
 monkey_patching := "your-first-monkey-patch patching-every-kind-of-method three-ways-to-spell-a-patch leaving-things-as-you-found-them patches-that-last-a-block why-your-patch-did-nothing patching-before-the-import wrapping-what-is-not-a-function patching-instance-attributes patching-to-observe"
+
+object_proxies_id := "grahamdumpleton.me/wrapt/object-proxies"
+object_proxies_title := "Object proxies with wrapt"
+object_proxies_description := "Guided JupyterLab workshops on standing in for an object with wrapt: what a proxy passes through and what it cannot, state of its own, intercepting special methods, the function wrapper beneath every decorator, and the callable, automatic, lazy and weak proxies wrapt ships, each beside the standard library way."
+
+# The object proxies collection, in the order to take it.
+object_proxies := "your-first-object-proxy what-does-not-pass-through what-belongs-to-the-proxy intercepting-special-methods calling-through-a-proxy under-the-decorator a-proxy-that-fits-its-target wrapping-what-does-not-exist-yet holding-a-function-weakly saving-and-restoring-a-proxy"
 
 # List available targets.
 default:
@@ -107,7 +114,7 @@ test-all:
     done
 
 # Write or refresh every collection index and the catalog.
-index: index-decorators index-monkey-patching catalog
+index: index-decorators index-monkey-patching index-object-proxies catalog
 
 # The workshop directories are named one by one, in the collection's
 # order, which is how `jupyter workshop index` is told the order to
@@ -147,6 +154,23 @@ index-monkey-patching:
     fi
     mkdir -p collections/monkey-patching
     uv run jupyter workshop index "${dirs[@]}" --root . --out collections/monkey-patching/collection.json --repo "{{repo}}" --id "{{monkey_patching_id}}" --title "{{monkey_patching_title}}" --description "{{monkey_patching_description}}" --homepage "{{repo}}" --tag python --tag wrapt --tag monkey-patching --ordered
+
+# Write or refresh collections/object-proxies/collection.json in the collection's order.
+index-object-proxies:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    dirs=()
+    for name in {{object_proxies}}; do
+        if [ -d "workshops/$name" ]; then
+            dirs+=("workshops/$name")
+        fi
+    done
+    if [ ${#dirs[@]} -eq 0 ]; then
+        echo "No object proxies workshops under workshops/ yet; collections/object-proxies/collection.json is left as it is"
+        exit 0
+    fi
+    mkdir -p collections/object-proxies
+    uv run jupyter workshop index "${dirs[@]}" --root . --out collections/object-proxies/collection.json --repo "{{repo}}" --id "{{object_proxies_id}}" --title "{{object_proxies_title}}" --description "{{object_proxies_description}}" --homepage "{{repo}}" --tag python --tag wrapt --tag proxies --ordered
 
 # Write or refresh catalog.json from the collection indexes, recorded by relative path.
 catalog:

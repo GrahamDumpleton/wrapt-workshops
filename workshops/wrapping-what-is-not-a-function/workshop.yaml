@@ -39,10 +39,12 @@ finish: |
   `apply_patch`, and why a replacement that is not a wrapt proxy
   carries no handle.
 
-  Proxies are a subject of their own, and a further set of workshops
-  on them is planned for this repository: what passes through and
-  what does not, special methods in full, lazy and automatic proxies,
-  and custom function wrappers.
+  Proxies are a subject of their own, and **Object proxies with
+  wrapt**, the workshops listed beside these in the workshop browser,
+  teaches them in full: what passes through and what does not, the
+  proxy's own state, special methods, the function wrapper beneath
+  every decorator, and the callable, automatic, lazy and weak proxies
+  wrapt ships.
 
   Next is **Patching instance attributes**, for
   the value that lives on each object rather than on its class,

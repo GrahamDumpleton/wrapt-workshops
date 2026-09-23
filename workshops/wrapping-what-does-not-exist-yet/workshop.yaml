@@ -1,0 +1,53 @@
+apiVersion: jupyterlab-workshop/v1alpha1
+name: wrapping-what-does-not-exist-yet
+title: Wrapping what does not exist yet
+version: 0.1.0
+description: A wrapt.LazyObjectProxy with a callback in place of a target, run once on first use and never at construction. wrapt.lazy_import over a shipped module that prints when it is imported, with sys.modules checked before and after, one attribute of a module, and the interface hint that lets a lazy proxy be callable before the import has happened.
+authors: [Graham Dumpleton]
+homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/wrapping-what-does-not-exist-yet
+issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
+tags: [python, wrapt, proxies]
+duration: 15m
+platforms: [linux, macos]
+capabilities:
+  - write-files
+  - kernel-exec
+  - install-packages
+environment:
+  requirements: requirements.txt
+  kernel: workshop-wrapping-what-does-not-exist-yet
+layout: notebook
+layouts:
+  notebook:
+    main:
+      areas:
+        - { name: notebook, tabs: [] }
+gating: soft
+finish: |
+  You can wrap something that is not there yet. `LazyObjectProxy`
+  takes a callback and runs it the first time the proxy is used,
+  never at construction and never twice. `wrapt.lazy_import` is that
+  with an import for the callback, for a module or one attribute of
+  it, so an expensive or circular import waits until it is needed.
+  Because the proxy cannot read a target it does not have, the
+  `interface` hint says what kind of thing to expect, and the
+  attribute form assumes a callable.
+
+  Next is **Holding a function weakly**: `WeakFunctionProxy`, for a
+  proxy that must not keep its target alive, and the bound method
+  that dies the moment it is made.
+
+  The "Lazy Object Proxies" section of the
+  [proxies guide](https://wrapt.readthedocs.io/en/latest/wrappers.html)
+  in the wrapt documentation covers what this workshop used.
+variables:
+  - name: notebook
+    type: path
+    default: wrapping-what-does-not-exist-yet.ipynb
+    description: The notebook the exercises are done in
+pages:
+  - pages/01-welcome.md
+  - pages/02-a-callback-in-place-of-an-object.md
+  - pages/03-the-import-that-waits.md
+  - pages/04-one-attribute-and-a-hint.md
+  - pages/05-finish.md

@@ -1,7 +1,7 @@
 {
   "version": 1,
   "title": "wrapt workshops",
-  "description": "Guided JupyterLab workshops for wrapt: writing decorators, and monkey patching.",
+  "description": "Guided JupyterLab workshops for wrapt: writing decorators, monkey patching, and object proxies.",
   "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops",
   "collections": [
     {
@@ -26,6 +26,18 @@
         "python",
         "wrapt",
         "monkey-patching"
+      ]
+    },
+    {
+      "url": "collections/object-proxies/collection.json",
+      "id": "grahamdumpleton.me/wrapt/object-proxies",
+      "title": "Object proxies with wrapt",
+      "description": "Guided JupyterLab workshops on standing in for an object with wrapt: what a proxy passes through and what it cannot, state of its own, intercepting special methods, the function wrapper beneath every decorator, and the callable, automatic, lazy and weak proxies wrapt ships, each beside the standard library way.",
+      "homepage": "https://github.com/GrahamDumpleton/wrapt-workshops",
+      "tags": [
+        "python",
+        "wrapt",
+        "proxies"
       ]
     }
   ]
