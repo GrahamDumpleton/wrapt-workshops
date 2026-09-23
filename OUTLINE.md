@@ -1057,21 +1057,17 @@ and the proxies id is reserved here ahead of its design. The other
 collections use flatter ids; revising them to match is a separate
 job for another time.
 
-**Where the collections meet the browser.** The Available section of
-the workshop browser groups by collection, so anyone who subscribes
-from their own JupyterLab sees the courses apart. The Installed
-section is one list, ordered by collection and then by each
-collection's order, with every card carrying its collection's title
-and its own numbering but no heading between the groups, and that is
-what the Binder and Codespaces images show, since everything is
-installed there. With one collection it is exactly the numbered list
-it is today. What it looks like with two is to be seen on Binder
-before anything is changed: the likely improvement is grouping the
-Installed section by collection with the heading the Available
-section already uses, and that change is in jupyterlab-workshop
-rather than here, so the open question below records it. The Finish
-dialog offers the next workshop of the same collection and stops at
-its end; the last workshop's `finish` text names where to go next.
+**Where the collections meet the browser.** Both sections of the
+workshop browser group by collection, since jupyterlab-workshop
+0.10.0: the Available section for anyone who subscribes from their own
+JupyterLab, and the Installed section, which is what the Binder and
+Codespaces images show, since everything is installed there, with the
+collections in the order the settings or the launch link name them,
+each under its heading with its workshops numbered in its order. A
+launch link can name several collections, so the local start in
+`jupyter_lab_config.py` names both. The Finish dialog offers the next
+workshop of the same collection and stops at its end; the last
+workshop's `finish` text names where to go next.
 
 **Binder, Codespaces and local runs.** The Binder and Codespaces
 settings subscribe to each collection's index by relative path, so the
@@ -1080,10 +1076,10 @@ disable opening other directories, subscribing to other collections
 and author mode, which keeps a visitor to the workshops the link was
 for. The catalog is not subscribed there, since with subscribing
 disabled it would offer nothing. A local `just lab` opens on a launch
-link naming the catalog and the decorators collection, which adds both
-for the session; a launch link carries one collection, so when the
-second collection exists the local start lists one and offers the
-other through the catalog.
+link naming the catalog and both collections, which adds them for the
+session in that order, so the local start lists both grouped and
+numbered as the images do; a collection added to this repository is
+added to that link.
 
 The two images differ on trust, on purpose. A Binder session is an
 anonymous container thrown away at the end, so the workshops are
@@ -1147,10 +1143,10 @@ being patched, and opens its modules in the code pane.
 
 ## Open questions
 
-- **Grouping the Installed section by collection** in
-  jupyterlab-workshop. Decided to look at the browser on Binder with
-  both collections installed first, and take what that shows to the
-  extension, rather than change the extension ahead of seeing it.
+- None open. Grouping the Installed section by collection, once
+  recorded here, was done in jupyterlab-workshop 0.10.0 after seeing
+  both collections installed together on Binder, along with launch
+  links that name several collections.
 
 ## Status
 

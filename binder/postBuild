@@ -19,6 +19,9 @@
 # answers. The token is public by construction, since this file is,
 # and only routes events to the service under a label naming Binder;
 # the welcome message tells the visitor that progress is reported.
+# The second block is JupyterLab's own: it turns off the question about
+# fetching Jupyter news, which a fresh container would otherwise put in
+# front of every visitor before the welcome message.
 set -euo pipefail
 
 # Notebook workshops build an environment of their own on first open,
@@ -75,6 +78,9 @@ cat > "$settings/overrides.json" <<'JSON'
       "sink": "https://workshop-analytics.grumpys.work/events",
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhY2NhZDJmYmI2YTY0ODI4OWJiODM2ZjI5OWQ2ODliMSIsInN1YiI6IndyYXB0LWJpbmRlciIsInNjb3BlIjpbImluZ2VzdCJdLCJsYWJlbHMiOnsiZGVwbG95bWVudCI6IndyYXB0LWJpbmRlciJ9LCJvcmlnaW5zIjpbXSwiaWF0IjoxNzkwMTE1MDQ3LCJuYmYiOjE3OTAxMTUwNDcsImV4cCI6MTgyMTEzOTE5OX0.rHy8UfqfSV2Vj0-WTJLGtlbE69pBgGXq-gK2cylkyv4"
     }
+  },
+  "@jupyterlab/apputils-extension:notification": {
+    "fetchNews": "false"
   }
 }
 JSON

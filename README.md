@@ -321,12 +321,11 @@ jupyter lab --config=jupyter_lab_config.py
 Run from the checkout, the workshops appear under Installed in the
 workshop browser, because they sit in the `workshops` directory the
 extension looks in by default. The config file opens JupyterLab at
-`http://localhost:8888/lab?catalog=catalog.json&collection=collections/decorators/collection.json`,
-which adds the decorators collection for the session, so its workshops
-are listed numbered in the order to take them under the collection's
-title, and adds the catalog, which offers the monkey patching
-collection to subscribe to, since a launch link carries one collection.
-Without the link the workshops are listed in directory order. From the
+`http://localhost:8888/lab?catalog=catalog.json&collection=collections/decorators/collection.json&collection=collections/monkey-patching/collection.json`,
+which adds both collections for the session, so the workshops are
+grouped under each collection's heading, numbered in the order to take
+them, and adds the catalog. Without the link the workshops are listed
+in directory order. From the
 browser, open a
 workshop, or go straight to one with
 `http://localhost:8888/lab?workshop=workshops/<name>`. Outside Binder
@@ -352,8 +351,9 @@ They start JupyterLab on a free port with `~/training` as its root and
 open the workshop browser with the catalog added, which offers each
 collection to subscribe to; each workshop is installed from this
 repository into `~/training/workshops` as you open it, and stays there
-for the next launch. To land with one collection's workshops already
-listed, give its index instead:
+for the next launch. To land with a collection's workshops already
+listed, give its index instead, and repeat `--collection` to list
+several in that order:
 
 ```
 jupyter-workshop launch --root ~/training --collection https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/decorators/collection.json
