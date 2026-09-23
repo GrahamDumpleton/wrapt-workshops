@@ -50,7 +50,7 @@
     {
       "name": "what-does-not-pass-through",
       "title": "What does not pass through",
-      "description": "A proxy is a second object, so identity and type() tell the truth about it while __class__ and isinstance follow the target. An operator on a proxy returns a plain value, and an in-place operator keeps the proxy. Then the line wrapt.BaseObjectProxy draws on purpose, leaving __iter__ and __call__ off, and why wrapt.ObjectProxy still exists.",
+      "description": "A proxy is a second object, so identity and type() tell the truth about it while __class__ and isinstance follow the target. An operator on a proxy returns a plain value, and an in-place operator keeps the proxy. Then the line wrapt.BaseObjectProxy draws on purpose, leaving __iter__ and __call__ off, and why wrapt.ObjectProxy still exists and is not for new code.",
       "tags": [
         "python",
         "wrapt",

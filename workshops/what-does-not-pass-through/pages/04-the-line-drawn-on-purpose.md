@@ -46,9 +46,13 @@ defines `__call__`, or uses one of the classes wrapt ships that do,
 which a later workshop covers.
 
 The middle line shows `wrapt.ObjectProxy`, which does forward
-`__iter__`. It is the older class, kept so that code written before
-wrapt 2.0.0 keeps working, and that is its only difference from
-`BaseObjectProxy`. New proxies derive from `BaseObjectProxy`.
+`__iter__`. It is the older class, kept only so that code written
+before wrapt 2.0.0 keeps working, and that is its one difference from
+`BaseObjectProxy`. Do not use it in new code, and do not derive from
+it: it makes every proxy claim to be iterable, which is the mistake
+the base class was changed to avoid. A new proxy derives from
+`BaseObjectProxy`, and defines `__iter__` itself when its target is
+iterable, as the next workshops do.
 
 ```{verify}
 :id: drawn-on-purpose

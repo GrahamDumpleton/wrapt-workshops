@@ -2,7 +2,7 @@ apiVersion: jupyterlab-workshop/v1alpha1
 name: what-does-not-pass-through
 title: What does not pass through
 version: 0.1.0
-description: A proxy is a second object, so identity and type() tell the truth about it while __class__ and isinstance follow the target. An operator on a proxy returns a plain value, and an in-place operator keeps the proxy. Then the line wrapt.BaseObjectProxy draws on purpose, leaving __iter__ and __call__ off, and why wrapt.ObjectProxy still exists.
+description: A proxy is a second object, so identity and type() tell the truth about it while __class__ and isinstance follow the target. An operator on a proxy returns a plain value, and an in-place operator keeps the proxy. Then the line wrapt.BaseObjectProxy draws on purpose, leaving __iter__ and __call__ off, and why wrapt.ObjectProxy still exists and is not for new code.
 authors: [Graham Dumpleton]
 homepage: https://github.com/GrahamDumpleton/wrapt-workshops/tree/main/workshops/what-does-not-pass-through
 issues: https://github.com/GrahamDumpleton/wrapt-workshops/issues
@@ -30,8 +30,9 @@ finish: |
   plain value, since the result is the target's to give, and an
   in-place operator hands the new value back wrapped. And
   `BaseObjectProxy` leaves `__iter__` and `__call__` off on purpose,
-  so a proxy claims only what its target can do; `ObjectProxy` keeps
-  `__iter__` for code written before wrapt 2.0.0.
+  so a proxy claims only what its target can do. `ObjectProxy` keeps
+  `__iter__` for code written before wrapt 2.0.0 and is not for new
+  code: derive from `BaseObjectProxy` and define `__iter__` yourself.
 
   Next is **What belongs to the proxy**: where an assignment through
   a proxy lands, and how a proxy keeps state of its own without the
