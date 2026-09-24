@@ -1443,8 +1443,8 @@ Codespaces images show, since everything is installed there, with the
 collections in the order the settings or the launch link name them,
 each under its heading with its workshops numbered in its order. A
 launch link can name several collections, so the local start in
-`jupyter_lab_config.py` names both. The Finish dialog offers the next
-workshop of the same collection and stops at its end; the last
+`jupyter_lab_config.py` names all three. The Finish dialog offers the
+next workshop of the same collection and stops at its end; the last
 workshop's `finish` text names where to go next.
 
 **Binder, Codespaces and local runs.** The Binder and Codespaces
@@ -1454,8 +1454,8 @@ disable opening other directories, subscribing to other collections
 and author mode, which keeps a visitor to the workshops the link was
 for. The catalog is not subscribed there, since with subscribing
 disabled it would offer nothing. A local `just lab` opens on a launch
-link naming the catalog and both collections, which adds them for the
-session in that order, so the local start lists both grouped and
+link naming the catalog and every collection, which adds them for the
+session in that order, so the local start lists them grouped and
 numbered as the images do; a collection added to this repository is
 added to that link.
 

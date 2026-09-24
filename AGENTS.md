@@ -306,11 +306,12 @@ Conventions for the workshops here:
 
 - Never write "collection" on its own in a page or a finish text: a
   learner does not know the word means a set of workshops. Name the
-  set instead. **Decorators with wrapt** or **Monkey patching with
-  wrapt** for a sibling in this repository, "the decorator workshops"
-  with its link for the standard library repository, "the wrapture
-  workshops" for wrapture, and "these workshops" or "the workshops so
-  far" for the one the learner is in. "Collection" is the term of
+  set instead. **Decorators with wrapt**, **Monkey patching with
+  wrapt** or **Object proxies with wrapt** for a sibling in this
+  repository, "the decorator workshops" with its link for the standard
+  library repository, "the wrapture workshops" for wrapture, and
+  "these workshops" or "the workshops so far" for the one the learner
+  is in. "Collection" is the term of
   this file, OUTLINE.md and the README, where it is explained.
 
 - A custom proxy derives from `wrapt.BaseObjectProxy`, never from

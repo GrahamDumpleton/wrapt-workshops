@@ -405,13 +405,12 @@ jupyter lab --config=jupyter_lab_config.py
 Run from the checkout, the workshops appear under Installed in the
 workshop browser, because they sit in the `workshops` directory the
 extension looks in by default. The config file opens JupyterLab at
-`http://localhost:8888/lab?catalog=catalog.json&collection=collections/decorators/collection.json&collection=collections/monkey-patching/collection.json`,
-which adds both collections for the session, so the workshops are
+`http://localhost:8888/lab?catalog=catalog.json&collection=collections/decorators/collection.json&collection=collections/monkey-patching/collection.json&collection=collections/object-proxies/collection.json`,
+which adds all three collections for the session, so the workshops are
 grouped under each collection's heading, numbered in the order to take
 them, and adds the catalog. Without the link the workshops are listed
-in directory order. From the
-browser, open a
-workshop, or go straight to one with
+in directory order. From the browser, open a workshop, or go straight
+to one with
 `http://localhost:8888/lab?workshop=workshops/<name>`. Outside Binder
 the trust dialog appears when a workshop opens; it lists what the
 workshop's pages are allowed to do.
@@ -457,6 +456,7 @@ Collections tab:
 https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/catalog.json
 https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/decorators/collection.json
 https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/monkey-patching/collection.json
+https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/object-proxies/collection.json
 ```
 
 ## What is in the repository
@@ -464,8 +464,10 @@ https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collectio
 ```
 workshops/
   <name>/                a workshop: workshop.yaml, requirements.txt and pages/*.md,
-                         and files/ holding the package a monkey patching workshop
-                         patches; every collection's workshops sit here side by side
+                         and files/ holding the package a workshop ships, which the
+                         monkey patching workshops patch and one object proxies
+                         workshop imports lazily; every collection's workshops sit
+                         here side by side
 catalog.json             names every collection, by relative path; written by `just index`
 collections/
   decorators/
@@ -473,6 +475,8 @@ collections/
                          it, written by `just index`; its id never changes
   monkey-patching/
     collection.json      the index of the monkey patching collection, likewise
+  object-proxies/
+    collection.json      the index of the object proxies collection, likewise
 reference/wrapt          a git submodule of wrapt at the release the workshops teach,
                          the source of truth for its API and documentation
 reference/jupyterlab-workshop
@@ -489,9 +493,9 @@ binder/                  the Binder image: the locked runtime dependencies expor
                          on port 8888, and the welcome message VS Code opens
 .github/workflows/       CI: test.yml lints the catalog, every collection and every
                          workshop, and self-tests every workshop, on each push
-jupyter_lab_config.py    opens a local JupyterLab on the catalog and the decorators
-                         collection, so the workshops are listed in order; `just lab`
-                         passes it to jupyter lab
+jupyter_lab_config.py    opens a local JupyterLab on the catalog and every collection,
+                         so the workshops are listed under each collection in order;
+                         `just lab` passes it to jupyter lab
 Justfile                 the common tasks, and the order of each collection; run `just`
                          to list them
 .mcp.json                the MCP server configuration for AI agent clients
