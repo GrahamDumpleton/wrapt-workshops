@@ -120,8 +120,9 @@ print("instances seen :", instances)
 Read through the instance, `shop.buy` is not the `FunctionWrapper`
 in the class. It is a `BoundFunctionWrapper`, made by the
 `FunctionWrapper`'s `__get__`, holding the shop as `_self_instance`
-and pointing back at the class's wrapper as `_self_parent`. The
-three bindings are what you predicted, and the wrapper was told the
+and that `FunctionWrapper` as `_self_parent`, which is what the
+identity check against `Shop.__dict__["buy"]` confirms. The three
+bindings are what you predicted, and the wrapper was told the
 shop for the instance method, the class for the class method and
 `None` for the static method, with the static method's arguments
 left alone. That table is the one **Decorators with wrapt** teaches
