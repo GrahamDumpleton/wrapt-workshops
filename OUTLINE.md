@@ -539,7 +539,7 @@ establish, and each is a page rather than a workshop. A migration
 workshop, converting stdlib decorators to wrapt, is redundant because
 every workshop here is the migration. The calling convention markers
 and the sync and async adapters are a footnote to workshop 11. Object
-proxies, `ObjectProxy` and its lazy and automatic variants, are the
+proxies, `BaseObjectProxy` and its lazy and automatic variants, are the
 foundation of monkey patching and are for that collection.
 
 ## Shape of the monkey patching collection
@@ -911,7 +911,7 @@ they are API, and workshop 4 teaches them as fundamentals. The
 pitfalls section of the docs is spread over workshops 1, 2, 4 and 6
 rather than being a workshop.
 
-`ObjectProxy` and its lazy and automatic variants were two topics in
+`BaseObjectProxy` and its lazy and automatic variants were two topics in
 the middle of the earlier monkey patching module. Workshop 8 teaches
 the least it needs and the proxies collection has the rest, because
 proxies are a course of their own with a different audience: the
@@ -1040,9 +1040,11 @@ which is named and not dwelt on.
 
 Then the line drawn on purpose: `iter(BaseObjectProxy([1, 2]))` fails,
 because `__iter__` is left off the base class so that a proxy over a
-non-iterable does not claim to be one, and `ObjectProxy` forwards it,
-kept for code written before wrapt 2.0.0. `__call__` is left off for
-the same reason, and workshop 5 is where it comes back.
+non-iterable does not claim to be one, and a three line subclass that
+defines `__iter__` itself iterates. `wrapt.ObjectProxy`, kept only for
+code written before wrapt 2.0.0, appears in a hint and never in a
+cell. `__call__` is left off for the same reason, and workshop 5 is
+where it comes back.
 
 - Format: notebook.
 
@@ -1063,10 +1065,15 @@ learner's cell gets it wrong. `vars(proxy)` shows the shop's
 dictionary, because `__dict__` is forwarded too, and `__self_dict__`
 shows the proxy's own.
 
-Then the name that cannot carry the prefix: code that will look up
-`proxy.describe` by that exact name, on a proxy over an object with
-no `describe`. `__self_setattr__("describe", ...)` stores it on the
-proxy under the name asked for. It is the portable spelling:
+Then an override that varies by instance. A method on the proxy
+class, like `Counted.buy`, is on every instance, which is wrong for a
+method only some targets have: a `Market` subclass of `Shop` adds
+`refund`, checkout code asks `hasattr` before calling it, and a
+`refund` on the class would make every counted shop say yes. So
+`Counted.__init__` stores its `_self_refund` method under the name
+`refund` with `__self_setattr__`, only when the wrapped object has
+one, and a quiz first asks what the class-level version would do.
+It is the portable spelling:
 `object.__setattr__` does the same with the pure Python
 implementation and, from Python 3.13, with the C extension too, and
 a sentence says so, since the learner's 3.14 kernel will not show

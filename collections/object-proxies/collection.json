@@ -50,7 +50,7 @@
     {
       "name": "what-does-not-pass-through",
       "title": "What does not pass through",
-      "description": "A proxy is a second object, so identity and type() tell the truth about it while __class__ and isinstance follow the target. An operator on a proxy returns a plain value, and an in-place operator keeps the proxy. Then the line wrapt.BaseObjectProxy draws on purpose, leaving __iter__ and __call__ off, and why wrapt.ObjectProxy still exists and is not for new code.",
+      "description": "A proxy is a second object, so identity and type() tell the truth about it while __class__ and isinstance follow the target. An operator on a proxy returns a plain value, and an in-place operator keeps the proxy. Then the line wrapt.BaseObjectProxy draws on purpose, leaving __iter__ and __call__ off, and how a subclass that wraps something iterable defines __iter__ itself.",
       "tags": [
         "python",
         "wrapt",
@@ -86,7 +86,7 @@
     {
       "name": "what-belongs-to-the-proxy",
       "title": "What belongs to the proxy",
-      "description": "An assignment through a proxy lands on the target, and unittest.mock.Mock keeps its own state by not being the target at all. The _self_ prefix for state that stays on the proxy, the two dictionaries a proxy has and __self_dict__ for reading its own, and __self_setattr__ for a name that must be found on the proxy without the prefix.",
+      "description": "An assignment through a proxy lands on the target, and unittest.mock.Mock keeps its own state by not being the target at all. The _self_ prefix for state that stays on the proxy, the two dictionaries a proxy has and __self_dict__ for reading its own, and __self_setattr__ in __init__ for an override that varies by instance, present only when the wrapped object has the method.",
       "tags": [
         "python",
         "wrapt",

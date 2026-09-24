@@ -314,10 +314,15 @@ Conventions for the workshops here:
   this file, OUTLINE.md and the README, where it is explained.
 
 - A custom proxy derives from `wrapt.BaseObjectProxy`, never from
-  `wrapt.ObjectProxy`. Since wrapt 2.0.0 `BaseObjectProxy` is the
-  recommended base class; `ObjectProxy` exists for code that depended
-  on its `__iter__` being proxied by default, and the pages do not go
-  into the difference beyond the one point that matters: calling,
+  `wrapt.ObjectProxy`, and `wrapt.ObjectProxy` never appears in a
+  cell or any other example code. Since wrapt 2.0.0 `BaseObjectProxy`
+  is the recommended base class; `ObjectProxy` exists only for code
+  that depended on its `__iter__` being proxied by default, which was
+  a mistake in the original design. At most a `hint` says that if the
+  learner sees `wrapt.ObjectProxy` elsewhere it is the old name, not
+  to be used, and that `wrapt.BaseObjectProxy` is the class for wrapt
+  2.0.0 and later. The pages do not go into the difference beyond the
+  one point that matters: calling,
   iteration and the other special methods whose presence says what
   an object is are not on `BaseObjectProxy`, so a proxy over
   something callable or iterable defines `__call__` or `__iter__`

@@ -16,9 +16,9 @@ it can and wrapping the new value when it cannot.
 
 `BaseObjectProxy` leaves `__iter__` and `__call__` off on purpose,
 because their presence on a type is what says an object is iterable
-or callable, and a proxy must claim only what its target can do.
-`ObjectProxy` forwards `__iter__` and exists only for code written
-before wrapt 2.0.0; new code does not use it.
+or callable, and a proxy must claim only what its target can do. A
+proxy over something iterable defines `__iter__` itself, forwarding
+to `__wrapped__`, and the claim is then true for that class alone.
 
 ```{quiz}
 :id: why-no-iter
@@ -32,8 +32,8 @@ options:
     explanation: "A proxy can forward `__next__` as easily as `__len__`. The base class leaves `__iter__` off by choice, not because it cannot be written."
   - text: "Lists are iterated through a C level fast path that skips the proxy."
     explanation: "`iter()` looks for `__iter__` on the proxy's type, finds none, and raises before any list code is reached."
-  - text: "`__iter__` is forwarded, but only for `ObjectProxy` subclasses that also define `__len__`."
-    explanation: "`ObjectProxy` forwards `__iter__` unconditionally, which is why new code does not use it. `BaseObjectProxy` never does, whatever else is defined."
+  - text: "`__iter__` is forwarded, but only once the subclass also defines `__len__`."
+    explanation: "`__len__` has nothing to do with it. `BaseObjectProxy` never forwards `__iter__`, whatever else is defined; a subclass that wants iteration defines `__iter__` itself."
 explanation: "Whether a type has `__iter__` is how Python, and `isinstance` against `Iterable`, decide whether an object is iterable. A base class for wrapping anything must not carry it, so a proxy over something iterable defines it itself."
 ```
 

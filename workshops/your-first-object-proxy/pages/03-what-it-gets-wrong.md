@@ -6,25 +6,32 @@ requires: [quiz:predict-delegate, verify:delegate-report]
 # What it gets wrong
 
 Now ask the delegate the questions that code receiving a shop might
-ask. Before running the cell, predict which of them come out the same
-as for the shop itself.
+ask. Six are listed below. Before running anything, predict which of
+them come out the same as for the shop itself.
 
 ```{quiz}
 :id: predict-delegate
 :title: Predict the delegate
 :type: multi
-question: "Which of these give the same answer for `delegate` as for `shop`?"
+question: "Which of these give the same answer for `delegate` as for `shop`? Pick every one that applies."
 options:
   - text: "`isinstance(delegate, Shop)`"
     explanation: "`isinstance` reads `__class__`, and the delegate's is `Delegate`. Nothing about `__getattr__` changes that."
-  - text: "`len(delegate)`"
-    explanation: "Python looks special methods up on the type, never through `__getattr__`, and `Delegate` has no `__len__`."
   - text: "`delegate.buy(\"pear\")`"
     correct: true
+  - text: "`len(delegate)`"
+    explanation: "Python looks special methods up on the type, never through `__getattr__`, and `Delegate` has no `__len__`."
+  - text: "`delegate == shop`"
+    explanation: "Equality is `__eq__`, another special method found on the type. `Delegate` has none, so Python falls back to identity, and the delegate is not the shop."
   - text: "`delegate.name`"
     correct: true
+  - text: "`str(delegate)`"
+    explanation: "`str` looks for `__str__` on the type as well. `Delegate` only has the default from `object`, which prints a class name and an address."
 explanation: "Only what goes through `__getattr__` is forwarded: plain attribute reads, including methods. `isinstance` and the special methods never get there."
 ```
+
+You have already seen `delegate.buy` and `delegate.name` work on the
+previous page. The report below runs the other four.
 
 ```{cell-insert}
 :id: insert-delegate-report
@@ -48,14 +55,16 @@ for key, value in delegate_report.items():
     print(f"{key:>10}: {value}")
 ```
 
-Four questions, four wrong answers. `isinstance` says no, because
-the delegate's `__class__` is `Delegate`. `len` raises, because
-Python finds special methods on the type, and `Delegate` has no
-`__len__`; `__getattr__` is never consulted for them. `==` is false
-for the same reason, falling back to identity, and `str` prints a
-`Delegate` at an address rather than `Shop('corner')`.
+Four questions, and the delegate gets all four wrong. `isinstance`
+says no, because the delegate's `__class__` is `Delegate`. `len`
+raises, because Python finds special methods on the type, and
+`Delegate` has no `__len__`; `__getattr__` is never consulted for
+them. `==` is false for the same reason, falling back to identity,
+and `str` prints a `Delegate` at an address rather than
+`Shop('corner')`. The two that do work, `buy` and `name`, are the
+only ones that go through `__getattr__`.
 
-There is a fifth, and it is the one that bites in real code. Assign
+There is a fifth failure, and it is the one that bites in real code. Assign
 an attribute through the delegate and see where it lands.
 
 ```{cell-insert}

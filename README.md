@@ -222,14 +222,14 @@ table in [OUTLINE.md](OUTLINE.md#status) records where each stands.
    15 minutes). Identity and `type()` against `__class__` and
    `isinstance`, an operator that returns a plain value and an
    in-place one that keeps the proxy, and the line drawn on purpose:
-   `__iter__` and `__call__` left off, and why `ObjectProxy` still
-   exists.
+   `__iter__` and `__call__` left off, and a subclass that defines
+   `__iter__` itself.
 
 3. **What belongs to the proxy** (`what-belongs-to-the-proxy`,
    15 minutes). An assignment through a proxy lands on the target,
    `Mock` with `wraps` for comparison, the `_self_` prefix, the two
-   dictionaries and `__self_dict__`, and `__self_setattr__` for a
-   name that must stay on the proxy without the prefix.
+   dictionaries and `__self_dict__`, and `__self_setattr__` in
+   `__init__` for an override that varies by instance.
 
 **Changing what the proxy does**
 

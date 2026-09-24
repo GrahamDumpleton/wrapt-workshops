@@ -12,9 +12,8 @@ needs something of its own, a count, a label, a cache, that the
 target must not see and other code must not mistake for the target's.
 
 This workshop puts a count on a proxy the wrong way, then the right
-way, looks at the two dictionaries a proxy has, and ends with the
-case where the proxy's own attribute has to carry a name that other
-code chose.
+way, looks at the two dictionaries a proxy has, and ends with an
+override that only some instances of the proxy should have.
 
 ## The environment
 

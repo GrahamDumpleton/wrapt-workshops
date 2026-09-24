@@ -14,9 +14,11 @@ back. A method defined on the proxy class is found before anything is
 forwarded, and calls through `self.__wrapped__` to intercept an
 ordinary method.
 
-When the proxy's own attribute must carry a name other code chose,
-`__self_setattr__` stores it on the proxy under that name, and works
-on every Python version wrapt supports.
+A method on the class is on every instance. When whether the proxy
+overrides a method has to vary by instance, because only some targets
+have it, `__init__` stores the override with `__self_setattr__` under
+the method's name on that instance alone, and it works on every
+Python version wrapt supports.
 
 ```{quiz}
 :id: where-it-lands
