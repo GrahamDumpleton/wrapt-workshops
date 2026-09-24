@@ -113,8 +113,7 @@ For the object proxies collection:
   is workshop 10.
 
 - `docs/issues.rst`: introspecting the proxy's own `__dict__` through
-  `__self_dict__`, ternary `pow()`, and the signature of
-  `PartialCallableObjectProxy` over a bound method.
+  `__self_dict__`, and ternary `pow()`.
 
 - `docs/typing.rst`: the Object Proxies and Function Wrappers
   sections, read so that no cell contradicts what a type checker
@@ -1134,8 +1133,7 @@ Then `wrapt.partial(fetch_price, "apple")` beside
 `_self_kwargs`, `inspect.signature` reporting the remaining
 parameters as it does for `functools.partial`, and the difference,
 that the wrapt one is still the function to `isinstance` and carries
-its attributes, where `functools.partial` is a type of its own. The
-issues section on a partial over a bound method is a page.
+its attributes, where `functools.partial` is a type of its own.
 
 - Format: notebook.
 

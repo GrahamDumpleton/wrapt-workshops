@@ -76,12 +76,3 @@ it is one. The bound arguments are on `_self_args` and
 :trigger: cell-executed wrapt-partial
 by_wrapt() == 0.5 and str(inspect.signature(by_wrapt)) == "(currency='USD')" and by_wrapt.__name__ == "fetch_price" and by_wrapt._self_args == ("apple",)
 ```
-
-```{hint}
-:title: A partial over a bound method
-The class behind `wrapt.partial` is `PartialCallableObjectProxy`,
-and its `__call__` is what applies the bound arguments. The wrapt
-documentation's known issues page has a section on the signature it
-reports for a partial over a bound method, where `self` is already
-gone before the partial binds anything.
-```
