@@ -1,3 +1,5 @@
+<a href="https://github.com/GrahamDumpleton/wrapt"><img src="https://raw.githubusercontent.com/GrahamDumpleton/wrapt/develop/docs/_static/wrapt-logo.svg" alt="wrapt" width="182"></a>
+
 # wrapt workshops
 
 [![Launch on Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GrahamDumpleton/wrapt-workshops/main?urlpath=lab)
