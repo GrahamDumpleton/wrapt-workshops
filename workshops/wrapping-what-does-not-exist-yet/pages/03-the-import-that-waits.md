@@ -52,11 +52,13 @@ not before and not after_proxy and after_use and summary == "3 items in stock"
 ```
 
 ```{hint}
-:title: The standard library way
-`importlib.util.LazyLoader` defers a module the same way, by
-replacing the module's class until first attribute access, and a
-module can define a `__getattr__` of its own to defer part of
-itself. Both defer a module and nothing else. `LazyObjectProxy`
-defers any object a callback can make, and `lazy_import` is one
-callback among many.
+:title: The Python way from 3.15
+Python 3.15 adds a `lazy import` statement, from PEP 810: `lazy
+import shop.reports` binds the name at once and runs the import the
+first time the name is used, which is what the cell did. From 3.15
+onwards that is the official way to defer a module. Code that has to
+run on earlier versions can use `wrapt.lazy_import` instead and get
+the same behaviour today. The statement defers modules and nothing
+else; `LazyObjectProxy` defers any object a callback can make, and
+`lazy_import` is one callback among many.
 ```

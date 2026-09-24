@@ -963,7 +963,8 @@ The comparison with the standard library continues in the form the
 monkey patching collection gave it: every workshop opens with the way
 the learner already knows, a delegating `__getattr__`,
 `unittest.mock.Mock` with `wraps`, `functools.partial`, a
-hand-written descriptor, `importlib.util.LazyLoader`, `weakref.proxy`
+hand-written descriptor, the `lazy import` statement of Python 3.15,
+`weakref.proxy`
 and `WeakMethod`, `copy` and `pickle`, in a cell and a sentence, and
 shows where it falls short before showing the wrapt class.
 
@@ -1212,8 +1213,10 @@ special methods to add, and `interface=Callable` or an iterable type
 from `collections.abc` tells it. Avoiding a circular import is the
 use the page ends on.
 
-The comparison is `importlib.util.LazyLoader` and a module-level
-`__getattr__`, which defer a module and nothing else.
+The comparison is the `lazy import` statement of Python 3.15, from
+PEP 810, named in a hint as the official way from 3.15 onwards with
+`wrapt.lazy_import` for earlier versions; it defers a module and
+nothing else.
 
 - Format: notebook.
 
