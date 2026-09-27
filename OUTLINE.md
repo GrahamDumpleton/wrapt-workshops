@@ -579,7 +579,7 @@ library continues here in a different form: every workshop opens
 with the way the learner already knows, assignment, `getattr` and
 `setattr`, or `unittest.mock.patch`, in a cell and a sentence, and
 shows where it falls short before showing the wrapt helper. Every
-workshop uses only what is in wrapt 2.4.1, the release the reference
+workshop uses only what is in wrapt 2.5.0, the release the reference
 submodule is at; the lifecycle functions the collection is built on
 arrived in 2.4.0.
 
@@ -981,7 +981,7 @@ gets, and teach nothing that differs between the C extension and the
 pure Python implementation. Where the docs record a difference, the
 workshop teaches the spelling that works on both: `__self_setattr__`
 rather than `object.__setattr__`, with a sentence on why. Every
-workshop uses only what is in wrapt 2.4.1, the release the reference
+workshop uses only what is in wrapt 2.5.0, the release the reference
 submodule is at.
 
 ## The object proxies workshops
