@@ -1484,17 +1484,19 @@ codespace's GitHub token.
 
 Both report anonymous progress events to the workshops' own analytics
 service, which is how it can be seen where a workshop loses people.
-Each carries an ingest token of its own, labelled `wrapt-binder` and
-`wrapt-codespaces`, so the service tells the two apart and either can
-be revoked alone; the tokens are public by construction, since the
-settings scripts are. The tokens carry only the deployment label: the
+The service and one ingest token are declared in the analytics block
+of each collection index, the same block in all three, and each
+deployment's settings only turn reporting on with `report: always`,
+since from 0.13.0 a deployment can adopt the sink its collection
+declares. One token serves every collection and every deployment: the
 collection is identified by the `id` in its index, which every event
-already carries, so no label repeats it. Each welcome message tells
-the visitor that progress is reported and what is never sent. The
-collection index carries no block of its own, as the other
-collections' do not: it would only ask someone who subscribed from
-their own JupyterLab to opt in, and the two images are where the
-numbers are.
+already carries, and the host and frontend say where the event came
+from, so no token or label per deployment or per collection is
+needed. The token is public by construction, since the indexes are.
+Each welcome message tells the visitor that progress is reported and
+what is never sent. Someone who subscribes from their own JupyterLab
+is offered the same sink as a checkbox in the trust dialog, off unless
+ticked.
 
 **CI.** `.github/workflows/test.yml` lints the catalog, every
 collection index and every workshop, and self-tests every workshop, on

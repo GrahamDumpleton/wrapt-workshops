@@ -10,6 +10,10 @@
     "decorators"
   ],
   "ordered": true,
+  "analytics": {
+    "sink": "https://workshop-analytics.grumpys.work/events",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MDg4YmIwMTBlMGE0MjA1YWM4NWVkMGRmZGM0YTNiNCIsInN1YiI6IndyYXB0LXdvcmtzaG9wcyIsInNjb3BlIjpbImluZ2VzdCJdLCJsYWJlbHMiOnt9LCJvcmlnaW5zIjpbXSwiaWF0IjoxNzkwNTUyNDA0LCJuYmYiOjE3OTA1NTI0MDQsImV4cCI6MTgyMTU3MTE5OX0.Gw1FHIuxOhTSOkRIrbxCjWopQl8KAoteXUGjubcVy3c"
+  },
   "workshops": [
     {
       "name": "your-first-wrapt-decorator",

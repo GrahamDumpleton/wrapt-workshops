@@ -11,8 +11,9 @@ Nothing to install: start the workshops on
 with no account, or in
 [GitHub Codespaces](https://codespaces.new/GrahamDumpleton/wrapt-workshops?quickstart=1)
 with a GitHub account (see [Launch on Binder](#launch-on-binder) and
-[Launch on Codespaces](#launch-on-codespaces) below). Or
-[run them locally](#run-locally).
+[Launch on Codespaces](#launch-on-codespaces) below). Or run them
+[in a container](#run-in-a-container) with nothing installed but
+Docker, or [locally](#run-locally).
 
 Guided, hands-on workshops for
 [wrapt](https://github.com/GrahamDumpleton/wrapt), the Python module for
@@ -307,14 +308,16 @@ checkout's own collection indexes, and names `binder/welcome.md` as the
 message shown when the session starts, which says what the workshops
 are and how to end the session.
 
-The same override names the workshops' own analytics service as the sink
-for progress events, so a session reports which pages, actions and
-checks happened and when, and it can be seen where the workshops are
-clear and where they are not. Sessions are anonymous, and the events
-never carry notebook contents, cell output or form answers; the welcome
-message says that progress is reported before you start. The token in
-the script is as public as the script, is accepted only for ingest, and
-is labelled `wrapt-binder` so it can be revoked on its own.
+The same override turns on reporting to the workshops' own analytics
+service, which each collection's index names as its sink, so a session
+reports which pages, actions and checks happened and when, and it can
+be seen where the workshops are clear and where they are not. Sessions
+are anonymous, and the events never carry notebook contents, cell
+output or form answers; the welcome message says that progress is
+reported before you start. The token in the indexes is as public as
+they are and is accepted only for ingest; the events say which
+collection they belong to and whether they came from Binder, a
+codespace or a container.
 
 Binder sessions are temporary: anything you do in one is gone when it
 ends, so finish a workshop in the session you started it in. When you
@@ -350,11 +353,10 @@ gone, open the address of the port labelled JupyterLab from VS Code's
 Ports panel. The tab is not opened by itself, because browsers block a
 tab nobody clicked for. From there the workshop browser lists the
 workshops in order, as on Binder, and `setup.sh` installs the same
-settings override as `binder/postBuild`, reporting progress to the same
-analytics service under a token of its own, labelled
-`wrapt-codespaces`, with two differences: it names
-`.devcontainer/welcome.md` as the message shown when JupyterLab starts,
-and it does not mark the workshops as trusted.
+settings override as `binder/postBuild`, reporting progress to the
+collections' sink without asking as Binder does, with two differences:
+it names `.devcontainer/welcome.md` as the message shown when
+JupyterLab starts, and it does not mark the workshops as trusted.
 
 On Binder the trust dialog is removed, because the session is an
 anonymous container that is thrown away when you are done. A codespace
@@ -380,6 +382,56 @@ work, and starting it again from
 [github.com/codespaces](https://github.com/codespaces) starts JupyterLab
 again with it. A stopped codespace still uses your storage allowance, so
 delete it there when you have finished with the workshops.
+
+## Run in a container
+
+Every jupyterlab-workshop release is published as a container image,
+with JupyterLab and the extension ready and no workshops inside. Run it
+with the three collection indexes and the catalog and it installs every
+workshop, starts JupyterLab and prints the link to open:
+
+```
+docker run --rm -p 8888:8888 \
+    -e WORKSHOP_CATALOG=https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/catalog.json \
+    -e "WORKSHOP_COLLECTION=https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/decorators/collection.json https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/monkey-patching/collection.json https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/object-proxies/collection.json" \
+    -e WORKSHOP_INSTALL=1 \
+    -e WORKSHOP_ANALYTICS=always \
+    ghcr.io/grahamdumpleton/jupyterlab-workshop:0.13.0
+```
+
+`WORKSHOP_COLLECTION` takes the indexes separated by spaces, in the
+order the browser groups them, and every workshop of every collection
+named is installed; the catalog is added for the session so the
+Collections dialog lists all three. Name one index to take one
+collection alone. The link, `http://127.0.0.1:8888/lab?token=…`,
+appears in the container's output once the server is up. It opens the
+workshop browser with the workshops listed under Installed, grouped
+under each collection's heading and numbered in the order to take
+them, and trusted, since whoever ran the image chose them. Each
+workshop builds its environment on first open from the image's Python,
+installing wrapt with pip, so the container needs the network then as
+well as at start. Podman runs the same command. Name a workshop to open
+it straight away instead of the browser, `-e WORKSHOP_WORKSHOP=<name>`,
+and pass a fixed token with `-e JUPYTER_TOKEN=…` so the link is the
+same every start.
+
+The workshops, their environments and everything you make in them live
+in the container's home directory, `/home/jovyan`, and go when the
+container does. To keep them, mount a volume there:
+`-v wrapt:/home/jovyan`. The next run finds the workshops installed
+and their environments built, and finds your files and your progress
+where you left them.
+
+`WORKSHOP_ANALYTICS=always` reports your progress to the workshops'
+own analytics service as Binder and Codespaces do, which pages you
+visited, which actions you clicked and what the checks found, and when,
+with nothing that identifies you and none of what you type or make.
+The trust dialog is not shown in the container, so leaving the
+variable out means nothing is reported: the checkbox that would offer
+it is never seen. The image, its variables and how a collection can
+build an image of its own with the workshops already inside are
+described in [the
+documentation](https://jupyterlab-workshop.readthedocs.io/en/latest/deploying.html#a-container-image).
 
 ## Run locally
 
@@ -474,7 +526,8 @@ catalog.json             names every collection, by relative path; written by `j
 collections/
   decorators/
     collection.json      the index of the decorators collection, in the order to take
-                         it, written by `just index`; its id never changes
+                         it, written by `just index`; its id never changes, and it
+                         names the analytics service every deployment reports to
   monkey-patching/
     collection.json      the index of the monkey patching collection, likewise
   object-proxies/

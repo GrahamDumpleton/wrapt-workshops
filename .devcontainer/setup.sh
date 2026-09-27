@@ -11,11 +11,10 @@
 # anything in their codespace. pip rather than uv, as on Binder, since
 # this is the learner's environment and the workshops use pip themselves.
 #
-# The analytics block is the same as Binder's but carries a token of its
-# own, so the service tells the two apart and either can be revoked
-# alone; it is as public as this file and only routes anonymous progress
-# events to the workshops' service. .devcontainer/welcome.md tells the
-# learner that progress is reported.
+# The analytics setting is Binder's: it reports every session's
+# progress events to the sink each collection index's analytics block
+# names, without asking; the events say they came from a codespace.
+# .devcontainer/welcome.md tells the learner that progress is reported.
 # The second block is JupyterLab's own: it turns off the question about
 # fetching Jupyter news, which would otherwise come before the welcome
 # message the first time the codespace's JupyterLab opens.
@@ -76,10 +75,7 @@ cat > "$overrides" <<'JSON'
       "remove",
       "author"
     ],
-    "analytics": {
-      "sink": "https://workshop-analytics.grumpys.work/events",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NWYyZTk4OTBjZjE0NmQzOWFmNDFiZGVlYjExN2Q0NSIsInN1YiI6IndyYXB0LWNvZGVzcGFjZXMiLCJzY29wZSI6WyJpbmdlc3QiXSwibGFiZWxzIjp7ImRlcGxveW1lbnQiOiJ3cmFwdC1jb2Rlc3BhY2VzIn0sIm9yaWdpbnMiOltdLCJpYXQiOjE3OTAxMTUwNTQsIm5iZiI6MTc5MDExNTA1NCwiZXhwIjoxODIxMTM5MTk5fQ.G5W_xc2ukdtzGtM5UjI5wgdJOM6Uq9fs6a4-09odhkY"
-    }
+    "analytics": { "report": "always" }
   },
   "@jupyterlab/apputils-extension:notification": {
     "fetchNews": "false"
