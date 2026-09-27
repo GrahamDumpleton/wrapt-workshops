@@ -17,7 +17,9 @@ about a parameter the caller must not pass.
 This short workshop makes one of those decorators, watches
 `inspect.signature()` and `help()` get it wrong, and fixes them with
 `wrapt.with_signature`, which changes what introspection sees and
-nothing else.
+nothing else: the signature, and with it the docstring, which was
+describing the argument too. `wrapt.with_doc` then does the same for
+a docstring on its own.
 
 ## The environment
 

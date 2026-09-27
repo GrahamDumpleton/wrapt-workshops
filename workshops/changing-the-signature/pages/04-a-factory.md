@@ -7,9 +7,11 @@ requires: [verify:factory-derived]
 
 `wrapt.with_signature(factory=...)` takes a function that is called
 at decoration time with the function being wrapped and returns the
-signature to present. A decorator that always removes `session` can
-then derive the new signature from the old, and wrap the two steps,
-describing and injecting, into one decorator that callers apply.
+signature to present, or a tuple of the signature and the docstring,
+so that one factory derives both in a single pass. A decorator that
+always removes `session` can then derive the new signature from the
+old, say so in the docstring, and wrap the two steps, describing and
+injecting, into one decorator that callers apply.
 
 `with_session` here is that decorator. It is a plain function: it
 applies `with_signature` to the function, then `inject_session` to
@@ -23,7 +25,8 @@ the result, and returns that.
 def without_session(wrapped):
     signature = inspect.signature(wrapped)
     parameters = [p for p in signature.parameters.values() if p.name != "session"]
-    return signature.replace(parameters=parameters)
+    doc = f"{wrapped.__doc__}\n\nThe session is supplied by the decorator; do not pass one."
+    return signature.replace(parameters=parameters), doc
 
 def with_session(wrapped):
     return inject_session(wrapt.with_signature(factory=without_session)(wrapped))
@@ -39,6 +42,7 @@ class Shop:
 
     @with_session
     def buy(self, session, item):
+        """Sell an item from the shop in a session."""
         return f"{self.name} sold {item} at {session.lookup(item)}"
 
 shop = Shop("Corner Store")
@@ -47,16 +51,25 @@ print("function      :", fetch_price("fig"), inspect.signature(fetch_price))
 print("method        :", shop.buy("apple"))
 print("on the class  :", inspect.signature(Shop.buy))
 print("on an instance:", inspect.signature(shop.buy))
+print()
+help(shop.buy)
 
 function_signature = str(inspect.signature(fetch_price))
 class_signature = str(inspect.signature(Shop.buy))
 bound_signature = str(inspect.signature(shop.buy))
+function_doc = fetch_price.__doc__
+class_doc = Shop.buy.__doc__
+bound_doc = shop.buy.__doc__
 ```
 
 The function reports `(item, currency='USD')`, with the default kept
 and `session` gone. The method reports `(self, item)` on the class
 and `(item)` on an instance, because `with_signature` strips the
 first parameter from the bound view as Python does for any method.
+The docstring is the original's with the note appended, on the
+function and on both views of the method, and the help for the bound
+method reads as a whole: the signature the caller uses, and a
+docstring that explains where the session comes from.
 
 One detail decided how `without_session` was written. The factory
 runs when the decorator is applied, which for a method is inside the
@@ -71,7 +84,16 @@ by name is right on both.
 :substrate: learner-kernel
 :path: {{ notebook }}
 :trigger: cell-executed factory
-function_signature == "(item, currency='USD')" and class_signature == "(self, item)" and bound_signature == "(item)"
+function_signature == "(item, currency='USD')" and class_signature == "(self, item)" and bound_signature == "(item)" and function_doc.endswith("do not pass one.") and class_doc == bound_doc and bound_doc.startswith("Sell an item from the shop in a session.")
+```
+
+```{hint}
+:title: When doc= is given as well
+A factory that returns a tuple can still be paired with `doc=`, and
+then the docstring from the tuple is ignored: an explicit `doc=`
+always wins. A factory that returns only a signature leaves the
+docstring delegating to the wrapped function, as on the first cell
+of the previous page.
 ```
 
 ```{hint}

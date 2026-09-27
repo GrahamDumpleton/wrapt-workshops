@@ -57,7 +57,7 @@ from memory. For the decorators collection:
 
 - `docs/bundled.rst`: `lru_cache`, `synchronized` in its synchronous
   and asynchronous forms, the calling convention markers,
-  `with_signature` and `bind_state_to_wrapper`.
+  `with_signature`, `with_doc` and `bind_state_to_wrapper`.
 
 - `docs/examples.rst`: tracking call state, checking argument types
   and validating argument values, which are the state class pattern the
@@ -517,9 +517,25 @@ where the overridden signature still comes through. The `adapter`
 argument to `wrapt.decorator` is named as the older mechanism this
 replaces, and not taught.
 
+The docstring is the other half of the lie, since it describes the
+argument too, and wrapt 2.5.0 added the means to fix it. The
+prototype page adds a second cell with the `doc=` argument to
+`with_signature`, after saying why assigning to `__doc__` on a
+wrapper is not the fix: `__doc__` on every wrapt wrapper delegates
+to the wrapped function, so the assignment writes through. The
+factory page has the factory return a tuple of the signature and the
+docstring, so one factory derives both, and checks the bound view of
+a method reports the same docstring as the class. A page of its own
+then covers `wrapt.with_doc` for the docstring alone, from `doc=`
+and from a `factory=` stacked above `with_signature`, where the
+factory sees the presented signature and can quote it. The finish
+page adds a quiz on the write-through. Both features are in wrapt
+2.5.0, the release the reference submodule is at, and the workshop
+is the only one that uses them.
+
 - Format: notebook.
 
-- Length: 10 minutes.
+- Length: 15 minutes.
 
 ## Topics the decorators collection leaves out
 

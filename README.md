@@ -115,9 +115,11 @@ build. All twelve are written; the status table in
     decorator serving both kinds, and `synchronized` switching to an
     asyncio lock by itself.
 
-12. **Changing the signature** (`changing-the-signature`, 10 minutes).
+12. **Changing the signature** (`changing-the-signature`, 15 minutes).
     A decorator that supplies an argument the caller no longer passes,
-    the lie `inspect.signature` then tells, and `wrapt.with_signature`.
+    the lie `inspect.signature` and `help()` then tell, and
+    `wrapt.with_signature` for the signature and the docstring, with
+    `wrapt.with_doc` for the docstring alone.
 
 ### Monkey patching with wrapt
 

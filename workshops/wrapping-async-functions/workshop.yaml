@@ -35,8 +35,9 @@ finish: |
 
   Next is **Changing the signature**, the last of these workshops,
   where a decorator that supplies an argument the caller
-  no longer passes tells introspection the truth with
-  `wrapt.with_signature`.
+  no longer passes tells introspection the truth, about its
+  signature and its docstring, with `wrapt.with_signature` and
+  `wrapt.with_doc`.
 
   The "Asynchronous usage" and "Calling Convention Markers and
   Adapters" sections of the

@@ -33,6 +33,7 @@ except TypeError as exc:
     print("TypeError:", signature_problem)
 
 reported = str(inspect.signature(fetch_price))
+original_doc = fetch_price.__doc__
 ```
 
 The call works. The signature and the help say `(session, item)`,
@@ -41,11 +42,14 @@ and a caller who believes them and passes a session gets a
 the decorator added a second session in front. Everything wrapt
 preserved so carefully is being preserved from the wrong function:
 `fetch_price` as written takes a session, and `fetch_price` as
-callable does not.
+callable does not. The help is wrong twice over: the signature line
+says `(session, item)`, and the docstring under it says "in a
+session", describing an argument the reader must not pass.
 
 A `functools.wraps` closure has the same problem, since it copies
 `__wrapped__` and `inspect` follows it. The stdlib answer is to
-rewrite `__signature__` by hand; wrapt's is the next page.
+rewrite `__signature__` and `__doc__` by hand; wrapt's is the next
+page.
 
 ```{verify}
 :id: the-lie
@@ -53,5 +57,5 @@ rewrite `__signature__` by hand; wrapt's is the next page.
 :substrate: learner-kernel
 :path: {{ notebook }}
 :trigger: cell-executed inject
-reported == "(session, item)" and "positional" in signature_problem
+reported == "(session, item)" and "positional" in signature_problem and "in a session" in original_doc
 ```

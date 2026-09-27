@@ -69,7 +69,7 @@ workshops teach (`just install` fetches it, `just bump-wrapt` moves
 it). Its `docs/*.rst` are the material the workshops draw on:
 `decorators.rst` for the wrapper signature, arguments, the `enabled`
 option and the rules for methods and classes, `bundled.rst` for
-`lru_cache`, `synchronized`, `with_signature` and
+`lru_cache`, `synchronized`, `with_signature`, `with_doc` and
 `bind_state_to_wrapper`, `examples.rst` for the state class and the
 argument checkers, `issues.rst` for what does not work and why,
 `monkey.rst` for every monkey patching helper, the post import hooks
