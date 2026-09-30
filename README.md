@@ -396,7 +396,7 @@ docker run --rm -p 8888:8888 \
     -e "WORKSHOP_COLLECTION=https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/decorators/collection.json https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/monkey-patching/collection.json https://raw.githubusercontent.com/GrahamDumpleton/wrapt-workshops/main/collections/object-proxies/collection.json" \
     -e WORKSHOP_INSTALL=1 \
     -e WORKSHOP_ANALYTICS=always \
-    ghcr.io/grahamdumpleton/jupyterlab-workshop:0.13.0
+    ghcr.io/grahamdumpleton/jupyterlab-workshop:0.15.0
 ```
 
 `WORKSHOP_COLLECTION` takes the indexes separated by spaces, in the
